@@ -1,0 +1,902 @@
+{
+  "1": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "2": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "3": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "4": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "5": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "6": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "7": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "8": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "9": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "10": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "11": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "12": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "13": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "14": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "15": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "16": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "17": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "18": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "19": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "20": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "21": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "22": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "23": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "24": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "25": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "26": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "27": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "28": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "29": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "30": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "31": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "32": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "33": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "34": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "35": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "36": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "37": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "38": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "39": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "40": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "41": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "42": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "43": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "44": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "45": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "46": {
+    "chinese": "你好，我叫小明。",
+    "translation": "Hello, my name is Xiaoming.",
+    "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+    "difficulty": "easy"
+  },
+  "47": {
+    "chinese": "今天是星期三。",
+    "translation": "Today is Wednesday.",
+    "pinyin": "Jīntiān shì xīngqīsān.",
+    "difficulty": "easy"
+  },
+  "48": {
+    "chinese": "我有一只猫。",
+    "translation": "I have a cat.",
+    "pinyin": "Wǒ yǒu yì zhī māo.",
+    "difficulty": "easy"
+  },
+  "49": {
+    "chinese": "他是我的朋友。",
+    "translation": "He is my friend.",
+    "pinyin": "Tā shì wǒ de péngyǒu.",
+    "difficulty": "easy"
+  },
+  "50": {
+    "chinese": "我喜欢喝水。",
+    "translation": "I like to drink water.",
+    "pinyin": "Wǒ xǐhuān hē shuǐ.",
+    "difficulty": "easy"
+  },
+  "51": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "52": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "53": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "54": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "55": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "56": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "57": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "58": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "59": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "60": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "61": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "62": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "63": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "64": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "65": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "66": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "67": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "68": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "69": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "70": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "71": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "72": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "73": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "74": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "75": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "76": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "77": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "78": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "79": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "80": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "81": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "82": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "83": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "84": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "85": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "86": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "87": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "88": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "89": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "90": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "91": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "92": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "93": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "94": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "95": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "96": {
+    "chinese": "我喜欢吃苹果。",
+    "translation": "I like to eat apples.",
+    "pinyin": "Wǒ xǐhuān chī píngguǒ.",
+    "difficulty": "medium"
+  },
+  "97": {
+    "chinese": "她正在学习中文。",
+    "translation": "She is learning Chinese.",
+    "pinyin": "Tā zhèngzài xuéxí zhōngwén.",
+    "difficulty": "medium"
+  },
+  "98": {
+    "chinese": "我们明天去北京。",
+    "translation": "We are going to Beijing tomorrow.",
+    "pinyin": "Wǒmen míngtiān qù Běijīng.",
+    "difficulty": "medium"
+  },
+  "99": {
+    "chinese": "这本书很有意思。",
+    "translation": "This book is very interesting.",
+    "pinyin": "Zhè běn shū hěn yǒuyìsi.",
+    "difficulty": "medium"
+  },
+  "100": {
+    "chinese": "我的哥哥在美国工作。",
+    "translation": "My older brother works in the US.",
+    "pinyin": "Wǒ de gēge zài Měiguó gōngzuò.",
+    "difficulty": "medium"
+  },
+  "101": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "102": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "103": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "104": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "105": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "106": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "107": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "108": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "109": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "110": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "111": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "112": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "113": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "114": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "115": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "116": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "117": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "118": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "119": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "120": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "121": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "122": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "123": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "124": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "125": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "126": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "127": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "128": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "129": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "130": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "131": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "132": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "133": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "134": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "135": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "136": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "137": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "138": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "139": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "140": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "141": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "142": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "143": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "144": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "145": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  },
+  "146": {
+    "chinese": "我们一起去学校。",
+    "translation": "We go to school together.",
+    "pinyin": "Wǒmen yīqǐ qù xuéxiào.",
+    "difficulty": "hard"
+  },
+  "147": {
+    "chinese": "他每天早上六点起床。",
+    "translation": "He gets up at six every morning.",
+    "pinyin": "Tā měitiān zǎoshang liù diǎn qǐchuáng.",
+    "difficulty": "hard"
+  },
+  "148": {
+    "chinese": "虽然下雨了，我们还是出去玩了。",
+    "translation": "Although it rained, we still went out to play.",
+    "pinyin": "Suīrán xiàyǔ le, wǒmen háishì chūqù wán le.",
+    "difficulty": "hard"
+  },
+  "149": {
+    "chinese": "她已经把作业做完了。",
+    "translation": "She has already finished her homework.",
+    "pinyin": "Tā yǐjīng bǎ zuòyè zuò wán le.",
+    "difficulty": "hard"
+  },
+  "150": {
+    "chinese": "他希望明年能去中国旅行。",
+    "translation": "He hopes to travel to China next year.",
+    "pinyin": "Tā xīwàng míngnián néng qù Zhōngguó lǚxíng.",
+    "difficulty": "hard"
+  }
+}

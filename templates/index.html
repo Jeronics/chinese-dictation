@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chinese Dictation Practice</title>
+    <script src="https://www.google.com/jsapi"></script>
+    <script>
+      google.load("elements", "1", {
+        packages: "inputtools"
+      });
+
+      function onLoad() {
+        google.elements.inputtools.initialize();
+        const options = {
+          inputType: 'ime',
+          ime: 'zh-Hans-pinyin',
+          handwriting: ['zh-Hans'],
+          autoFocus: true
+        };
+        const input = document.getElementById('user_input');
+        google.elements.inputtools.attach(input, options);
+      }
+
+      google.setOnLoadCallback(onLoad);
+    </script>
+    <style>
+        del { color: red; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+    <h1>🈶 Chinese Dictation Practice</h1>
+    <div>
+        <strong>🏆 Score:</strong> {{ score }} &nbsp;&nbsp;
+        <strong>🎮 Level:</strong> {{ level }}
+    </div>
+
+    <form method="POST">
+        <audio controls>
+            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+        </audio>
+        <br><br>
+        <label for="user_input">Write what you heard:</label><br>
+        <input type="text" id="user_input" name="user_input"
+               lang="zh" inputmode="chinese"
+               required placeholder="Type using Pinyin or draw" />
+        <p style="color: gray;">💡 Tip: Enable Chinese input on your system (Pinyin or handwriting).</p>
+
+        <input type="hidden" name="correct_sentence" value="{{ correct_sentence }}">
+        <input type="hidden" name="audio_file" value="{{ audio_file }}">
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if show_result %}
+        <h2>{{ result }}</h2>
+        <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
+        {% if not result.startswith("✅") %}
+            <p><strong>Mark:</strong> {{ distance }}</p>
+            <p><strong>Corrections:</strong></p>
+            <p style="font-size: 1.2em;">{{ correction | safe }}</p>
+        {% endif %}
+        <a href="/">Return to menu</a>
+    {% endif %}
+</body>
+</html>

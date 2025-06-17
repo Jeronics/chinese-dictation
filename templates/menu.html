@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chinese Dictation Menu</title>
+</head>
+<body>
+    <h1>📚 Choose a Sentence</h1>
+    {% for level in ['easy', 'medium', 'hard'] %}
+        <h2>{{ level.capitalize() }}</h2>
+        <ul>
+        {% for sid, chinese in grouped[level] %}
+            <li><a href="{{ url_for('practice', sid=sid) }}">Audio {{ sid }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
