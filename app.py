@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, session
 from gtts import gTTS
 import os
 import json
+import string
+import re   
+import unicodedata
 
 class DictationApp:
     def __init__(self, app, json_path="sentences.json", audio_dir="static/audio_files", level_threshold=3):
@@ -15,6 +18,12 @@ class DictationApp:
     def load_sentences(self):
         with open(self.json_path, "r", encoding="utf-8") as f:
             return json.load(f)
+     
+    def clean_text(self, text):
+        return ''.join(
+            ch for ch in text
+            if not unicodedata.category(ch).startswith('P') and not ch.isspace()
+        )
 
     def ensure_audio(self, sid, text, difficulty):
         filename = f"{sid}_{difficulty}.mp3"
@@ -68,9 +77,11 @@ class DictationApp:
 
             if request.method == "POST":
                 user_input = request.form["user_input"].strip()
-                is_correct = user_input == sentence
+                is_correct = self.clean_text(user_input) == self.clean_text(sentence)
                 correction_html = self.compare_sentences(user_input, sentence)
-                distance = (len(sentence)-self.levenshtein(user_input, sentence))*10//len(sentence)
+                clean_user = self.clean_text(user_input)
+                clean_correct = self.clean_text(sentence)
+                distance = (len(clean_correct) - self.levenshtein(clean_user, clean_correct)) * 10 // len(clean_correct)
 
                 if is_correct:
                     session["score"] += 1
