@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Chinese Dictation Menu</title>
+    <title>Chinese Dictation – Menu</title>
 </head>
 <body>
-    <h1>📚 Choose a Sentence</h1>
-    {% for level in ['easy', 'medium', 'hard'] %}
-        <h2>{{ level.capitalize() }}</h2>
+    <h1>📚 Chinese Dictation – Menu</h1>
+
+    <p>
+        <a href="/session"><button>▶ Start 5-Sentence Session</button></a>
+    </p>
+
+    <h2>🎯 Practice by Difficulty</h2>
+
+    {% for level, sentence_list in grouped.items() %}
+        <h3>{{ level|capitalize }}</h3>
         <ul>
-        {% for sid, chinese in grouped[level] %}
-            <li><a href="{{ url_for('practice', sid=sid) }}">Audio {{ sid }}</a></li>
+        {% for sid, sentence in sentence_list %}
+            <li><a href="{{ url_for('practice', sid=sid) }}">{{ sentence }}</a></li>
         {% endfor %}
         </ul>
     {% endfor %}
+
 </body>
 </html>
