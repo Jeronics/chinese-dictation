@@ -24,8 +24,10 @@
         </form>
     {% else %}
         <h3>{{ result }}</h3>
-        <p><strong>Correct:</strong> {{ correct_sentence }}</p>
+        <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
         <p><strong>Correction:</strong> {{ correction|safe }}</p>
+        <p><strong>Pinyin:</strong> {{ pinyin }}</p>
+        <p><strong>Translation:</strong> {{ translation }}</p>
         <p><strong>Accuracy:</strong> {{ distance }}%</p>
 
         {% if show_next_button %}

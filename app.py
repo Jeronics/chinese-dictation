@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session
 from gtts import gTTS
 import os
 import json
@@ -94,8 +94,11 @@ class DictationApp:
                 session["level"] = 1
                 session["correct_count"] = 0
 
-            sentence = self.sentences[sid]["chinese"]
-            difficulty = self.sentences[sid]["difficulty"]
+            data = self.sentences[sid]
+            sentence = data["chinese"]
+            difficulty = data["difficulty"]
+            translation = data.get("translation", "")
+            pinyin = data.get("pinyin", "")
             audio_file = self.ensure_audio(sid, sentence, difficulty)
 
             if request.method == "POST":
@@ -121,7 +124,9 @@ class DictationApp:
                                        score=session["score"],
                                        level=session["level"],
                                        show_result=True,
-                                       audio_file=audio_file)
+                                       audio_file=audio_file,
+                                       translation=translation,
+                                       pinyin=pinyin)
 
             return render_template("index.html",
                                    correct_sentence=sentence,
@@ -137,7 +142,6 @@ class DictationApp:
                 session["session_index"] = 0
                 session["session_score"] = 0
 
-            # Avançar a la següent frase
             if request.method == "POST" and "next" in request.form:
                 session["session_index"] += 1
                 if session["session_index"] >= 5:
@@ -146,11 +150,13 @@ class DictationApp:
                     return render_template("session_summary.html", score=score, total=5)
 
             sid = session["session_ids"][session["session_index"]]
-            sentence = self.sentences[sid]["chinese"]
-            difficulty = self.sentences[sid]["difficulty"]
+            data = self.sentences[sid]
+            sentence = data["chinese"]
+            difficulty = data["difficulty"]
+            translation = data.get("translation", "")
+            pinyin = data.get("pinyin", "")
             audio_file = self.ensure_audio(sid, sentence, difficulty)
 
-            # Processar resposta
             if request.method == "POST" and "user_input" in request.form:
                 user_input = request.form["user_input"].strip()
                 clean_user = self.strip_punctuation(user_input)
@@ -174,7 +180,9 @@ class DictationApp:
                                        session_mode=True,
                                        current=session["session_index"] + 1,
                                        total=5,
-                                       show_next_button=True)
+                                       show_next_button=True,
+                                       translation=translation,
+                                       pinyin=pinyin)
 
             return render_template("index.html",
                                    correct_sentence=sentence,
