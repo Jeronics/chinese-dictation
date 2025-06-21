@@ -51,12 +51,12 @@ class DictationApp:
                 for k in range(j2 - j1):
                     u = user_input[ui + k] if ui + k < len(user_input) else ""
                     c = correct_sentence[ci + k] if ci + k < len(correct_sentence) else ""
-                    result += f"<span style='color: red;'><del>{u}</del>{c}</span>"
+                    result += f"<span style='color: red;'><del>{u}</del></span><span style='color: blue;'>{c}</span>"
                 ui += (i2 - i1)
                 ci += (j2 - j1)
             elif tag == 'insert':
                 inserted = correct_sentence[ci:ci + (j2 - j1)]
-                result += f"<span style='color: red;'>{inserted}</span>"
+                result += f"<span style='color: blue;'>{inserted}</span>"
                 ci += (j2 - j1)
             elif tag == 'delete':
                 deleted = user_input[ui:ui + (i2 - i1)]
