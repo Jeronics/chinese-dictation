@@ -104,7 +104,7 @@ class DictationApp:
                 clean_correct = self.strip_punctuation(sentence)
                 is_correct = clean_user == clean_correct
                 correction_html = self.compare_sentences(user_input, sentence)
-                distance = (len(clean_correct) - self.levenshtein(clean_user, clean_correct)) * 10 // len(clean_correct)
+                distance = (len(clean_correct) - self.levenshtein(clean_user, clean_correct)) * 10 // len(clean_correct) if len(clean_correct) > 0 else 0
 
                 if is_correct:
                     session["score"] += 1
@@ -137,18 +137,27 @@ class DictationApp:
                 session["session_index"] = 0
                 session["session_score"] = 0
 
+            # Avançar a la següent frase
+            if request.method == "POST" and "next" in request.form:
+                session["session_index"] += 1
+                if session["session_index"] >= 5:
+                    score = session["session_score"]
+                    session.clear()
+                    return render_template("session_summary.html", score=score, total=5)
+
             sid = session["session_ids"][session["session_index"]]
             sentence = self.sentences[sid]["chinese"]
             difficulty = self.sentences[sid]["difficulty"]
             audio_file = self.ensure_audio(sid, sentence, difficulty)
 
-            if request.method == "POST":
+            # Processar resposta
+            if request.method == "POST" and "user_input" in request.form:
                 user_input = request.form["user_input"].strip()
                 clean_user = self.strip_punctuation(user_input)
                 clean_correct = self.strip_punctuation(sentence)
                 is_correct = clean_user == clean_correct
                 correction_html = self.compare_sentences(user_input, sentence)
-                distance = (len(clean_correct) - self.levenshtein(clean_user, clean_correct)) * 10 // len(clean_correct)
+                distance = (len(clean_correct) - self.levenshtein(clean_user, clean_correct)) * 10 // len(clean_correct) if len(clean_correct) > 0 else 0
 
                 if is_correct:
                     session["session_score"] += 1
@@ -166,30 +175,6 @@ class DictationApp:
                                        current=session["session_index"] + 1,
                                        total=5,
                                        show_next_button=True)
-
-            return render_template("index.html",
-                                   correct_sentence=sentence,
-                                   audio_file=audio_file,
-                                   score=session["session_score"],
-                                   level=session.get("level", 1),
-                                   show_result=False,
-                                   session_mode=True,
-                                   current=session["session_index"] + 1,
-                                   total=5)
-
-        @self.app.route("/session/result", methods=["GET", "POST"])
-        def session_result():
-            session["session_index"] += 1
-
-            if session["session_index"] >= 5:
-                score = session["session_score"]
-                session.clear()
-                return render_template("session_summary.html", score=score, total=5)
-
-            sid = session["session_ids"][session["session_index"]]
-            sentence = self.sentences[sid]["chinese"]
-            difficulty = self.sentences[sid]["difficulty"]
-            audio_file = self.ensure_audio(sid, sentence, difficulty)
 
             return render_template("index.html",
                                    correct_sentence=sentence,

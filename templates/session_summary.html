@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Session Complete</title>
+</head>
+<body>
+    <h1>🎉 Session Complete!</h1>
+    <p>You scored <strong>{{ score }} / {{ total }}</strong>.</p>
+
+    {% if score == total %}
+        <p>🏅 Perfect! Great job!</p>
+    {% elif score >= 3 %}
+        <p>👍 Nice! Keep practicing.</p>
+    {% else %}
+        <p>💪 Don’t give up! Try again!</p>
+    {% endif %}
+
+    <a href="/session">🔁 Start New Session</a><br>
+    <a href="/">🏠 Back to Menu</a>
+</body>
+</html>

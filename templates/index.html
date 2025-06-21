@@ -29,7 +29,8 @@
         <p><strong>Accuracy:</strong> {{ distance }}%</p>
 
         {% if show_next_button %}
-            <form action="/session/result" method="post">
+            <form action="/session" method="post">
+                <input type="hidden" name="next" value="1">
                 <button type="submit">Next ▶</button>
             </form>
         {% else %}
@@ -38,5 +39,12 @@
     {% endif %}
 
     <p>🎯 Score: {{ score }} | 🧗 Level: {{ level }}</p>
+
+    <script>
+        window.onload = function() {
+            const input = document.getElementById("user_input");
+            if (input) input.focus();
+        };
+    </script>
 </body>
 </html>
