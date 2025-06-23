@@ -1,0 +1,28 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore Flask session files (if any)
+instance/
+*.sqlite3
+
+# Ignore audio files
+static/audio_files/
+*.mp3
+
+# Ignore compiled or temporary files
+*.log
+*.bak
+*.swp
+
+# Ignore VS Code settings (if using)
+.vscode/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
