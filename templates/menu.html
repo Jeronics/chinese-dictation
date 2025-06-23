@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Chinese Dictation – Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>📚 Chinese Dictation – Menu</h1>
@@ -22,5 +24,14 @@
         <button type="submit">▶ Start HSK Session</button>
     </form>
 
+    <h2>📝 Practice Individual Sentences</h2>
+    {% for level, sentence_list in grouped.items() %}
+        <h3>{{ level }}</h3>
+        <ul>
+        {% for sid, sentence in sentence_list %}
+            <li><a href="{{ url_for('practice', sid=sid) }}">{{ sentence }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
 </body>
 </html>
