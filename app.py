@@ -51,16 +51,16 @@ class DictationApp:
                 for k in range(j2 - j1):
                     u = user_input[ui + k] if ui + k < len(user_input) else ""
                     c = correct_sentence[ci + k] if ci + k < len(correct_sentence) else ""
-                    result += f"<span style='color: red;'><del>{u}</del></span><span style='color: blue;'>{c}</span>"
+                    result += f"<span class='diff-del'><del>{u}</del></span><span class='diff-ins'>{c}</span>"
                 ui += (i2 - i1)
                 ci += (j2 - j1)
             elif tag == 'insert':
                 inserted = correct_sentence[ci:ci + (j2 - j1)]
-                result += f"<span style='color: blue;'>{inserted}</span>"
+                result += f"<span class='diff-ins'>{inserted}</span>"
                 ci += (j2 - j1)
             elif tag == 'delete':
                 deleted = user_input[ui:ui + (i2 - i1)]
-                result += f"<span style='color: red;'><del>{deleted}</del></span>"
+                result += f"<span class='diff-del'><del>{deleted}</del></span>"
                 ui += (i2 - i1)
 
         return result
@@ -86,12 +86,7 @@ class DictationApp:
     def register_routes(self):
         @self.app.route("/")
         def menu():
-            grouped = {"HSK1": [], "HSK2": [], "HSK3": [], "HSK4": []}
-            for sid, data in self.sentences.items():
-                difficulty = data["difficulty"]
-                if difficulty in grouped:
-                    grouped[difficulty].append((sid, data["chinese"]))
-            return render_template("menu.html", grouped=grouped)
+            return render_template("menu.html")
 
         @self.app.route("/practice/<sid>", methods=["GET", "POST"])
         def practice(sid):
@@ -207,7 +202,7 @@ class DictationApp:
                                    current=session["session_index"] + 1,
                                    total=5)
 
-# Inicialitzar Flask
+# Initialize Flask app
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
 DictationApp(app)

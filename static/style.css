@@ -82,3 +82,28 @@ del {
     text-decoration: line-through;
     color: red;
 }
+
+
+/* Highlight for incorrect and inserted characters */
+.diff-del {
+    color: red;
+}
+
+.diff-ins {
+    color: blue;
+}
+
+/* Adjust colors for dark mode */
+@media (prefers-color-scheme: dark) {
+    .diff-del {
+        color: #ff6b6b; /* bright red for dark bg */
+    }
+
+    .diff-ins {
+        color: #80bfff; /* bright blue for dark bg */
+    }
+
+    .result {
+        background-color: #1e1e1e; /* readable dark result box */
+    }
+}

@@ -23,15 +23,5 @@
         </select>
         <button type="submit">▶ Start HSK Session</button>
     </form>
-
-    <h2>📝 Practice Individual Sentences</h2>
-    {% for level, sentence_list in grouped.items() %}
-        <h3>{{ level }}</h3>
-        <ul>
-        {% for sid, sentence in sentence_list %}
-            <li><a href="{{ url_for('practice', sid=sid) }}">{{ sentence }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
 </body>
 </html>
