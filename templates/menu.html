@@ -8,19 +8,19 @@
     <h1>📚 Chinese Dictation – Menu</h1>
 
     <p>
-        <a href="/session"><button>▶ Start 5-Sentence Session</button></a>
+        <a href="/session"><button>▶ Start 5-Sentence Mixed Session</button></a>
     </p>
 
-    <h2>🎯 Practice by Difficulty</h2>
-
-    {% for level, sentence_list in grouped.items() %}
-        <h3>{{ level|capitalize }}</h3>
-        <ul>
-        {% for sid, sentence in sentence_list %}
-            <li><a href="{{ url_for('practice', sid=sid) }}">{{ sentence }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
+    <h2>🎯 Start Session by HSK Level</h2>
+    <form method="get" action="/session">
+        <select name="hsk">
+            <option value="HSK1">HSK1</option>
+            <option value="HSK2">HSK2</option>
+            <option value="HSK3">HSK3</option>
+            <option value="HSK4">HSK4</option>
+        </select>
+        <button type="submit">▶ Start HSK Session</button>
+    </form>
 
 </body>
 </html>

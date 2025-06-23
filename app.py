@@ -76,15 +76,21 @@ class DictationApp:
                 dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
         return dp[len_s1][len_s2]
 
-    def get_random_session_ids(self, count=5):
-        return random.sample(list(self.sentences.keys()), count)
+    def get_random_session_ids(self, count=5, level=None):
+        if level:
+            filtered = [sid for sid, data in self.sentences.items() if data["difficulty"] == level]
+        else:
+            filtered = list(self.sentences.keys())
+        return random.sample(filtered, count) if len(filtered) >= count else random.sample(filtered, len(filtered))
 
     def register_routes(self):
         @self.app.route("/")
         def menu():
-            grouped = {"easy": [], "medium": [], "hard": []}
+            grouped = {"HSK1": [], "HSK2": [], "HSK3": [], "HSK4": []}
             for sid, data in self.sentences.items():
-                grouped[data["difficulty"]].append((sid, data["chinese"]))
+                difficulty = data["difficulty"]
+                if difficulty in grouped:
+                    grouped[difficulty].append((sid, data["chinese"]))
             return render_template("menu.html", grouped=grouped)
 
         @self.app.route("/practice/<sid>", methods=["GET", "POST"])
@@ -123,6 +129,7 @@ class DictationApp:
                                        distance=distance,
                                        score=session["score"],
                                        level=session["level"],
+                                       difficulty=difficulty,
                                        show_result=True,
                                        audio_file=audio_file,
                                        translation=translation,
@@ -133,12 +140,15 @@ class DictationApp:
                                    audio_file=audio_file,
                                    score=session.get("score", 0),
                                    level=session.get("level", 1),
+                                   difficulty=difficulty,
                                    show_result=False)
 
         @self.app.route("/session", methods=["GET", "POST"])
         def session_practice():
             if "session_ids" not in session:
-                session["session_ids"] = self.get_random_session_ids()
+                hsk_level = request.args.get("hsk")
+                session["hsk_level"] = hsk_level if hsk_level else None
+                session["session_ids"] = self.get_random_session_ids(level=hsk_level)
                 session["session_index"] = 0
                 session["session_score"] = 0
 
@@ -146,8 +156,9 @@ class DictationApp:
                 session["session_index"] += 1
                 if session["session_index"] >= 5:
                     score = session["session_score"]
+                    level = session.get("hsk_level")
                     session.clear()
-                    return render_template("session_summary.html", score=score, total=5)
+                    return render_template("session_summary.html", score=score, total=5, level=level)
 
             sid = session["session_ids"][session["session_index"]]
             data = self.sentences[sid]
@@ -175,6 +186,7 @@ class DictationApp:
                                        distance=distance,
                                        score=session["session_score"],
                                        level=session.get("level", 1),
+                                       difficulty=difficulty,
                                        show_result=True,
                                        audio_file=audio_file,
                                        session_mode=True,
@@ -189,6 +201,7 @@ class DictationApp:
                                    audio_file=audio_file,
                                    score=session["session_score"],
                                    level=session.get("level", 1),
+                                   difficulty=difficulty,
                                    show_result=False,
                                    session_mode=True,
                                    current=session["session_index"] + 1,

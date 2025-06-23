@@ -5,18 +5,25 @@
     <title>Session Complete</title>
 </head>
 <body>
-    <h1>🎉 Session Complete!</h1>
+    <h1>🎉 Dictation Session Complete!</h1>
+
     <p>You scored <strong>{{ score }} / {{ total }}</strong>.</p>
 
     {% if score == total %}
         <p>🏅 Perfect! Great job!</p>
     {% elif score >= 3 %}
-        <p>👍 Nice! Keep practicing.</p>
+        <p>👍 Nice! You're getting there!</p>
     {% else %}
-        <p>💪 Don’t give up! Try again!</p>
+        <p>💪 Don’t give up! Try another round!</p>
     {% endif %}
 
-    <a href="/session">🔁 Start New Session</a><br>
-    <a href="/">🏠 Back to Menu</a>
+    {% if level %}
+        <p><strong>HSK Level:</strong> {{ level }}</p>
+    {% endif %}
+
+    <p>
+        <a href="/session"><button>🔁 Start New Session</button></a>
+        <a href="/"><button>🏠 Back to Menu</button></a>
+    </p>
 </body>
 </html>
