@@ -204,7 +204,7 @@ class DictationApp:
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = "your-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-key")
 
 # Ensure audio folder exists before app starts
 os.makedirs("static/audio_files", exist_ok=True)
