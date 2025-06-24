@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session
-from gtts import gTTS
 import os
 import json
 import random
@@ -23,9 +22,8 @@ class DictationApp:
         filename = f"{sid}_{difficulty}.mp3"
         filepath = os.path.join(self.audio_dir, filename)
         if not os.path.exists(filepath):
-            os.makedirs(self.audio_dir, exist_ok=True)
-            tts = gTTS(text=text, lang='zh')
-            tts.save(filepath)
+            print(f"⚠️ Missing audio: {filepath}")
+            return None
         return f"audio_files/{filename}"
 
     def strip_punctuation(self, text):
@@ -81,7 +79,7 @@ class DictationApp:
             filtered = [sid for sid, data in self.sentences.items() if data["difficulty"] == level]
         else:
             filtered = list(self.sentences.keys())
-        return random.sample(filtered, count) if len(filtered) >= count else random.sample(filtered, len(filtered))
+        return random.sample(filtered, min(count, len(filtered)))
 
     def register_routes(self):
         @self.app.route("/")
@@ -101,6 +99,9 @@ class DictationApp:
             translation = data.get("translation", "")
             pinyin = data.get("pinyin", "")
             audio_file = self.ensure_audio(sid, sentence, difficulty)
+
+            if not audio_file:
+                return "Audio file missing. Please regenerate with generate_audios.py.", 500
 
             if request.method == "POST":
                 user_input = request.form["user_input"].strip()
@@ -163,6 +164,9 @@ class DictationApp:
             pinyin = data.get("pinyin", "")
             audio_file = self.ensure_audio(sid, sentence, difficulty)
 
+            if not audio_file:
+                return "Audio file missing. Please regenerate with generate_audios.py.", 500
+
             if request.method == "POST" and "user_input" in request.form:
                 user_input = request.form["user_input"].strip()
                 clean_user = self.strip_punctuation(user_input)
@@ -202,14 +206,11 @@ class DictationApp:
                                    current=session["session_index"] + 1,
                                    total=5)
 
-# Initialize Flask app
+# --- App initialization ---
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-key")
-
-# Ensure audio folder exists before app starts
 os.makedirs("static/audio_files", exist_ok=True)
 
-# Start dictation app
 DictationApp(app)
 
 if __name__ == "__main__":
