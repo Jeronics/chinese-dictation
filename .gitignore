@@ -12,8 +12,7 @@ instance/
 *.sqlite3
 
 # Ignore audio files
-static/audio_files/
-*.mp3
+static/audio_files/*.mp3
 
 # Ignore compiled or temporary files
 *.log
