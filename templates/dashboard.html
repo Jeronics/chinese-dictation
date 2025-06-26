@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Progress Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>📈 Progress Dashboard</h1>
+
+    {% if levels %}
+        {% for l in levels %}
+            <h3>{{ l.level }}</h3>
+            <div style="background: #ddd; border-radius: 6px; overflow: hidden; height: 24px; max-width: 500px;">
+                <div style="background: var(--accent); width: {{ l.percent }}%; height: 100%; color: white; text-align: center;">
+                    {{ l.percent }}%
+                </div>
+            </div>
+            <p>{{ l.learned }} / {{ l.total }} characters learned</p>
+        {% endfor %}
+    {% else %}
+        <p>No progress yet. Start practicing to see your progress!</p>
+    {% endif %}
+
+    <p><a href="/"><button>🏠 Back to Menu</button></a></p>
+</body>
+</html>

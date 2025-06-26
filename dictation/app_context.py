@@ -1,13 +1,19 @@
 import json, os, random
 
 class DictationContext:
-    def __init__(self, json_path="sentences.json", audio_dir="static/audio_files"):
+    def __init__(self, json_path="sentences.json", audio_dir="static/audio_files", hsk_path="hsk_characters.json"):
         self.sentences = self.load_sentences(json_path)
         self.audio_dir = audio_dir
+        self.hsk_lookup = self.load_hsk(hsk_path)
 
     def load_sentences(self, path):
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
+
+    def load_hsk(self, path):
+        with open(path, encoding="utf-8") as f:
+            items = json.load(f)
+        return {item["hanzi"]: item["hsk_level"] for item in items}
 
     def get_sentence(self, sid):
         return self.sentences.get(sid)
