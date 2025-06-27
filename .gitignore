@@ -23,4 +23,9 @@ instance/
 .DS_Store
 Thumbs.db
 
+# Ignore virtual environments
+.venv/
 
+progress.db
+*.pyc
+__pycache__/
