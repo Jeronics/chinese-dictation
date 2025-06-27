@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session, g
+import sqlite3
 from .app_context import DictationContext
 from .corrector import Corrector
 
@@ -6,19 +7,41 @@ dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
 
+### ──────── DATABASE CONNECTION ────────
+
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect("progress.db")
+    return g.db
+
+@dictation_bp.teardown_app_request
+def close_connection(exception):
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
+
+### ──────── DICTATION RESULT RENDERING ────────
+
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None):
-    correction, stripped_user, stripped_correct = corrector.compare(user_input, sentence_data["chinese"])
+    correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
     is_correct = stripped_user == stripped_correct
 
-    if is_correct:
+    if lev > 1:
         session[session_score_key] += 1
-        if session_score_key == "score":
-            session["correct_count"] += 1
-            if session["correct_count"] >= 3:
-                session["level"] += 1
-                session["correct_count"] = 0
+        user_id = session.get("user_id", "guest")
+        db = get_db()
+
+        for hanzi in set(correct_segments):
+            hsk_level = ctx.hsk_lookup.get(hanzi)
+            if hsk_level:
+                db.execute("""
+                    INSERT INTO progress (user_id, character, hsk_level, correct_count)
+                    VALUES (?, ?, ?, 1)
+                    ON CONFLICT(user_id, character) DO UPDATE SET correct_count = correct_count + 1
+                """, (user_id, hanzi, hsk_level))
+        db.commit()
 
     return render_template(
         "index.html",
@@ -39,6 +62,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         show_next_button=show_next,
     )
 
+### ──────── ROUTES ────────
+
 @dictation_bp.route("/")
 def menu():
     return render_template("menu.html")
@@ -46,7 +71,7 @@ def menu():
 @dictation_bp.route("/practice/<sid>", methods=["GET", "POST"])
 def practice(sid):
     if "score" not in session:
-        session.update(score=0, level=1, correct_count=0)
+        session.update(score=0, level=1)
 
     s = ctx.get_sentence(sid)
     s["id"] = sid
@@ -57,14 +82,25 @@ def practice(sid):
         user_input = request.form["user_input"].strip()
         return render_dictation_result(user_input, s, session_score_key="score")
 
-    return render_template("index.html", correct_sentence=s["chinese"], audio_file=ctx.audio_path(sid, s["difficulty"]),
-                           score=session["score"], level=session["level"], difficulty=s["difficulty"], show_result=False)
+    return render_template("index.html",
+        correct_sentence=s["chinese"],
+        audio_file=ctx.audio_path(sid, s["difficulty"]),
+        score=session["score"],
+        level=session.get("level", 1),
+        difficulty=s["difficulty"],
+        show_result=False
+    )
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
     if "session_ids" not in session:
         level = request.args.get("hsk")
-        session.update(hsk_level=level, session_ids=ctx.get_random_ids(level=level), session_index=0, session_score=0)
+        session.update(
+            hsk_level=level,
+            session_ids=ctx.get_random_ids(level=level),
+            session_index=0,
+            session_score=0
+        )
 
     if request.method == "POST" and "next" in request.form:
         session["session_index"] += 1
@@ -82,9 +118,48 @@ def session_practice():
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_dictation_result(user_input, s, session_score_key="session_score",
-                                       show_next=True, current=session["session_index"] + 1, total=5)
+        return render_dictation_result(
+            user_input, s,
+            session_score_key="session_score",
+            show_next=True,
+            current=session["session_index"] + 1,
+            total=5
+        )
 
-    return render_template("index.html", correct_sentence=s["chinese"], audio_file=ctx.audio_path(sid, s["difficulty"]),
-                           score=session["session_score"], level=session.get("level", 1), difficulty=s["difficulty"],
-                           show_result=False, session_mode=True, current=session["session_index"] + 1, total=5)
+    return render_template("index.html",
+        correct_sentence=s["chinese"],
+        audio_file=ctx.audio_path(sid, s["difficulty"]),
+        score=session["session_score"],
+        level=session.get("level", 1),
+        difficulty=s["difficulty"],
+        show_result=False,
+        session_mode=True,
+        current=session["session_index"] + 1,
+        total=5
+    )
+
+@dictation_bp.route("/dashboard")
+def dashboard():
+    user_id = session.get("user_id", "guest")
+    db = get_db()
+    cursor = db.execute("""
+        SELECT hsk_level,
+               COUNT(*) AS learned
+        FROM progress
+        WHERE user_id = ? AND correct_count >= 1
+        GROUP BY hsk_level
+    """, (user_id,))
+    learned_data = {row[0]: row[1] for row in cursor.fetchall()}
+
+    levels = []
+    for hsk_level, total in ctx.hsk_totals.items():
+        learned = learned_data.get(hsk_level, 0)
+        percent = int(100 * learned / total) if total else 0
+        levels.append({
+            "level": hsk_level,
+            "learned": learned,
+            "total": total,
+            "percent": percent
+        })
+
+    return render_template("dashboard.html", levels=levels)
