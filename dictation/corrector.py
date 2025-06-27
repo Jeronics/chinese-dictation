@@ -19,9 +19,13 @@ class Corrector:
         s_correct = self.strip(correct)
         matcher = difflib.SequenceMatcher(None, s_user, s_correct)
         result, ui, ci = "", 0, 0
+        correct_segments = []
+
         for tag, i1, i2, j1, j2 in matcher.get_opcodes():
             if tag == 'equal':
-                result += correct[ci:j2]
+                equal_text = correct[ci:j2]
+                result += equal_text
+                correct_segments.append(equal_text)
             elif tag == 'replace':
                 for k in range(j2 - j1):
                     u = user_input[ui + k] if ui + k < len(user_input) else ""
@@ -33,4 +37,5 @@ class Corrector:
                 result += f"<span class='diff-del'><del>{user_input[ui:i2]}</del></span>"
             ui += (i2 - i1)
             ci += (j2 - j1)
-        return result, s_user, s_correct
+        return result, s_user, s_correct, "".join(correct_segments)
+

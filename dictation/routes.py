@@ -23,25 +23,25 @@ def close_connection(exception):
 ### ──────── DICTATION RESULT RENDERING ────────
 
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None):
-    correction, stripped_user, stripped_correct = corrector.compare(user_input, sentence_data["chinese"])
+    correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
     is_correct = stripped_user == stripped_correct
 
-    if is_correct:
+    if lev > 1:
         session[session_score_key] += 1
         user_id = session.get("user_id", "guest")
+        db = get_db()
 
-        for hanzi in set(stripped_correct):
+        for hanzi in set(correct_segments):
             hsk_level = ctx.hsk_lookup.get(hanzi)
             if hsk_level:
-                db = get_db()
                 db.execute("""
                     INSERT INTO progress (user_id, character, hsk_level, correct_count)
                     VALUES (?, ?, ?, 1)
                     ON CONFLICT(user_id, character) DO UPDATE SET correct_count = correct_count + 1
                 """, (user_id, hanzi, hsk_level))
-                db.commit()
+        db.commit()
 
     return render_template(
         "index.html",
@@ -144,21 +144,19 @@ def dashboard():
     db = get_db()
     cursor = db.execute("""
         SELECT hsk_level,
-               COUNT(*) AS total,
-               SUM(CASE WHEN correct_count >= 3 THEN 1 ELSE 0 END) AS learned
+               COUNT(*) AS learned
         FROM progress
-        WHERE user_id = ?
+        WHERE user_id = ? AND correct_count >= 1
         GROUP BY hsk_level
-        ORDER BY hsk_level
     """, (user_id,))
-    data = cursor.fetchall()
+    learned_data = {row[0]: row[1] for row in cursor.fetchall()}
 
     levels = []
-    for row in data:
-        hsk, total, learned = row
+    for hsk_level, total in ctx.hsk_totals.items():
+        learned = learned_data.get(hsk_level, 0)
         percent = int(100 * learned / total) if total else 0
         levels.append({
-            "level": hsk,
+            "level": hsk_level,
             "learned": learned,
             "total": total,
             "percent": percent
