@@ -1,7 +1,7 @@
-import os
 import sqlite3
+import os
 
-if not os.path.exists("progress.db"):
+def init_db():
     conn = sqlite3.connect("progress.db")
     c = conn.cursor()
     c.execute("""
@@ -15,6 +15,6 @@ if not os.path.exists("progress.db"):
     """)
     conn.commit()
     conn.close()
-    print("Database created.")
-else:
-    print("Database already exists.")
+
+if __name__ == "__main__":
+    init_db()
