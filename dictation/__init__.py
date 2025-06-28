@@ -1,9 +1,12 @@
 import os
 import sqlite3
 from flask import Flask
+from .routes import dictation_bp
+
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="../templates", static_folder="../static")
+
 
     db_path = os.environ.get("DB_PATH", "progress.db")
     app.config["DB_PATH"] = db_path
@@ -22,8 +25,7 @@ def create_app():
         """)
         conn.commit()
 
-    # ⬇️ Register routes or blueprints here
-    from .routes import blueprint
-    app.register_blueprint(blueprint)
+    app.secret_key = "dev-key"
+    app.register_blueprint(dictation_bp)
 
     return app
