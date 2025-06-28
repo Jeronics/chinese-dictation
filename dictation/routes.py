@@ -67,6 +67,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
 @dictation_bp.route("/")
 def menu():
+    session.clear()  # ← clears HSK level, session_ids, etc.
     return render_template("menu.html")
 
 @dictation_bp.route("/practice/<sid>", methods=["GET", "POST"])
@@ -94,6 +95,7 @@ def practice(sid):
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
+    print(session)
     if "session_ids" not in session:
         level = request.args.get("hsk")
         session.update(
