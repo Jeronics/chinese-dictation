@@ -5,7 +5,10 @@ services:
     buildCommand: : |
       pip install -r requirements.txt
       python init_db.py  # This creates progress.db
-    startCommand: "gunicorn 'run:create_app()'"
+    startCommand: "python init_db.py && gunicorn 'run:create_app()'"
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: DB_PATH
+        value: progress.db
+
