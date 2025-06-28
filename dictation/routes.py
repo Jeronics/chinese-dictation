@@ -26,7 +26,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
-    is_correct = stripped_user == stripped_correct
+    accuracy = round(len(correct_segments)/len(stripped_correct)*100)
+    is_correct = stripped_user == correct_segments
 
     if lev > 1:
         session[session_score_key] += 1
@@ -48,7 +49,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         correct_sentence=sentence_data["chinese"],
         result="✅ Correct!" if is_correct else "❌ Try again.",
         correction=correction,
-        distance=distance,
+        accuracy=accuracy,
         score=session[session_score_key],
         level=session.get("level", 1),
         difficulty=sentence_data["difficulty"],
