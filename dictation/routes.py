@@ -1,7 +1,14 @@
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 from flask import Blueprint, render_template, request, session, g
 import sqlite3
 from .app_context import DictationContext
 from .corrector import Corrector
+import os
+from flask import request, redirect, session, render_template
+from supabase import create_client
 
 dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
@@ -67,11 +74,19 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
 @dictation_bp.route("/")
 def menu():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect("/login")
+    
     session.clear()  # ← clears HSK level, session_ids, etc.
     return render_template("menu.html")
 
 @dictation_bp.route("/practice/<sid>", methods=["GET", "POST"])
 def practice(sid):
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect("/login")
+
     if "score" not in session:
         session.update(score=0, level=1)
 
@@ -95,7 +110,10 @@ def practice(sid):
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
-    print(session)
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect("/login")
+
     if "session_ids" not in session:
         level = request.args.get("hsk")
         session.update(
@@ -144,6 +162,9 @@ def session_practice():
 @dictation_bp.route("/dashboard")
 def dashboard():
     user_id = session.get("user_id", "guest")
+    if not user_id:
+        return redirect("/login")
+
     db = get_db()
     cursor = db.execute("""
         SELECT hsk_level,
@@ -166,3 +187,42 @@ def dashboard():
         })
 
     return render_template("dashboard.html", levels=levels)
+
+
+supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
+
+@dictation_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        try:
+            result = supabase.auth.sign_in_with_password({
+                "email": email,
+                "password": password
+            })
+            user = result.user
+            session["user_id"] = user.id
+            return redirect("/")
+        except Exception as e:
+            return f"Login failed: {e}"
+
+    return render_template("login.html")
+
+@dictation_bp.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        try:
+            result = supabase.auth.sign_up({
+                "email": email,
+                "password": password
+            })
+            return "✅ Usuari registrat! Revisa el teu correu per confirmar-lo."
+        except Exception as e:
+            return f"Signup failed: {e}"
+
+    return render_template("signup.html")
