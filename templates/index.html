@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Chinese Dictation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Chinese Dicatation{% endblock %}
+
+{% block content %}
+    
     <h1>Chinese Dictation</h1>
 
     {% if session_mode %}
@@ -54,5 +51,4 @@
             if (input) input.focus();
         };
     </script>
-</body>
-</html>
+{% endblock %}

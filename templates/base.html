@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Chinese Dictation{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    {% if session.get("email") %}
+        <div class="user-bar">
+            👤 {{ session["email"] }}
+            <a href="/logout">🚪 Logout</a>
+        </div>
+    {% else %}
+        <div class="user-bar">
+            <a href="/login">🔐 Login</a>
+        </div>
+        <div class="user-bar">
+            <a href="/signup">🔐 Sign up</a>
+        </div>
+    {% endif %}
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

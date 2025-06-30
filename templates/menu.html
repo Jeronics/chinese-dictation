@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Chinese Dictation – Menu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+
     <h1>📚 Chinese Dictation – Menu</h1>
 
     <p>
@@ -31,5 +28,5 @@
         </select>
         <button type="submit">▶ Start HSK Session</button>
     </form>
-</body>
-</html>
+{% endblock %}
+

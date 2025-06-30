@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Progress Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Progress Dashboard{% endblock %}
+
+{% block content %}
+
     <h1>📈 Progress Dashboard</h1>
 
     {% if levels %}
@@ -24,5 +21,4 @@
     {% endif %}
 
     <p><a href="/"><button>🏠 Back to Menu</button></a></p>
-</body>
-</html>
+{% endblock %}

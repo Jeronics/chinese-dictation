@@ -38,7 +38,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
     if lev > 1:
         session[session_score_key] += 1
-        user_id = session.get("user_id", "guest")
+        user_id = session.get("user_id")
         db = get_db()
 
         for hanzi in set(correct_segments):
@@ -74,19 +74,15 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
 @dictation_bp.route("/")
 def menu():
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect("/login")
     
-    session.clear()  # ← clears HSK level, session_ids, etc.
+    # clear HSK level, session_ids, etc.
+    for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
+        session.pop(key, None)
+
     return render_template("menu.html")
 
 @dictation_bp.route("/practice/<sid>", methods=["GET", "POST"])
 def practice(sid):
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect("/login")
-
     if "score" not in session:
         session.update(score=0, level=1)
 
@@ -110,10 +106,6 @@ def practice(sid):
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect("/login")
-
     if "session_ids" not in session:
         level = request.args.get("hsk")
         session.update(
@@ -129,6 +121,8 @@ def session_practice():
             score = session["session_score"]
             level = session.get("hsk_level")
             session.clear()
+            for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
+                session.pop(key, None)
             return render_template("session_summary.html", score=score, total=5, level=level)
 
     sid = session["session_ids"][session["session_index"]]
@@ -161,10 +155,6 @@ def session_practice():
 
 @dictation_bp.route("/dashboard")
 def dashboard():
-    user_id = session.get("user_id", "guest")
-    if not user_id:
-        return redirect("/login")
-
     db = get_db()
     cursor = db.execute("""
         SELECT hsk_level,
@@ -204,6 +194,7 @@ def login():
             })
             user = result.user
             session["user_id"] = user.id
+            session["email"] = user.email
             return redirect("/")
         except Exception as e:
             return f"Login failed: {e}"
@@ -221,8 +212,13 @@ def signup():
                 "email": email,
                 "password": password
             })
-            return "✅ Usuari registrat! Revisa el teu correu per confirmar-lo."
+            return redirect("/login")
         except Exception as e:
             return f"Signup failed: {e}"
 
     return render_template("signup.html")
+
+@dictation_bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
