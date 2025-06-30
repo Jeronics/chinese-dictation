@@ -1,109 +1,139 @@
+
 :root {
-    --main-bg: #fdfdfd;
-    --text-color: #222;
-    --accent: #2a72d4;
-    --button-bg: #2a72d4;
-    --button-text: white;
+    --bg: #fef2f2;
+    --text: #3b0a0a;
+    --primary: #d00000;
+    --primary-hover: #a30000;
+    --secondary: #fa4c4c;
+    --secondary-hover: #dc2626;
+    --danger: #b91c1c;
+    --danger-hover: #7f1d1d;
+    --muted: #7f1d1d;
+    --white: #ffffff;
+    --surface: #fff5f5;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --main-bg: #121212;
-        --text-color: #eee;
-        --accent: #4da3ff;
-        --button-bg: #4da3ff;
-        --button-text: #000;
+        --bg: #1e0a0a;
+        --text: #fee2e2;
+        --primary: #f87171;
+        --primary-hover: #ef4444;
+        --secondary: #fca5a5;
+        --secondary-hover: #f87171;
+        --danger: #fecaca;
+        --danger-hover: #fca5a5;
+        --muted: #f87171;
+        --white: #1f1f1f;
+        --surface: #2c0a0a;
+        --shadow: none;
     }
 }
 
 body {
-    background: var(--main-bg);
-    color: var(--text-color);
-    font-family: system-ui, sans-serif;
-    font-size: 1.1em;
-    line-height: 1.6;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    padding: 1em;
-    max-width: 600px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--surface);
+    box-shadow: var(--shadow);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-weight: bold;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links a {
+    font-size: 0.95rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-links a.login { color: var(--primary); }
+.nav-links a.signup { color: var(--secondary); }
+.nav-links a.logout { color: var(--danger); }
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 768px;
     margin: auto;
 }
 
-h1, h2, h3 {
-    color: var(--accent);
+footer {
+    background-color: var(--surface);
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid #fca5a5;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
 }
 
 input[type="text"], select {
     width: 100%;
     max-width: 500px;
-    padding: 0.6em;
-    font-size: 1.1em;
-    margin: 1em 0;
-    border: 1px solid #ccc;
+    padding: 0.6rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+    border: 1px solid #f87171;
     border-radius: 6px;
-}
-
-button {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    border: none;
-    padding: 0.6em 1em;
-    border-radius: 6px;
-    font-size: 1.1em;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #1e5bbf;
-}
-
-a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-audio {
-    width: 100%;
-    margin: 1em 0;
+    background-color: var(--white);
+    color: var(--text);
 }
 
 .result {
-    margin-top: 1em;
-    padding: 1em;
-    background-color: #eef;
-    border-left: 4px solid var(--accent);
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #ffe4e6;
+    border-left: 4px solid var(--primary);
     border-radius: 6px;
 }
 
-del {
-    text-decoration: line-through;
-    color: red;
-}
+.diff-del { color: var(--danger); }
+.diff-ins { color: var(--primary); }
 
-
-/* Highlight for incorrect and inserted characters */
-.diff-del {
-    color: red;
-}
-
-.diff-ins {
-    color: blue;
-}
-
-/* Adjust colors for dark mode */
 @media (prefers-color-scheme: dark) {
-    .diff-del {
-        color: #ff6b6b; /* bright red for dark bg */
-    }
-
-    .diff-ins {
-        color: #80bfff; /* bright blue for dark bg */
-    }
-
     .result {
-        background-color: #1e1e1e; /* readable dark result box */
+        background-color: #7f1d1d;
     }
 }

@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Chinese Dictation{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<header>
-    {% if session.get("email") %}
-        <div class="user-bar">
-            👤 {{ session["email"] }}
-            <a href="/logout">🚪 Logout</a>
+<header class="topbar">
+    <nav class="navbar">
+        <div class="brand">
+            <a href="/">🈶 Chinese Dictation</a>
         </div>
-    {% else %}
-        <div class="user-bar">
-            <a href="/login">🔐 Login</a>
+        <div class="user-links">
+            {% if session.get("email") %}
+                <span class="user-email">👤 {{ session["email"] }}</span>
+                <a class="nav-link" href="/logout">🚪 Logout</a>
+            {% else %}
+                <a class="nav-link" href="/login">🔐 Login</a>
+                <a class="nav-link" href="/signup">📝 Sign up</a>
+            {% endif %}
         </div>
-        <div class="user-bar">
-            <a href="/signup">🔐 Sign up</a>
-        </div>
-    {% endif %}
+    </nav>
 </header>
 
-<main>
+<main class="content">
     {% block content %}{% endblock %}
 </main>
+
+<footer class="footer">
+    <p>&copy; 2025 Chinese Dictation. Learn Chinese efficiently.</p>
+</footer>
 
 </body>
 </html>

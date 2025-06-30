@@ -155,6 +155,8 @@ def session_practice():
 
 @dictation_bp.route("/dashboard")
 def dashboard():
+    user_id = session.get("user_id")
+    
     db = get_db()
     cursor = db.execute("""
         SELECT hsk_level,
