@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
+import uuid
+
 from flask import Blueprint, render_template, request, session, g
 import sqlite3
 from .app_context import DictationContext
@@ -183,23 +185,39 @@ def dashboard():
 
 supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
 
+@dictation_bp.before_app_request
+def assign_guest_user_id():
+    if "user_id" not in session:
+        session["user_id"] = f"guest-{uuid.uuid4()}"
+
 @dictation_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-
         try:
             result = supabase.auth.sign_in_with_password({
                 "email": email,
                 "password": password
             })
             user = result.user
-            session["user_id"] = user.id
+            old_guest_id = session.get("user_id")
+            new_user_id = user.id
+
+            # Actualitzar progrés de guest → nou user_id
+            db = get_db()
+            db.execute("""
+                UPDATE progress SET user_id = ?
+                WHERE user_id = ?
+            """, (new_user_id, old_guest_id))
+            db.commit()
+
+            session["user_id"] = new_user_id
             session["email"] = user.email
             return redirect("/")
         except Exception as e:
             return f"Login failed: {e}"
+
 
     return render_template("login.html")
 

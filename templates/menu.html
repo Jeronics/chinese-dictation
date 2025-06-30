@@ -3,6 +3,12 @@
 {% block title %}Menu{% endblock %}
 
 {% block content %}
+    {% if not session.get("email") %}
+        <p style="color: gray;">
+            👋 Estàs fent servir l'app com a convidat.
+            <a href="/login">🔐 Inicia sessió</a> per guardar el teu progrés a la base de dades i accedir-hi des de qualsevol dispositiu.
+        </p>
+    {% endif %}
 
     <h1>📚 Chinese Dictation – Menu</h1>
 
