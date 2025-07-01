@@ -137,3 +137,9 @@ input[type="text"], select {
         background-color: #7f1d1d;
     }
 }
+
+.logo {
+    height: 40px;
+    vertical-align: middle;
+}
+

@@ -11,8 +11,11 @@
 <header class="topbar">
     <nav class="navbar">
         <div class="brand">
-            <a href="/">🈶 Chinese Dictation</a>
-        </div>
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="height: 40px; vertical-align: middle;">
+                <span style="margin-left: 0.5em;">Chinese Dictation</span>
+            </a>
+        </div>        
         <div class="user-links">
             {% if session.get("email") %}
                 <span class="user-email">👤 {{ session["email"] }}</span>
