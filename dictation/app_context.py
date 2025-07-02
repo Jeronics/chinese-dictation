@@ -15,6 +15,7 @@ class DictationContext:
     def load_hsk(self, path):
         with open(path, encoding="utf-8") as f:
             items = json.load(f)
+        self.hsk_data = items  # guardar llista completa
         return {item["hanzi"]: item["hsk_level"] for item in items}
 
     def get_sentence(self, sid):

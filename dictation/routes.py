@@ -44,14 +44,18 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         db = get_db()
 
         for hanzi in set(correct_segments):
+            character_id = next(
+                (entry["id"] for entry in ctx.hsk_data if entry["hanzi"] == hanzi),
+                None
+            )
             hsk_level = ctx.hsk_lookup.get(hanzi)
-            if hsk_level:
-                # ───── SQLite ─────
+            if character_id and hsk_level:
                 db.execute("""
-                    INSERT INTO progress (user_id, character, hsk_level, correct_count)
+                    INSERT INTO progress (user_id, character_id, hsk_level, correct_count)
                     VALUES (?, ?, ?, 1)
-                    ON CONFLICT(user_id, character) DO UPDATE SET correct_count = correct_count + 1
-                """, (user_id, hanzi, hsk_level))
+                    ON CONFLICT(user_id, character_id) DO UPDATE SET correct_count = correct_count + 1
+                """, (user_id, character_id, hsk_level))
+
 
                 # ───── Supabase ─────
                 try:
