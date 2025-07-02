@@ -30,933 +30,1353 @@
     "difficulty": "HSK1"
   },
   "6": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
-    "difficulty": "HSK1"
+    "chinese": "我正在吃饭。",
+    "translation": "I am eating.",
+    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "difficulty": "HSK2"
   },
   "7": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
-    "difficulty": "HSK1"
+    "chinese": "你明天有空吗？",
+    "translation": "Are you free tomorrow?",
+    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "difficulty": "HSK2"
   },
   "8": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
-    "difficulty": "HSK1"
+    "chinese": "我每天跑步。",
+    "translation": "I run every day.",
+    "pinyin": "Wǒ měitiān pǎobù.",
+    "difficulty": "HSK2"
   },
   "9": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
-    "difficulty": "HSK1"
+    "chinese": "她喜欢听音乐。",
+    "translation": "She likes listening to music.",
+    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "difficulty": "HSK2"
   },
   "10": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
-    "difficulty": "HSK1"
+    "chinese": "我们去公园吧。",
+    "translation": "Let's go to the park.",
+    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "difficulty": "HSK2"
   },
   "11": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
-    "difficulty": "HSK1"
+    "chinese": "这家餐厅的菜很好吃。",
+    "translation": "The food at this restaurant is delicious.",
+    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "difficulty": "HSK3"
   },
   "12": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
-    "difficulty": "HSK1"
+    "chinese": "我昨天在超市买了水果。",
+    "translation": "I bought fruit at the supermarket yesterday.",
+    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "difficulty": "HSK3"
   },
   "13": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
-    "difficulty": "HSK1"
+    "chinese": "他正在图书馆看书。",
+    "translation": "He is reading at the library.",
+    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "difficulty": "HSK3"
   },
   "14": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
-    "difficulty": "HSK1"
+    "chinese": "我们坐地铁去学校。",
+    "translation": "We take the subway to school.",
+    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "difficulty": "HSK3"
   },
   "15": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
-    "difficulty": "HSK1"
+    "chinese": "你知道这个词的意思吗？",
+    "translation": "Do you know the meaning of this word?",
+    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "difficulty": "HSK3"
   },
   "16": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
-    "difficulty": "HSK1"
+    "chinese": "虽然天气不好，我们还是去了动物园。",
+    "translation": "Although the weather was bad, we still went to the zoo.",
+    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "difficulty": "HSK4"
   },
   "17": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
-    "difficulty": "HSK1"
+    "chinese": "他因为感冒所以没来上课。",
+    "translation": "He didn’t come to class because he had a cold.",
+    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "difficulty": "HSK4"
   },
   "18": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
-    "difficulty": "HSK1"
+    "chinese": "这个工作对我来说是一个挑战。",
+    "translation": "This job is a challenge for me.",
+    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "difficulty": "HSK4"
   },
   "19": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
-    "difficulty": "HSK1"
+    "chinese": "他一直努力学习，希望考上大学。",
+    "translation": "He keeps studying hard, hoping to get into college.",
+    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "difficulty": "HSK4"
   },
   "20": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
-    "difficulty": "HSK1"
+    "chinese": "我想申请一个跟中文有关的工作。",
+    "translation": "I want to apply for a job related to Chinese.",
+    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "difficulty": "HSK4"
   },
   "21": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
     "difficulty": "HSK1"
   },
   "22": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
     "difficulty": "HSK1"
   },
   "23": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
     "difficulty": "HSK1"
   },
   "24": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
     "difficulty": "HSK1"
   },
   "25": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
     "difficulty": "HSK1"
   },
   "26": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
     "difficulty": "HSK1"
   },
   "27": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
     "difficulty": "HSK1"
   },
   "28": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
     "difficulty": "HSK1"
   },
   "29": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
     "difficulty": "HSK1"
   },
   "30": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
     "difficulty": "HSK1"
   },
   "31": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
     "difficulty": "HSK1"
   },
   "32": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
     "difficulty": "HSK1"
   },
   "33": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
     "difficulty": "HSK1"
   },
   "34": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
     "difficulty": "HSK1"
   },
   "35": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
     "difficulty": "HSK1"
   },
   "36": {
-    "chinese": "我有一个苹果。",
-    "translation": "I have an apple.",
-    "pinyin": "Wǒ yǒu yí gè píngguǒ.",
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
     "difficulty": "HSK1"
   },
   "37": {
-    "chinese": "他是学生。",
-    "translation": "He is a student.",
-    "pinyin": "Tā shì xuéshēng.",
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
     "difficulty": "HSK1"
   },
   "38": {
-    "chinese": "今天很热。",
-    "translation": "It's hot today.",
-    "pinyin": "Jīntiān hěn rè.",
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
     "difficulty": "HSK1"
   },
   "39": {
-    "chinese": "你叫什么名字？",
-    "translation": "What is your name?",
-    "pinyin": "Nǐ jiào shénme míngzi?",
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
     "difficulty": "HSK1"
   },
   "40": {
-    "chinese": "她喜欢猫。",
-    "translation": "She likes cats.",
-    "pinyin": "Tā xǐhuān māo.",
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
     "difficulty": "HSK1"
   },
   "41": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
-    "difficulty": "HSK2"
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
+    "difficulty": "HSK1"
   },
   "42": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
-    "difficulty": "HSK2"
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
+    "difficulty": "HSK1"
   },
   "43": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
-    "difficulty": "HSK2"
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
+    "difficulty": "HSK1"
   },
   "44": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
-    "difficulty": "HSK2"
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
+    "difficulty": "HSK1"
   },
   "45": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
-    "difficulty": "HSK2"
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
+    "difficulty": "HSK1"
   },
   "46": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
-    "difficulty": "HSK2"
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
+    "difficulty": "HSK1"
   },
   "47": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
-    "difficulty": "HSK2"
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
+    "difficulty": "HSK1"
   },
   "48": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
-    "difficulty": "HSK2"
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
+    "difficulty": "HSK1"
   },
   "49": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
-    "difficulty": "HSK2"
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
+    "difficulty": "HSK1"
   },
   "50": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
-    "difficulty": "HSK2"
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
+    "difficulty": "HSK1"
   },
   "51": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
-    "difficulty": "HSK2"
+    "chinese": "我会说一点汉语。",
+    "pinyin": "Wǒ huì shuō yìdiǎn Hànyǔ.",
+    "translation": "I can speak a little Chinese.",
+    "difficulty": "HSK1"
   },
   "52": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
-    "difficulty": "HSK2"
+    "chinese": "这个苹果很大。",
+    "pinyin": "Zhège píngguǒ hěn dà.",
+    "translation": "This apple is big.",
+    "difficulty": "HSK1"
   },
   "53": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
-    "difficulty": "HSK2"
+    "chinese": "你叫什么名字？",
+    "pinyin": "Nǐ jiào shénme míngzi?",
+    "translation": "What’s your name?",
+    "difficulty": "HSK1"
   },
   "54": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
-    "difficulty": "HSK2"
+    "chinese": "我家有五口人。",
+    "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+    "translation": "There are five people in my family.",
+    "difficulty": "HSK1"
   },
   "55": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
-    "difficulty": "HSK2"
+    "chinese": "现在是上午十点。",
+    "pinyin": "Xiànzài shì shàngwǔ shí diǎn.",
+    "translation": "It’s 10 a.m. now.",
+    "difficulty": "HSK1"
   },
   "56": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
     "difficulty": "HSK2"
   },
   "57": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
     "difficulty": "HSK2"
   },
   "58": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
     "difficulty": "HSK2"
   },
   "59": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
     "difficulty": "HSK2"
   },
   "60": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
     "difficulty": "HSK2"
   },
   "61": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
     "difficulty": "HSK2"
   },
   "62": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
     "difficulty": "HSK2"
   },
   "63": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
     "difficulty": "HSK2"
   },
   "64": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
     "difficulty": "HSK2"
   },
   "65": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
     "difficulty": "HSK2"
   },
   "66": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
     "difficulty": "HSK2"
   },
   "67": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
     "difficulty": "HSK2"
   },
   "68": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
     "difficulty": "HSK2"
   },
   "69": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
     "difficulty": "HSK2"
   },
   "70": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
     "difficulty": "HSK2"
   },
   "71": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
     "difficulty": "HSK2"
   },
   "72": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
     "difficulty": "HSK2"
   },
   "73": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
     "difficulty": "HSK2"
   },
   "74": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
     "difficulty": "HSK2"
   },
   "75": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
     "difficulty": "HSK2"
   },
   "76": {
-    "chinese": "我正在吃饭。",
-    "translation": "I am eating.",
-    "pinyin": "Wǒ zhèngzài chīfàn.",
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
     "difficulty": "HSK2"
   },
   "77": {
-    "chinese": "你明天有空吗？",
-    "translation": "Are you free tomorrow?",
-    "pinyin": "Nǐ míngtiān yǒu kòng ma?",
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
     "difficulty": "HSK2"
   },
   "78": {
-    "chinese": "我每天跑步。",
-    "translation": "I run every day.",
-    "pinyin": "Wǒ měitiān pǎobù.",
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
     "difficulty": "HSK2"
   },
   "79": {
-    "chinese": "她喜欢听音乐。",
-    "translation": "She likes listening to music.",
-    "pinyin": "Tā xǐhuān tīng yīnyuè.",
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
     "difficulty": "HSK2"
   },
   "80": {
-    "chinese": "我们去公园吧。",
-    "translation": "Let's go to the park.",
-    "pinyin": "Wǒmen qù gōngyuán ba.",
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
     "difficulty": "HSK2"
   },
   "81": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
-    "difficulty": "HSK3"
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
+    "difficulty": "HSK2"
   },
   "82": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
-    "difficulty": "HSK3"
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
+    "difficulty": "HSK2"
   },
   "83": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
-    "difficulty": "HSK3"
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
+    "difficulty": "HSK2"
   },
   "84": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
-    "difficulty": "HSK3"
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
+    "difficulty": "HSK2"
   },
   "85": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
-    "difficulty": "HSK3"
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
+    "difficulty": "HSK2"
   },
   "86": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
-    "difficulty": "HSK3"
+    "chinese": "你每天几点起床？",
+    "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng?",
+    "translation": "What time do you get up every day?",
+    "difficulty": "HSK2"
   },
   "87": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
-    "difficulty": "HSK3"
+    "chinese": "我喜欢听音乐。",
+    "pinyin": "Wǒ xǐhuan tīng yīnyuè.",
+    "translation": "I like listening to music.",
+    "difficulty": "HSK2"
   },
   "88": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
-    "difficulty": "HSK3"
+    "chinese": "他正在写作业。",
+    "pinyin": "Tā zhèngzài xiě zuòyè.",
+    "translation": "He is doing homework.",
+    "difficulty": "HSK2"
   },
   "89": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
-    "difficulty": "HSK3"
+    "chinese": "你吃过午饭了吗？",
+    "pinyin": "Nǐ chī guo wǔfàn le ma?",
+    "translation": "Have you had lunch?",
+    "difficulty": "HSK2"
   },
   "90": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
-    "difficulty": "HSK3"
+    "chinese": "我们坐公共汽车去。",
+    "pinyin": "Wǒmen zuò gōnggòng qìchē qù.",
+    "translation": "We’re going by bus.",
+    "difficulty": "HSK2"
   },
   "91": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "92": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "93": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "94": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "95": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "96": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "97": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "98": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "99": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "100": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "101": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "102": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "103": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "104": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "105": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "106": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "107": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "108": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "109": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "110": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "111": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "112": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "113": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "114": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "115": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "116": {
-    "chinese": "这家餐厅的菜很好吃。",
-    "translation": "The food at this restaurant is delicious.",
-    "pinyin": "Zhè jiā cāntīng de cài hěn hǎochī.",
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
     "difficulty": "HSK3"
   },
   "117": {
-    "chinese": "我昨天在超市买了水果。",
-    "translation": "I bought fruit at the supermarket yesterday.",
-    "pinyin": "Wǒ zuótiān zài chāoshì mǎi le shuǐguǒ.",
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
     "difficulty": "HSK3"
   },
   "118": {
-    "chinese": "他正在图书馆看书。",
-    "translation": "He is reading at the library.",
-    "pinyin": "Tā zhèngzài túshūguǎn kàn shū.",
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
     "difficulty": "HSK3"
   },
   "119": {
-    "chinese": "我们坐地铁去学校。",
-    "translation": "We take the subway to school.",
-    "pinyin": "Wǒmen zuò dìtiě qù xuéxiào.",
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
     "difficulty": "HSK3"
   },
   "120": {
-    "chinese": "你知道这个词的意思吗？",
-    "translation": "Do you know the meaning of this word?",
-    "pinyin": "Nǐ zhīdào zhège cí de yìsi ma?",
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
     "difficulty": "HSK3"
   },
   "121": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
-    "difficulty": "HSK4"
+    "chinese": "这个手机比那个贵。",
+    "pinyin": "Zhège shǒujī bǐ nàge guì.",
+    "translation": "This phone is more expensive than that one.",
+    "difficulty": "HSK3"
   },
   "122": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
-    "difficulty": "HSK4"
+    "chinese": "我每天都锻炼身体。",
+    "pinyin": "Wǒ měitiān dōu duànliàn shēntǐ.",
+    "translation": "I exercise every day.",
+    "difficulty": "HSK3"
   },
   "123": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
-    "difficulty": "HSK4"
+    "chinese": "请帮我找一下我的书。",
+    "pinyin": "Qǐng bāng wǒ zhǎo yíxià wǒ de shū.",
+    "translation": "Please help me find my book.",
+    "difficulty": "HSK3"
   },
   "124": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
-    "difficulty": "HSK4"
+    "chinese": "我正在看一部电影。",
+    "pinyin": "Wǒ zhèngzài kàn yí bù diànyǐng.",
+    "translation": "I'm watching a movie.",
+    "difficulty": "HSK3"
   },
   "125": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
-    "difficulty": "HSK4"
+    "chinese": "你会开车吗？",
+    "pinyin": "Nǐ huì kāichē ma?",
+    "translation": "Can you drive?",
+    "difficulty": "HSK3"
   },
   "126": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "127": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "128": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "129": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "130": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "131": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "132": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "133": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "134": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "135": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "136": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "137": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "138": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "139": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "140": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "141": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "142": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "143": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "144": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "145": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "146": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "147": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "148": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "149": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "150": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "151": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "152": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "153": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "154": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "155": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
   },
   "156": {
-    "chinese": "虽然天气不好，我们还是去了动物园。",
-    "translation": "Although the weather was bad, we still went to the zoo.",
-    "pinyin": "Suīrán tiānqì bù hǎo, wǒmen háishì qù le dòngwùyuán.",
+    "chinese": "虽然很累，但他还是坚持跑步。",
+    "pinyin": "Suīrán hěn lèi, dàn tā háishì jiānchí pǎobù.",
+    "translation": "Although tired, he still insists on running.",
     "difficulty": "HSK4"
   },
   "157": {
-    "chinese": "他因为感冒所以没来上课。",
-    "translation": "He didn’t come to class because he had a cold.",
-    "pinyin": "Tā yīnwèi gǎnmào suǒyǐ méi lái shàngkè.",
+    "chinese": "这份工作对我来说很重要。",
+    "pinyin": "Zhè fèn gōngzuò duì wǒ lái shuō hěn zhòngyào.",
+    "translation": "This job is very important to me.",
     "difficulty": "HSK4"
   },
   "158": {
-    "chinese": "这个工作对我来说是一个挑战。",
-    "translation": "This job is a challenge for me.",
-    "pinyin": "Zhège gōngzuò duì wǒ lái shuō shì yí gè tiǎozhàn.",
+    "chinese": "我希望将来能出国留学。",
+    "pinyin": "Wǒ xīwàng jiānglái néng chūguó liúxué.",
+    "translation": "I hope to study abroad in the future.",
     "difficulty": "HSK4"
   },
   "159": {
-    "chinese": "他一直努力学习，希望考上大学。",
-    "translation": "He keeps studying hard, hoping to get into college.",
-    "pinyin": "Tā yīzhí nǔlì xuéxí, xīwàng kǎo shàng dàxué.",
+    "chinese": "他经常看新闻了解世界。",
+    "pinyin": "Tā jīngcháng kàn xīnwén liǎojiě shìjiè.",
+    "translation": "He often watches the news to understand the world.",
     "difficulty": "HSK4"
   },
   "160": {
-    "chinese": "我想申请一个跟中文有关的工作。",
-    "translation": "I want to apply for a job related to Chinese.",
-    "pinyin": "Wǒ xiǎng shēnqǐng yí gè gēn Zhōngwén yǒuguān de gōngzuò.",
+    "chinese": "他通过了汉语水平考试。",
+    "pinyin": "Tā tōngguò le Hànyǔ shuǐpíng kǎoshì.",
+    "translation": "He passed the Chinese proficiency test.",
     "difficulty": "HSK4"
+  },
+  "161": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "162": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "163": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "164": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "165": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "166": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "167": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "168": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "169": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "170": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "171": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "172": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "173": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "174": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "175": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "176": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "177": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "178": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "179": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "180": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "181": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "182": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "183": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "184": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "185": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "186": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "187": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "188": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "189": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "190": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "191": {
+    "chinese": "他对工作充满了热情。",
+    "pinyin": "Tā duì gōngzuò chōngmǎn le rèqíng.",
+    "translation": "He is full of passion for his work.",
+    "difficulty": "HSK5"
+  },
+  "192": {
+    "chinese": "这项研究非常复杂。",
+    "pinyin": "Zhè xiàng yánjiū fēicháng fùzá.",
+    "translation": "This research is very complex.",
+    "difficulty": "HSK5"
+  },
+  "193": {
+    "chinese": "他们的合作非常顺利。",
+    "pinyin": "Tāmen de hézuò fēicháng shùnlì.",
+    "translation": "Their cooperation went very smoothly.",
+    "difficulty": "HSK5"
+  },
+  "194": {
+    "chinese": "请尽快提交你的报告。",
+    "pinyin": "Qǐng jǐnkuài tíjiāo nǐ de bàogào.",
+    "translation": "Please submit your report as soon as possible.",
+    "difficulty": "HSK5"
+  },
+  "195": {
+    "chinese": "他具有很强的领导能力。",
+    "pinyin": "Tā jùyǒu hěn qiáng de lǐngdǎo nénglì.",
+    "translation": "He has strong leadership skills.",
+    "difficulty": "HSK5"
+  },
+  "196": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "197": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "198": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "199": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "200": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "201": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "202": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "203": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "204": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "205": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "206": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "207": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "208": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "209": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "210": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "211": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "212": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "213": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "214": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "215": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "216": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "217": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "218": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "219": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "220": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "221": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "222": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "223": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "224": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "225": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
+  },
+  "226": {
+    "chinese": "他在行业内具有很高的声誉。",
+    "pinyin": "Tā zài hángyè nèi jùyǒu hěn gāo de shēngyù.",
+    "translation": "He has a high reputation in the industry.",
+    "difficulty": "HSK6"
+  },
+  "227": {
+    "chinese": "这个项目的实施需要多方协调。",
+    "pinyin": "Zhège xiàngmù de shíshī xūyào duōfāng xiétiáo.",
+    "translation": "The implementation of this project requires multi-party coordination.",
+    "difficulty": "HSK6"
+  },
+  "228": {
+    "chinese": "他的发言非常具有启发性。",
+    "pinyin": "Tā de fāyán fēicháng jùyǒu qǐfāxìng.",
+    "translation": "His speech was very inspiring.",
+    "difficulty": "HSK6"
+  },
+  "229": {
+    "chinese": "我们要用科学的方法解决问题。",
+    "pinyin": "Wǒmen yào yòng kēxué de fāngfǎ jiějué wèntí.",
+    "translation": "We must use scientific methods to solve problems.",
+    "difficulty": "HSK6"
+  },
+  "230": {
+    "chinese": "他表现出极高的专业素养。",
+    "pinyin": "Tā biǎoxiàn chū jí gāo de zhuānyè sùyǎng.",
+    "translation": "He shows a high level of professionalism.",
+    "difficulty": "HSK6"
   }
 }
