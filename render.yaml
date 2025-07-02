@@ -2,12 +2,15 @@ services:
   - type: web
     name: chinese-dictation
     env: python
-    buildCommand: : |
-      pip install -r requirements.txt
-    startCommand: "gunicorn 'run:app'"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python run.py"
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: SUPABASE_URL
+        value: https://utkffbhmvvvfupfrxooj.supabase.co
+      - key: SUPABASE_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0a2ZmYmhtdnZ2ZnVwZnJ4b29qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMjQzNDYsImV4cCI6MjA2NjgwMDM0Nn0.K-bxlH9znKsuj9EBEYtvXF12HMSjbAExGMj65IMWBsA
       - key: DB_PATH
         value: progress.db
 
