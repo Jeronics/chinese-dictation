@@ -46,11 +46,31 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         for hanzi in set(correct_segments):
             hsk_level = ctx.hsk_lookup.get(hanzi)
             if hsk_level:
+                # ───── SQLite ─────
                 db.execute("""
                     INSERT INTO progress (user_id, character, hsk_level, correct_count)
                     VALUES (?, ?, ?, 1)
                     ON CONFLICT(user_id, character) DO UPDATE SET correct_count = correct_count + 1
                 """, (user_id, hanzi, hsk_level))
+
+                # ───── Supabase ─────
+                try:
+                    existing = supabase.table("progress").select("correct_count").eq("user_id", user_id).eq("character", hanzi).execute()
+                    if existing.data:
+                        current_count = existing.data[0]["correct_count"]
+                        supabase.table("progress").update({
+                            "correct_count": current_count + 1
+                        }).eq("user_id", user_id).eq("character", hanzi).execute()
+                    else:
+                        supabase.table("progress").insert({
+                            "user_id": user_id,
+                            "character": hanzi,
+                            "hsk_level": hsk_level,
+                            "correct_count": 1
+                        }).execute()
+                except Exception as e:
+                    print("Supabase update failed:", e)
+
         db.commit()
 
     return render_template(
@@ -158,17 +178,24 @@ def session_practice():
 @dictation_bp.route("/dashboard")
 def dashboard():
     user_id = session.get("user_id")
-    
-    db = get_db()
-    cursor = db.execute("""
-        SELECT hsk_level,
-               COUNT(*) AS learned
-        FROM progress
-        WHERE user_id = ? AND correct_count >= 1
-        GROUP BY hsk_level
-    """, (user_id,))
-    learned_data = {row[0]: row[1] for row in cursor.fetchall()}
 
+    # ───── Consulta Supabase ─────
+    try:
+        response = supabase.table("progress") \
+            .select("hsk_level, correct_count") \
+            .eq("user_id", user_id).execute()
+
+        learned_data = {}
+        for row in response.data:
+            if row["correct_count"] >= 1:
+                level = row["hsk_level"]
+                learned_data[level] = learned_data.get(level, 0) + 1
+
+    except Exception as e:
+        print("Error loading progress from Supabase:", e)
+        learned_data = {}
+
+    # ───── Càlcul de percentatges per nivell ─────
     levels = []
     for hsk_level, total in ctx.hsk_totals.items():
         learned = learned_data.get(hsk_level, 0)
@@ -181,7 +208,6 @@ def dashboard():
         })
 
     return render_template("dashboard.html", levels=levels)
-
 
 supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
 
