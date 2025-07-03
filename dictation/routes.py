@@ -4,32 +4,19 @@ load_dotenv()
 
 import uuid
 
-from flask import Blueprint, render_template, request, session, g
-import sqlite3
+from flask import Blueprint, render_template, request, session, redirect
 from .app_context import DictationContext
 from .corrector import Corrector
-import os
-from flask import request, redirect, session, render_template
 from supabase import create_client
+
+# Configuració de Supabase
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
-
-### ──────── DATABASE CONNECTION ────────
-
-def get_db():
-    if "db" not in g:
-        g.db = sqlite3.connect("progress.db")
-    return g.db
-
-@dictation_bp.teardown_app_request
-def close_connection(exception):
-    db = g.pop("db", None)
-    if db is not None:
-        db.close()
-
-### ──────── DICTATION RESULT RENDERING ────────
 
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None):
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
@@ -41,38 +28,20 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     if lev > 1:
         session[session_score_key] += 1
         user_id = session.get("user_id")
-        db = get_db()
 
         for hanzi in set(correct_segments):
             match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
             if match:
                 character_id = match["id"]
                 hsk_level = match["hsk_level"]
-                db.execute("""
-                    INSERT INTO progress (user_id, character_id, hanzi, hsk_level, correct_count)
-                    VALUES (?, ?, ?, ?, 1)
-                    ON CONFLICT(user_id, character_id) DO UPDATE SET correct_count = correct_count + 1
-                """, (user_id, character_id, hanzi, hsk_level))
-
-                # ───── Supabase ─────
-                try:
-                    existing = supabase.table("progress").select("correct_count").eq("user_id", user_id).eq("character", hanzi).execute()
-                    if existing.data:
-                        current_count = existing.data[0]["correct_count"]
-                        supabase.table("progress").update({
-                            "correct_count": current_count + 1
-                        }).eq("user_id", user_id).eq("character", hanzi).execute()
-                    else:
-                        supabase.table("progress").insert({
-                            "user_id": user_id,
-                            "character": hanzi,
-                            "hsk_level": hsk_level,
-                            "correct_count": 1
-                        }).execute()
-                except Exception as e:
-                    print("Supabase update failed:", e)
-
-        db.commit()
+                # Insert or update progress in Supabase
+                supabase.table("progress").upsert({
+                    "user_id": user_id,
+                    "character_id": character_id,
+                    "hanzi": hanzi,
+                    "hsk_level": hsk_level,
+                    "correct_count": 1
+                }).execute()
 
     return render_template(
         "index.html",
@@ -231,13 +200,10 @@ def login():
             old_guest_id = session.get("user_id")
             new_user_id = user.id
 
-            # Actualitzar progrés de guest → nou user_id
-            db = get_db()
-            db.execute("""
-                UPDATE progress SET user_id = ?
-                WHERE user_id = ?
-            """, (new_user_id, old_guest_id))
-            db.commit()
+            supabase.table("progress").update({
+                "user_id": new_user_id
+            }).eq("user_id", old_guest_id).execute()
+
 
             session["user_id"] = new_user_id
             session["email"] = user.email
