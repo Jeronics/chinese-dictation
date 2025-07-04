@@ -219,6 +219,7 @@ def assign_guest_user_id():
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
 def login():
+    error = None
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -227,23 +228,23 @@ def login():
                 "email": email,
                 "password": password
             })
+            
             user = result.user
             old_guest_id = session.get("user_id")
             new_user_id = user.id
 
-            supabase.table("progress").update({
+            supabase.table("character_progress").update({
                 "user_id": new_user_id
             }).eq("user_id", old_guest_id).execute()
-
 
             session["user_id"] = new_user_id
             session["email"] = user.email
             return redirect("/")
         except Exception as e:
-            return f"Login failed: {e}"
+            print("Login error:", e)
+            error = "Login failed. Please check your credentials or try again later."
 
-
-    return render_template("login.html")
+    return render_template("login.html", error=error)
 
 @dictation_bp.route("/signup", methods=["GET", "POST"])
 def signup():
