@@ -9,12 +9,14 @@
     {% if levels %}
         {% for l in levels %}
             <h3>{{ l.level }}</h3>
-            <div style="background: #ddd; border-radius: 6px; overflow: hidden; height: 24px; max-width: 500px;">
-                <div style="background: var(--accent); width: {{ l.percent }}%; height: 100%; color: white; text-align: center;">
-                    {{ l.percent }}%
+            <a href="/hsk/{{ l.level }}" style="text-decoration: none;">
+                <div style="background: #ddd; border-radius: 6px; overflow: hidden; height: 24px; max-width: 500px; cursor: pointer;">
+                    <div style="background: var(--accent); width: {{ l.percent }}%; height: 100%; color: white; text-align: center;">
+                        {{ l.percent }}%
+                    </div>
                 </div>
-            </div>
-            <p>{{ l.learned }} / {{ l.total }} characters learned</p>
+            </a>
+            <p>{{ l.known }} / {{ l.total }} characters known</p>
         {% endfor %}
     {% else %}
         <p>No progress yet. Start practicing to see your progress!</p>

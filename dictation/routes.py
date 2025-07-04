@@ -18,6 +18,44 @@ dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
 
+# --- Helper functions for character progress tracking ---
+def update_character_progress(user_id, hanzi, hsk_level, correct):
+    # Fetch existing record
+    result = supabase.table("character_progress").select("*") \
+        .eq("user_id", user_id).eq("hanzi", hanzi).execute()
+    if result.data:
+        progress = result.data[0]
+        correct_count = progress["correct_count"] + (1 if correct else 0)
+        fail_count = progress["fail_count"] + (0 if correct else 1)
+        # Determine new status
+        if correct_count >= 3:
+            status = "known"
+        elif fail_count >= 2:
+            status = "failed"
+        else:
+            status = "learning"
+        supabase.table("character_progress").update({
+            "correct_count": correct_count,
+            "fail_count": fail_count,
+            "status": status,
+            "last_seen": "now()"
+        }).eq("user_id", user_id).eq("hanzi", hanzi).execute()
+    else:
+        supabase.table("character_progress").insert({
+            "user_id": user_id,
+            "hanzi": hanzi,
+            "hsk_level": hsk_level,
+            "correct_count": 1 if correct else 0,
+            "fail_count": 0 if correct else 1,
+            "status": "known" if correct else "failed",
+            "last_seen": "now()"
+        }).execute()
+
+def get_user_character_status(user_id):
+    # Returns a dict: {hanzi: status}
+    result = supabase.table("character_progress").select("hanzi, status").eq("user_id", user_id).execute()
+    return {row["hanzi"]: row["status"] for row in result.data} if result.data else {}
+
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None):
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
@@ -28,19 +66,14 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     session[session_score_key] += 1
     user_id = session.get("user_id")
 
-    for hanzi in set(correct_segments):
+    # Update character progress for each hanzi in the sentence
+    for hanzi in set(sentence_data["chinese"]):
         match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
         if match:
-            character_id = match["id"]
             hsk_level = match["hsk_level"]
-            # Insert or update progress in Supabase
-            supabase.table("progress").upsert({
-                "user_id": user_id,
-                "character_id": character_id,
-                "hanzi": hanzi,
-                "hsk_level": hsk_level,
-                "correct_count": 1
-            }).execute()
+            # If the hanzi is in the correct_segments, mark as correct, else as failed
+            correct = hanzi in correct_segments
+            update_character_progress(user_id, hanzi, hsk_level, correct)
 
     return render_template(
         "index.html",
@@ -147,35 +180,34 @@ def session_practice():
 @dictation_bp.route("/dashboard")
 def dashboard():
     user_id = session.get("user_id")
-
-    # ───── Consulta Supabase ─────
     try:
-        response = supabase.table("progress") \
-            .select("hsk_level, correct_count") \
+        response = supabase.table("character_progress") \
+            .select("hsk_level, status") \
             .eq("user_id", user_id).execute()
-
-        learned_data = {}
+        # Count known, failed, and learning per HSK level
+        stats = {}
         for row in response.data:
-            if row["correct_count"] >= 1:
-                level = row["hsk_level"]
-                learned_data[level] = learned_data.get(level, 0) + 1
-
+            level = row["hsk_level"]
+            status = row["status"]
+            if level not in stats:
+                stats[level] = {"known": 0, "failed": 0, "learning": 0}
+            stats[level][status] += 1
     except Exception as e:
         print("Error loading progress from Supabase:", e)
-        learned_data = {}
-
-    # ───── Càlcul de percentatges per nivell ─────
+        stats = {}
+    # Prepare levels for dashboard
     levels = []
     for hsk_level, total in ctx.hsk_totals.items():
-        learned = learned_data.get(hsk_level, 0)
-        percent = int(100 * learned / total) if total else 0
+        level_stats = stats.get(hsk_level, {"known": 0, "failed": 0, "learning": 0})
+        percent = int(100 * level_stats["known"] / total) if total else 0
         levels.append({
             "level": hsk_level,
-            "learned": learned,
+            "known": level_stats["known"],
+            "failed": level_stats["failed"],
+            "learning": level_stats["learning"],
             "total": total,
             "percent": percent
         })
-
     return render_template("dashboard.html", levels=levels)
 
 supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
@@ -234,3 +266,32 @@ def signup():
 def logout():
     session.clear()
     return redirect("/")
+
+@dictation_bp.route("/hsk/<level>")
+def hsk_level_detail(level):
+    user_id = session.get("user_id")
+    # Get all hanzi for this level
+    hanzi_list = [item for item in ctx.hsk_data if item["hsk_level"] == level]
+    # Get user progress for these hanzi
+    result = supabase.table("character_progress").select("hanzi, correct_count, fail_count, status").eq("user_id", user_id).execute()
+    progress = {row["hanzi"]: row for row in result.data} if result.data else {}
+    # Prepare data for template
+    char_data = []
+    for item in hanzi_list:
+        hanzi = item["hanzi"]
+        p = progress.get(hanzi)
+        if p:
+            status = p["status"]
+            correct_count = p["correct_count"]
+            fail_count = p["fail_count"]
+        else:
+            status = "unseen"
+            correct_count = 0
+            fail_count = 0
+        char_data.append({
+            "hanzi": hanzi,
+            "status": status,
+            "correct_count": correct_count,
+            "fail_count": fail_count
+        })
+    return render_template("hsk_level_detail.html", level=level, char_data=char_data, min=min)

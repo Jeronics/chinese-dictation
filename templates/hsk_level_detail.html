@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ level }} Characters{% endblock %}
+
+{% block content %}
+<h1>{{ level }} – Character Progress</h1>
+<div style="margin-bottom: 1em;">
+  <span style="display:inline-block;width:24px;height:24px;background:#1565c0;border-radius:4px;margin-right:4px;"></span> Known
+  <span style="display:inline-block;width:24px;height:24px;background:#c62828;border-radius:4px;margin:0 8px 0 16px;"></span> Failed
+  <span style="display:inline-block;width:24px;height:24px;background:#bdbdbd;border-radius:4px;margin:0 8px 0 16px;"></span> Unseen/Learning
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
+  {% for c in char_data %}
+    {% set color = '' %}
+    {% if c.status == 'known' %}
+      {# Blue, intensity by correct_count #}
+      {% set intensity = 60 + (min(c.correct_count, 8) * 20) %}
+      {% set color = 'rgb(' ~ (21) ~ ',' ~ (101) ~ ',' ~ intensity ~ ')' %}
+    {% elif c.status == 'failed' %}
+      {# Red, intensity by fail_count #}
+      {% set intensity = 60 + (min(c.fail_count, 8) * 20) %}
+      {% set color = 'rgb(' ~ intensity ~ ',' ~ (40) ~ ',' ~ (40) ~ ')' %}
+    {% elif c.status == 'learning' %}
+      {% set color = '#bdbdbd' %}
+    {% else %}
+      {% set color = '#e0e0e0' %}
+    {% endif %}
+    <div title="{{ c.hanzi }} ({{ c.status }}, correct: {{ c.correct_count }}, failed: {{ c.fail_count }})"
+         style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; background: {{ color }}; color: white; border-radius: 6px; box-shadow: 0 1px 2px #0001; cursor:pointer;"
+         onclick="showStrokeOrder('{{ c.hanzi }}')">
+      {{ c.hanzi }}
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Hanzi Writer Modal -->
+<div id="strokeModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+  <div style="background:white; padding:24px; border-radius:8px; position:relative; min-width:220px; min-height:220px; box-shadow:0 4px 16px #0003;">
+    <span id="closeModal" style="position:absolute; top:8px; right:16px; cursor:pointer; font-size:1.5em;">&times;</span>
+    <div id="strokeContainer" style="width:200px; height:200px; margin:auto;"></div>
+    <div id="strokeChar" style="text-align:center; font-size:2em; margin-top:8px;"></div>
+  </div>
+</div>
+
+<p style="margin-top:2em;"><a href="/dashboard"><button>← Back to Dashboard</button></a></p>
+
+<!-- Hanzi Writer Script -->
+<script src="https://unpkg.com/hanzi-writer@2.2.2/dist/hanzi-writer.min.js"></script>
+<script>
+function showStrokeOrder(hanzi) {
+  var modal = document.getElementById('strokeModal');
+  modal.style.display = 'flex';
+  document.getElementById('strokeChar').innerText = hanzi;
+  document.getElementById('strokeContainer').innerHTML = '';
+  HanziWriter.create('strokeContainer', hanzi, {
+    width: 200,
+    height: 200,
+    showOutline: true,
+    showCharacter: false,
+    padding: 5,
+    strokeAnimationSpeed: 1,
+    delayBetweenStrokes: 300,
+  }).animateCharacter();
+}
+document.getElementById('closeModal').onclick = function() {
+  document.getElementById('strokeModal').style.display = 'none';
+};
+document.getElementById('strokeModal').onclick = function(e) {
+  if (e.target === this) this.style.display = 'none';
+};
+</script>
+{% endblock %} 
