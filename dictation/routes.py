@@ -25,23 +25,22 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     accuracy = round(len(correct_segments)/len(stripped_correct)*100)
     is_correct = stripped_user == correct_segments
 
-    if lev > 1:
-        session[session_score_key] += 1
-        user_id = session.get("user_id")
+    session[session_score_key] += 1
+    user_id = session.get("user_id")
 
-        for hanzi in set(correct_segments):
-            match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
-            if match:
-                character_id = match["id"]
-                hsk_level = match["hsk_level"]
-                # Insert or update progress in Supabase
-                supabase.table("progress").upsert({
-                    "user_id": user_id,
-                    "character_id": character_id,
-                    "hanzi": hanzi,
-                    "hsk_level": hsk_level,
-                    "correct_count": 1
-                }).execute()
+    for hanzi in set(correct_segments):
+        match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
+        if match:
+            character_id = match["id"]
+            hsk_level = match["hsk_level"]
+            # Insert or update progress in Supabase
+            supabase.table("progress").upsert({
+                "user_id": user_id,
+                "character_id": character_id,
+                "hanzi": hanzi,
+                "hsk_level": hsk_level,
+                "correct_count": 1
+            }).execute()
 
     return render_template(
         "index.html",
