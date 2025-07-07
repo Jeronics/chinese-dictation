@@ -20,25 +20,10 @@
     {% if not show_result %}
         <form method="POST">
             <label for="user_input">Type what you hear:</label><br>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <input type="text" name="user_input" id="user_input" required style="flex:1;">
-                <button type="button" id="handwriteBtn" style="padding:0.5em 1em;">✍️ Handwrite</button>
-            </div>
-            <br>
+            <input type="text" name="user_input" id="user_input" required style="width:100%;">
+            <br><br>
             <button type="submit">Submit</button>
         </form>
-
-        <!-- Handwriting Modal -->
-        <div id="handwriteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-          <div style="background:white; padding:24px; border-radius:8px; position:relative; min-width:220px; min-height:220px; box-shadow:0 4px 16px #0003;">
-            <span id="closeHandwriteModal" style="position:absolute; top:8px; right:16px; cursor:pointer; font-size:1.5em;">&times;</span>
-            <div id="handwritingPad" style="width:200px; height:200px; margin:auto;"></div>
-            <div id="handwriteSuggestions" style="text-align:center; margin-top:12px;"></div>
-            <div style="text-align:center; margin-top:8px;">
-              <button type="button" id="clearHandwriting" style="margin-right:8px;">Clear</button>
-            </div>
-          </div>
-        </div>
     {% else %}
         <div class="result">
             <h3>{{ result }}</h3>
@@ -59,84 +44,12 @@
         {% endif %}
     {% endif %}
 
-    <p>🎯 Score: {{ score }} | 🧗 Level: {{ level }}</p>
+    <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
 
-    <script src="{{ url_for('static', filename='hanzi-writer.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='hanzi-writer-handwriting-recognizer.min.js') }}"></script>
     <script>
         window.onload = function() {
             const input = document.getElementById("user_input");
             if (input) input.focus();
         };
-
-        // Handwriting modal logic
-        const handwriteBtn = document.getElementById('handwriteBtn');
-        const handwriteModal = document.getElementById('handwriteModal');
-        const closeHandwriteModal = document.getElementById('closeHandwriteModal');
-        const handwritingPadDiv = document.getElementById('handwritingPad');
-        const handwriteSuggestions = document.getElementById('handwriteSuggestions');
-        const clearHandwriting = document.getElementById('clearHandwriting');
-        let recognizer, pad;
-
-        handwriteBtn.onclick = function() {
-            handwriteModal.style.display = 'flex';
-            handwriteSuggestions.innerHTML = '';
-            handwritingPadDiv.innerHTML = '';
-            recognizer = new HanziWriter.HandwritingRecognizer({
-                charDataLoader: function(char, onLoad, onError) {
-                    fetch('/static/hanzi-data/' + char + '.json')
-                        .then(function(response) { return response.json(); })
-                        .then(onLoad)
-                        .catch(onError);
-                }
-            });
-            pad = HanziWriter.create('handwritingPad', '', {
-                width: 200,
-                height: 200,
-                showOutline: true,
-                showCharacter: false,
-                padding: 5,
-                drawingColor: '#1565c0',
-                drawingWidth: 4,
-                onDrawingEnd: function(strokes) {
-                    recognizer.recognize(strokes, function(results) {
-                        handwriteSuggestions.innerHTML = '';
-                        if (results.length === 0) {
-                            handwriteSuggestions.innerHTML = '<span style="color:#c62828">No match</span>';
-                        } else {
-                            results.slice(0, 5).forEach(function(r) {
-                                const btn = document.createElement('button');
-                                btn.textContent = r.character;
-                                btn.style.margin = '0 4px';
-                                btn.onclick = function() {
-                                    insertAtCursor(document.getElementById('user_input'), r.character);
-                                    handwriteModal.style.display = 'none';
-                                };
-                                handwriteSuggestions.appendChild(btn);
-                            });
-                        }
-                    });
-                }
-            });
-        };
-        closeHandwriteModal.onclick = function() {
-            handwriteModal.style.display = 'none';
-        };
-        handwriteModal.onclick = function(e) {
-            if (e.target === this) this.style.display = 'none';
-        };
-        clearHandwriting.onclick = function() {
-            if (pad) pad.clear();
-            handwriteSuggestions.innerHTML = '';
-        };
-        function insertAtCursor(input, char) {
-            // Insert char at cursor position
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const value = input.value;
-            input.value = value.slice(0, start) + char + value.slice(end);
-            input.selectionStart = input.selectionEnd = start + char.length;
-            input.focus();
-        }
     </script>
 {% endblock %}
