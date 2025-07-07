@@ -12,6 +12,8 @@ from supabase import create_client
 # Configuració de Supabase
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+if SUPABASE_URL is None or SUPABASE_KEY is None:
+    raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set in environment variables.")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 dictation_bp = Blueprint("dictation", __name__)
@@ -144,7 +146,6 @@ def session_practice():
         if session["session_index"] >= 5:
             score = session["session_score"]
             level = session.get("hsk_level")
-            session.clear()
             for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
                 session.pop(key, None)
             return render_template("session_summary.html", score=score, total=5, level=level)
@@ -230,6 +231,8 @@ def login():
             })
             
             user = result.user
+            if user is None:
+                raise Exception("No user returned from Supabase.")
             old_guest_id = session.get("user_id")
             new_user_id = user.id
 
