@@ -30,11 +30,11 @@ class Corrector:
                 for k in range(j2 - j1):
                     u = user_input[ui + k] if ui + k < len(user_input) else ""
                     c = correct[ci + k] if ci + k < len(correct) else ""
-                    result += f"<span class='diff-del'><del>{u}</del></span><span class='diff-ins'>{c}</span>"
+                    result += f"<span class='diff-del'>{u}</span><span class='diff-ins'>{c}</span>"
             elif tag == 'insert':
                 result += f"<span class='diff-ins'>{correct[ci:j2]}</span>"
             elif tag == 'delete':
-                result += f"<span class='diff-del'><del>{user_input[ui:i2]}</del></span>"
+                result += f"<span class='diff-del'>{user_input[ui:i2]}</span>"
             ui += (i2 - i1)
             ci += (j2 - j1)
         return result, s_user, s_correct, "".join(correct_segments)

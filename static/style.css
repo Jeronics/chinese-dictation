@@ -1,4 +1,3 @@
-
 :root {
     --bg: #fef2f2;
     --text: #3b0a0a;
@@ -124,17 +123,17 @@ input[type="text"], select {
 .result {
     margin-top: 1rem;
     padding: 1rem;
-    background-color: #ffe4e6;
+    background-color: #fff;
     border-left: 4px solid var(--primary);
     border-radius: 6px;
 }
 
-.diff-del { color: var(--danger); }
-.diff-ins { color: var(--primary); }
+.diff-del { color: #d32f2f; opacity: 0.5; }
+.diff-ins { color: #90caf9; }
 
 @media (prefers-color-scheme: dark) {
     .result {
-        background-color: #7f1d1d;
+        background-color: #3a3a1a;
     }
 }
 
