@@ -211,8 +211,6 @@ def dashboard():
         })
     return render_template("dashboard.html", levels=levels)
 
-supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_KEY"])
-
 @dictation_bp.before_app_request
 def assign_guest_user_id():
     if "user_id" not in session:
@@ -224,6 +222,11 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
+        
+        print(f"Login attempt for email: {email}")
+        print(f"Supabase URL: {SUPABASE_URL}")
+        print(f"Supabase Key exists: {SUPABASE_KEY is not None}")
+        
         try:
             result = supabase.auth.sign_in_with_password({
                 "email": email,
@@ -233,38 +236,50 @@ def login():
             user = result.user
             if user is None:
                 raise Exception("No user returned from Supabase.")
+            
+            print(f"Login successful for user: {user.id}")
             old_guest_id = session.get("user_id")
             new_user_id = user.id
 
-            supabase.table("character_progress").update({
-                "user_id": new_user_id
-            }).eq("user_id", old_guest_id).execute()
+            # Update character progress for guest user
+            try:
+                supabase.table("character_progress").update({
+                    "user_id": new_user_id
+                }).eq("user_id", old_guest_id).execute()
+                print(f"Updated character progress from {old_guest_id} to {new_user_id}")
+            except Exception as e:
+                print(f"Warning: Could not update character progress: {e}")
 
             session["user_id"] = new_user_id
             session["email"] = user.email
             return redirect("/")
         except Exception as e:
-            print("Login error:", e)
-            error = "Login failed. Please check your credentials or try again later."
+            print(f"Login error: {e}")
+            error = f"Login failed: {str(e)}"
 
     return render_template("login.html", error=error)
 
 @dictation_bp.route("/signup", methods=["GET", "POST"])
 def signup():
+    error = None
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
 
+        print(f"Signup attempt for email: {email}")
+        
         try:
             result = supabase.auth.sign_up({
                 "email": email,
                 "password": password
             })
+            print(f"Signup successful for user: {result.user.id if result.user else 'No user'}")
             return redirect("/login")
         except Exception as e:
-            return f"Signup failed: {e}"
+            print(f"Signup error: {e}")
+            error = f"Signup failed: {str(e)}"
 
-    return render_template("signup.html")
+    return render_template("signup.html", error=error)
 
 @dictation_bp.route("/logout")
 def logout():
