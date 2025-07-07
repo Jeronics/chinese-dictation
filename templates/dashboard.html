@@ -7,20 +7,60 @@
     <h1>📈 Progress Dashboard</h1>
 
     {% if levels %}
-        {% for l in levels %}
-            <h3>{{ l.level }}</h3>
-            <a href="/hsk/{{ l.level }}" style="text-decoration: none;">
-                <div style="background: #ddd; border-radius: 6px; overflow: hidden; height: 24px; max-width: 500px; cursor: pointer;">
-                    <div style="background: var(--accent); width: {{ l.percent }}%; height: 100%; color: white; text-align: center;">
-                        {{ l.percent }}%
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: flex-start;">
+            {% for l in levels %}
+                <a href="/hsk/{{ l.level }}" style="text-decoration: none; color: inherit; flex: 1 1 340px; min-width: 320px; max-width: 420px; margin-bottom: 12px; display: block; position: relative;">
+                    <div class="hsk-section-hover" style="padding: 0 0 0 0;">
+                        <h3 style="margin-top:0; margin-bottom: 12px;">{{ l.level }}</h3>
+                        {% set seen = l.known + l.failed + l.learning %}
+                        {% set unseen = l.total - seen %}
+                        {% set known_combined = l.known + l.learning %}
+                        {% set known_pct = (100 * known_combined // l.total) if l.total else 0 %}
+                        {% set failed_pct = (100 * l.failed // l.total) if l.total else 0 %}
+                        {% set unseen_pct = 100 - known_pct - failed_pct %}
+                        <!-- Progress Bar -->
+                        <div style="display: flex; height: 28px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 2px #0001; margin-bottom: 12px;">
+                            <div style="background: #2196f3; width: {{ known_pct }}%;"></div>
+                            <div style="background: #f44336; width: {{ failed_pct }}%;"></div>
+                            <div style="background: #bdbdbd; width: {{ unseen_pct }}%;"></div>
+                        </div>
+                        <!-- Legend and Percentages Row -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; font-size: 1em; margin-bottom: 0.5em; gap: 0.5em;">
+                            <div style="flex:1; text-align:left;">
+                                <span style="display:inline-block;width:14px;height:14px;background:#2196f3;border-radius:3px;vertical-align:middle;"></span>
+                                <span style="margin-left:4px;">Known</span><br>
+                                <span style="font-weight:bold; color:#2196f3;">{{ known_pct }}%</span>
+                                <span style="font-size:0.9em; color:#888;">({{ known_combined }})</span>
+                            </div>
+                            <div style="flex:1; text-align:left;">
+                                <span style="display:inline-block;width:14px;height:14px;background:#f44336;border-radius:3px;vertical-align:middle;"></span>
+                                <span style="margin-left:4px;">Failed</span><br>
+                                <span style="font-weight:bold; color:#f44336;">{{ failed_pct }}%</span>
+                                <span style="font-size:0.9em; color:#888;">({{ l.failed }})</span>
+                            </div>
+                            <div style="flex:1; text-align:left;">
+                                <span style="display:inline-block;width:14px;height:14px;background:#bdbdbd;border-radius:3px;vertical-align:middle;"></span>
+                                <span style="margin-left:4px;">Unseen</span><br>
+                                <span style="font-weight:bold; color:#888;">{{ unseen_pct }}%</span>
+                                <span style="font-size:0.9em; color:#888;">({{ unseen }})</span>
+                            </div>
+                        </div>
+                        <div style="text-align:right; font-size:0.95em; color:#888;">Total: {{ l.total }}</div>
                     </div>
-                </div>
-            </a>
-            <p>{{ l.known }} / {{ l.total }} characters known</p>
-        {% endfor %}
+                </a>
+            {% endfor %}
+        </div>
     {% else %}
         <p>No progress yet. Start practicing to see your progress!</p>
     {% endif %}
 
     <p><a href="/"><button>🏠 Back to Menu</button></a></p>
+
+    <style>
+    .hsk-section-hover:hover {
+        background: rgba(33, 150, 243, 0.07);
+        transition: background 0.2s;
+        cursor: pointer;
+    }
+    </style>
 {% endblock %}
