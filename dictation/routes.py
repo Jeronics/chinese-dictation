@@ -68,14 +68,17 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     session[session_score_key] += 1
     user_id = session.get("user_id")
 
-    # Update character progress for each hanzi in the sentence
-    for hanzi in set(sentence_data["chinese"]):
-        match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
-        if match:
-            hsk_level = match["hsk_level"]
-            # If the hanzi is in the correct_segments, mark as correct, else as failed
-            correct = hanzi in correct_segments
-            update_character_progress(user_id, hanzi, hsk_level, correct)
+    # Only update character progress for logged-in users (not guests)
+    if user_id and not str(user_id).startswith("guest-"):
+        for hanzi in set(sentence_data["chinese"]):
+            match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
+            if match:
+                hsk_level = match["hsk_level"]
+                # If the hanzi is in the correct_segments, mark as correct, else as failed
+                correct = hanzi in correct_segments
+                update_character_progress(user_id, hanzi, hsk_level, correct)
+    else:
+        print("[INFO] Not saving progress: user is not logged in.")
 
     return render_template(
         "index.html",

@@ -16,3 +16,6 @@ urllib3==2.4.0
 python-dotenv
 supabase
 Werkzeug==3.1.3
+# High-quality TTS options
+azure-cognitiveservices-speech
+google-cloud-texttospeech
