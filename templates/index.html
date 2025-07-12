@@ -1,55 +1,176 @@
 {% extends "base.html" %}
 
-{% block title %}Chinese Dicatation{% endblock %}
+{% block title %}Chinese Dictation{% endblock %}
 
 {% block content %}
-    
-    <h1>Chinese Dictation</h1>
-
-    {% if session_mode %}
-        <p>Sentence {{ current }} of {{ total }}</p>
-    {% endif %}
-
-    <p><strong>HSK Level:</strong> {{ difficulty }}</p>
-
-    <audio controls autoplay>
-        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    {% if not show_result %}
-        <form method="POST">
-            <label for="user_input">Type what you hear:</label><br>
-            <input type="text" name="user_input" id="user_input" required style="width:100%;">
-            <br><br>
-            <button type="submit">Submit</button>
-        </form>
-    {% else %}
-        <div class="result">
-            <h3>{{ result }}</h3>
-            <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
-            <p><strong>Correction:</strong> {{ correction|safe }}</p>
-            <p><strong>Pinyin:</strong> {{ pinyin }}</p>
-            <p><strong>Translation:</strong> {{ translation }}</p>
-            <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+    {% if story_mode %}
+        <!-- Story Actions - Outside the main layout -->
+        <div class="story-actions">
+            <button type="submit" name="resume_later" value="1" class="resume-later-btn" form="dictation-form">
+                💾 Save & Resume Later
+            </button>
+            <button type="submit" name="restart" value="1" class="restart-btn" form="dictation-form">
+                🔄 Restart Story
+            </button>
         </div>
 
-        {% if show_next_button %}
-            <form action="/session" method="post">
-                <input type="hidden" name="next" value="1">
-                <button type="submit">Next ▶</button>
+        <!-- Story Mode Layout with Context Panel -->
+        <div class="story-layout">
+            <!-- Main Content Column -->
+            <div class="story-main-content">
+                <h1>{{ story_title }}</h1>
+
+                <p><strong>HSK Level:</strong> {{ difficulty }}</p>
+
+                {% if audio_file %}
+                    <audio controls autoplay>
+                        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                {% else %}
+                    <div class="no-audio-notice">
+                        <p>📖 <strong>Story Mode:</strong> Read the text below and type what you see.</p>
+                    </div>
+                {% endif %}
+
+                {% if not show_result %}
+                    <form method="POST" id="dictation-form">
+                        <label for="user_input">Type what you hear:</label><br>
+                        <input type="text" name="user_input" id="user_input" required style="width:100%;">
+                        <br><br>
+                        <button type="submit">Submit</button>
+                    </form>
+                {% else %}
+                    <div class="result">
+                        <h3>{{ result }}</h3>
+                        <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
+                        <p><strong>Correction:</strong> {{ correction|safe }}</p>
+                        <p><strong>Pinyin:</strong> {{ pinyin }}</p>
+                        <p><strong>Translation:</strong> {{ translation }}</p>
+                        <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+                    </div>
+
+                    {% if show_next_button %}
+                        <form action="{{ request.path }}" method="post">
+                            <input type="hidden" name="next" value="1">
+                            <button type="submit">Next ▶</button>
+                        </form>
+                    {% else %}
+                        <a href="/stories">Back to Stories</a>
+                    {% endif %}
+                {% endif %}
+
+                <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
+            </div>
+
+            <!-- Context Panel -->
+            <div class="story-context-panel">
+                <h3>📖 Story Context</h3>
+                <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
+                <div class="context-content">
+                    {% if story_context and story_context|length > 0 %}
+                        {% for part in story_context %}
+                            <div class="context-part">
+                                <div class="context-text">{{ part.chinese }}</div>
+                                <div class="context-pinyin hidden">{{ part.pinyin }}</div>
+                                <div class="context-translation hidden">{{ part.translation }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-context">📖 This is the beginning of the story. Previous context will appear here as you progress.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Regular Session Layout -->
+        <h1>Chinese Dictation</h1>
+
+        {% if session_mode %}
+            <!-- Session Progress Bar -->
+            <div class="session-progress-container">
+                <div class="session-progress-info">
+                    <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
+                    <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
+                </div>
+                <div class="session-progress-bar">
+                    <div class="session-progress-fill" style="width: {{ (current / total) * 100 }}%"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        <p><strong>HSK Level:</strong> {{ difficulty }}</p>
+
+        {% if audio_file %}
+            <audio controls autoplay>
+                <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        {% endif %}
+
+        {% if not show_result %}
+            <form method="POST">
+                <label for="user_input">Type what you hear:</label><br>
+                <input type="text" name="user_input" id="user_input" required style="width:100%;">
+                <br><br>
+                <button type="submit">Submit</button>
             </form>
         {% else %}
-            <a href="/">Back to Menu</a>
-        {% endif %}
-    {% endif %}
+            <div class="result">
+                <h3>{{ result }}</h3>
+                <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
+                <p><strong>Correction:</strong> {{ correction|safe }}</p>
+                <p><strong>Pinyin:</strong> {{ pinyin }}</p>
+                <p><strong>Translation:</strong> {{ translation }}</p>
+                <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+            </div>
 
-    <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
+            {% if show_next_button %}
+                <form action="/session" method="post">
+                    <input type="hidden" name="next" value="1">
+                    <button type="submit">Next ▶</button>
+                </form>
+            {% else %}
+                <a href="/">Back to Menu</a>
+            {% endif %}
+        {% endif %}
+
+        <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
+    {% endif %}
 
     <script>
         window.onload = function() {
             const input = document.getElementById("user_input");
             if (input) input.focus();
         };
+
+        function toggleTranslations() {
+            const button = document.querySelector('.toggle-button');
+            const pinyinElements = document.querySelectorAll('.context-pinyin');
+            const translationElements = document.querySelectorAll('.context-translation');
+            
+            const pinyinHidden = pinyinElements[0].classList.contains('hidden');
+            const translationHidden = translationElements[0].classList.contains('hidden');
+            
+            if (pinyinHidden && translationHidden) {
+                // First click: Show pinyin only
+                pinyinElements.forEach(el => el.classList.remove('hidden'));
+                translationElements.forEach(el => el.classList.add('hidden'));
+                button.textContent = 'Show English';
+                button.classList.add('active');
+            } else if (!pinyinHidden && translationHidden) {
+                // Second click: Show both pinyin and English
+                pinyinElements.forEach(el => el.classList.remove('hidden'));
+                translationElements.forEach(el => el.classList.remove('hidden'));
+                button.textContent = 'Hide All';
+                button.classList.add('active');
+            } else {
+                // Third click: Hide everything
+                pinyinElements.forEach(el => el.classList.add('hidden'));
+                translationElements.forEach(el => el.classList.add('hidden'));
+                button.textContent = 'Show Pinyin';
+                button.classList.remove('active');
+            }
+        }
     </script>
 {% endblock %}

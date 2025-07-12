@@ -4,7 +4,7 @@ load_dotenv()
 
 import uuid
 
-from flask import Blueprint, render_template, request, session, redirect
+from flask import Blueprint, render_template, request, session, redirect, flash
 from .app_context import DictationContext
 from .corrector import Corrector
 from supabase import create_client
@@ -58,7 +58,7 @@ def get_user_character_status(user_id):
     result = supabase.table("character_progress").select("hanzi, status").eq("user_id", user_id).execute()
     return {row["hanzi"]: row["status"] for row in result.data} if result.data else {}
 
-def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None):
+def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None):
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
@@ -80,6 +80,18 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     else:
         print("[INFO] Not saving progress: user is not logged in.")
 
+    # Determine audio file path based on whether it's a story part or regular sentence
+    if is_story_part:
+        audio_file = ctx.story_audio_path(sentence_data["id"])
+    else:
+        audio_file = ctx.audio_path(sentence_data["id"], sentence_data["difficulty"])
+
+    # Determine difficulty based on whether it's a story part or regular sentence
+    if is_story_part and story_difficulty:
+        difficulty = story_difficulty
+    else:
+        difficulty = sentence_data.get("difficulty", "Unknown")
+    
     return render_template(
         "index.html",
         correct_sentence=sentence_data["chinese"],
@@ -88,15 +100,18 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         accuracy=accuracy,
         score=session[session_score_key],
         level=session.get("level", 1),
-        difficulty=sentence_data["difficulty"],
+        difficulty=difficulty,
         show_result=True,
-        audio_file=ctx.audio_path(sentence_data["id"], sentence_data["difficulty"]),
+        audio_file=audio_file,
         translation=sentence_data["translation"],
         pinyin=sentence_data["pinyin"],
         session_mode=show_next,
         current=current,
         total=total,
         show_next_button=show_next,
+        story_mode=is_story_part,
+        story_context=story_context,
+        story_title=story_title
     )
 
 ### ──────── ROUTES ────────
@@ -317,3 +332,186 @@ def hsk_level_detail(level):
             "fail_count": fail_count
         })
     return render_template("hsk_level_detail.html", level=level, char_data=char_data, min=min)
+
+@dictation_bp.route("/phrases")
+def phrases():
+    level = request.args.get("hsk")
+    phrases = ctx.get_phrases_by_level(level)
+    return render_template("phrases.html", phrases=phrases, selected_level=level)
+
+@dictation_bp.route("/stories")
+def stories():
+    # Get saved stories for logged-in users
+    saved_stories = []
+    user_id = session.get("user_id")
+    if user_id and not str(user_id).startswith("guest-"):
+        try:
+            result = supabase.table("story_progress").select("story_id").eq("user_id", user_id).execute()
+            saved_stories = [row["story_id"] for row in result.data] if result.data else []
+            session["saved_stories"] = saved_stories
+        except Exception as e:
+            print(f"Error loading saved stories: {e}")
+            saved_stories = []
+    
+    return render_template("stories.html", stories=ctx.stories, saved_stories=saved_stories)
+
+@dictation_bp.route("/story/<story_id>")
+def story_detail(story_id):
+    # Handle both story IDs and story titles
+    story = ctx.get_story(story_id)
+    actual_story_id = story_id
+    if not story:
+        # Try to find story by title
+        for sid, s in ctx.stories.items():
+            if s["title"].lower().replace(" ", "_").replace("'", "") == story_id:
+                story = s
+                actual_story_id = sid
+                break
+    
+    if not story:
+        return "Story not found", 404
+    return render_template("story_detail.html", story=story, story_id=actual_story_id)
+
+@dictation_bp.route("/story/<story_id>/session", methods=["GET", "POST"])
+def story_session(story_id):
+    # Handle both story IDs and story titles
+    story = ctx.get_story(story_id)
+    if not story:
+        # Try to find story by title
+        for sid, s in ctx.stories.items():
+            if s["title"].lower().replace(" ", "_").replace("'", "") == story_id:
+                story = s
+                story_id = sid
+                break
+    
+    if not story:
+        return "Story not found", 404
+
+    user_id = session.get("user_id")
+    
+    # Check if user wants to resume or restart
+    if request.method == "POST" and "resume_later" in request.form:
+        # Save current progress to database for logged-in users
+        if user_id and not str(user_id).startswith("guest-"):
+            try:
+                # Save story progress
+                supabase.table("story_progress").upsert({
+                    "user_id": user_id,
+                    "story_id": story_id,
+                    "current_index": session.get("story_session_index", 0),
+                    "score": session.get("story_session_score", 0),
+                    "total_parts": len(story["parts"]),
+                    "last_updated": "now()"
+                }).execute()
+                print(f"Saved story progress for user {user_id}, story {story_id}")
+                flash(f"Progress saved! You can resume '{story['title']}' later.", "success")
+            except Exception as e:
+                print(f"Error saving story progress: {e}")
+                flash("Failed to save progress. Please try again.", "error")
+        else:
+            flash("Please log in to save your progress.", "warning")
+        
+        # Clear session and redirect to stories page
+        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+            session.pop(key, None)
+        return redirect("/stories")
+    
+    if request.method == "POST" and "restart" in request.form:
+        # Clear any existing progress and restart
+        if user_id and not str(user_id).startswith("guest-"):
+            try:
+                supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
+                print(f"Cleared story progress for user {user_id}, story {story_id}")
+            except Exception as e:
+                print(f"Error clearing story progress: {e}")
+        
+        # Clear session data
+        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+            session.pop(key, None)
+
+    # Check for existing progress if no session data
+    if "story_session_ids" not in session or session.get("story_id") != story_id:
+        # Try to load existing progress for logged-in users
+        existing_progress = None
+        if user_id and not str(user_id).startswith("guest-"):
+            try:
+                result = supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).execute()
+                if result.data:
+                    existing_progress = result.data[0]
+                    print(f"Found existing progress for user {user_id}, story {story_id}")
+            except Exception as e:
+                print(f"Error loading story progress: {e}")
+        
+        if existing_progress:
+            # Resume from saved progress
+            session.update(
+                story_id=story_id,
+                story_session_ids=[part["id"] for part in story["parts"]],
+                story_session_index=existing_progress["current_index"],
+                story_session_score=existing_progress["score"]
+            )
+            flash(f"Resuming '{story['title']}' from part {existing_progress['current_index'] + 1} of {len(story['parts'])}", "info")
+        else:
+            # Initialize new story session
+            session.update(
+                story_id=story_id,
+                story_session_ids=[part["id"] for part in story["parts"]],
+                story_session_index=0,
+                story_session_score=0
+            )
+
+    if request.method == "POST" and "next" in request.form:
+        session["story_session_index"] += 1
+        if session["story_session_index"] >= len(story["parts"]):
+            score = session["story_session_score"]
+            total = len(story["parts"])
+            
+            # Clear story progress from database when completed
+            if user_id and not str(user_id).startswith("guest-"):
+                try:
+                    supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
+                    print(f"Cleared completed story progress for user {user_id}, story {story_id}")
+                except Exception as e:
+                    print(f"Error clearing completed story progress: {e}")
+            
+            # Clear story session data
+            for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+                session.pop(key, None)
+            return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id)
+
+    part_id = session["story_session_ids"][session["story_session_index"]]
+    part = ctx.get_story_part(story_id, part_id)
+    if not part:
+        return "Story part not found", 500
+
+    if request.method == "POST" and "user_input" in request.form:
+        user_input = request.form["user_input"].strip()
+        return render_dictation_result(
+            user_input, part,
+            session_score_key="story_session_score",
+            show_next=True,
+            current=session["story_session_index"] + 1,
+            total=len(story["parts"]),
+            is_story_part=True,
+            story_context=story["parts"][:session["story_session_index"]],
+            story_title=story["title"],
+            story_difficulty=story["difficulty"]
+        )
+
+    # Get story context (previous parts only, not the current one)
+    story_context = story["parts"][:session["story_session_index"]]
+    
+    return render_template("index.html",
+        correct_sentence=part["chinese"],
+        audio_file=ctx.story_audio_path(part_id),  # Use story audio path
+        score=session["story_session_score"],
+        level=session.get("level", 1),
+        difficulty=story["difficulty"],
+        show_result=False,
+        session_mode=True,
+        current=session["story_session_index"] + 1,
+        total=len(story["parts"]),
+        story_mode=True,
+        story_title=story["title"],
+        story_context=story_context
+    )
