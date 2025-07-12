@@ -6,12 +6,18 @@
     {% if story_mode %}
         <!-- Story Actions - Outside the main layout -->
         <div class="story-actions">
-            <button type="submit" name="resume_later" value="1" class="resume-later-btn" form="dictation-form">
-                💾 Save & Resume Later
-            </button>
-            <button type="submit" name="restart" value="1" class="restart-btn" form="dictation-form">
-                🔄 Restart Story
-            </button>
+            <form method="POST" style="display: inline;">
+                <input type="hidden" name="resume_later" value="1">
+                <button type="submit" class="resume-later-btn">
+                    💾 Save & Resume Later
+                </button>
+            </form>
+            <form method="POST" style="display: inline;">
+                <input type="hidden" name="restart" value="1">
+                <button type="submit" class="restart-btn">
+                    🔄 Restart Story
+                </button>
+            </form>
         </div>
 
         <!-- Story Mode Layout with Context Panel -->
@@ -36,9 +42,9 @@
                 {% if not show_result %}
                     <form method="POST" id="dictation-form">
                         <label for="user_input">Type what you hear:</label><br>
-                        <input type="text" name="user_input" id="user_input" required style="width:100%;">
+                        <input type="text" name="user_input" id="user_input" style="width:100%;">
                         <br><br>
-                        <button type="submit">Submit</button>
+                        <button type="submit" id="submit-answer-btn">Submit</button>
                     </form>
                 {% else %}
                     <div class="result">
@@ -51,10 +57,12 @@
                     </div>
 
                     {% if show_next_button %}
-                        <form action="{{ request.path }}" method="post">
-                            <input type="hidden" name="next" value="1">
-                            <button type="submit">Next ▶</button>
-                        </form>
+                        <div class="result-actions">
+                            <form action="{{ request.path }}" method="post" style="display: inline;">
+                                <input type="hidden" name="next" value="1">
+                                <button type="submit" class="next-btn">Next ▶</button>
+                            </form>
+                        </div>
                     {% else %}
                         <a href="/stories">Back to Stories</a>
                     {% endif %}
@@ -143,6 +151,38 @@
             const input = document.getElementById("user_input");
             if (input) input.focus();
         };
+
+        // Only require input for the Submit button
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('dictation-form');
+            const userInput = document.getElementById('user_input');
+            const submitBtn = document.getElementById('submit-answer-btn');
+
+            if (form && userInput && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    // Only require input if the submit button was used
+                    if (document.activeElement === submitBtn) {
+                        if (!userInput.value.trim()) {
+                            e.preventDefault();
+                            userInput.focus();
+                            userInput.setCustomValidity('Please enter your answer.');
+                            userInput.reportValidity();
+                        } else {
+                            userInput.setCustomValidity('');
+                        }
+                    } else {
+                        // For other form submissions, allow empty input
+                        userInput.setCustomValidity('');
+                    }
+                });
+            }
+            // Also clear custom validity on input
+            if (userInput) {
+                userInput.addEventListener('input', function() {
+                    userInput.setCustomValidity('');
+                });
+            }
+        });
 
         function toggleTranslations() {
             const button = document.querySelector('.toggle-button');
