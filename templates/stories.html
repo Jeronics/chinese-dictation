@@ -36,13 +36,15 @@
                 
                 <div class="story-actions">
                     <a href="/story/{{ story_id }}" class="view-button">👁️ View Story</a>
-                    <a href="/story/{{ story_id }}/session" class="start-button">
-                        {% if story_id in saved_stories %}
-                            🔄 Resume Practice
-                        {% else %}
-                            ▶ Start Practice
-                        {% endif %}
-                    </a>
+                    {% if story_id in saved_stories %}
+                        <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume Story</a>
+                        <form method="POST" action="/story/{{ story_id }}/session" style="display: inline;">
+                            <input type="hidden" name="restart" value="1">
+                            <button type="submit" class="restart-button">🔄 Restart Story</button>
+                        </form>
+                    {% else %}
+                        <a href="/story/{{ story_id }}/session" class="start-button">▶ Start Practice</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -165,7 +167,7 @@
         justify-content: center;
     }
 
-    .view-button, .start-button {
+    .view-button, .start-button, .resume-button, .restart-button {
         display: inline-block;
         padding: 12px 20px;
         border-radius: 6px;
@@ -174,12 +176,15 @@
         transition: all 0.2s;
         text-align: center;
         min-width: 120px;
+        border: 2px solid;
+        cursor: pointer;
+        font-size: 14px;
     }
 
     .view-button {
         background: #6c757d;
         color: white;
-        border: 2px solid #6c757d;
+        border-color: #6c757d;
     }
 
     .view-button:hover {
@@ -192,7 +197,7 @@
     .start-button {
         background: #28a745;
         color: white;
-        border: 2px solid #28a745;
+        border-color: #28a745;
     }
 
     .start-button:hover {
@@ -200,6 +205,31 @@
         border-color: #218838;
         color: white;
         text-decoration: none;
+    }
+
+    .resume-button {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .resume-button:hover {
+        background: #0056b3;
+        border-color: #0056b3;
+        color: white;
+        text-decoration: none;
+    }
+
+    .restart-button {
+        background: #dc3545;
+        color: white;
+        border-color: #dc3545;
+    }
+
+    .restart-button:hover {
+        background: #c82333;
+        border-color: #c82333;
+        color: white;
     }
 
     .no-stories {
@@ -247,7 +277,7 @@
             flex-direction: column;
         }
         
-        .view-button, .start-button {
+        .view-button, .start-button, .resume-button, .restart-button {
             width: 100%;
         }
     }

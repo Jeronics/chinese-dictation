@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}{{ story.title }}{% endblock %}
+
+{% block content %}
+    <div class="story-header">
+        <h1>{{ story.title }}</h1>
+        <h2 class="story-title-chinese">{{ story.title_chinese }}</h2>
+        <div class="story-meta">
+            <span class="difficulty-badge">{{ story.difficulty }}</span>
+            <span class="parts-count">{{ story.parts|length }} parts</span>
+        </div>
+    </div>
+
+    <div class="story-content">
+        <div class="story-parts">
+            {% for part in story.parts %}
+                <div class="story-part">
+                    <div class="part-header">
+                        <span class="part-number">Part {{ part.part_number }}</span>
+                    </div>
+                    <div class="part-content">
+                        <div class="part-chinese">{{ part.chinese }}</div>
+                        <div class="part-pinyin">{{ part.pinyin }}</div>
+                        <div class="part-translation">{{ part.translation }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="story-actions">
+        <a href="/stories" class="back-button">← Back to Stories</a>
+        <a href="/story/{{ story_id }}/session" class="start-button">▶ Start Practice Session</a>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .story-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        border: 1px solid #dee2e6;
+    }
+
+    .story-header h1 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #212529;
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+    }
+
+    .story-title-chinese {
+        font-size: 28px;
+        color: #007bff;
+        margin: 0 0 20px 0;
+        font-weight: normal;
+    }
+
+    .story-meta {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .difficulty-badge, .parts-count {
+        background: #007bff;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .parts-count {
+        background: #28a745;
+    }
+
+    .story-content {
+        max-width: 800px;
+        margin: 0 auto 40px auto;
+    }
+
+    .story-parts {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .story-part {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .story-part:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .part-header {
+        margin-bottom: 15px;
+    }
+
+    .part-number {
+        background: #6c757d;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .part-content {
+        line-height: 1.6;
+    }
+
+    .part-chinese {
+        font-size: 20px;
+        font-weight: bold;
+        color: #212529;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .part-pinyin {
+        font-size: 16px;
+        color: #6c757d;
+        margin-bottom: 8px;
+        font-style: italic;
+    }
+
+    .part-translation {
+        font-size: 16px;
+        color: #495057;
+        line-height: 1.5;
+    }
+
+    .story-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 40px;
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 1px solid #dee2e6;
+    }
+
+    .back-button, .start-button {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s;
+        min-width: 150px;
+        text-align: center;
+    }
+
+    .back-button {
+        background: #6c757d;
+        color: white;
+        border: 2px solid #6c757d;
+    }
+
+    .back-button:hover {
+        background: #5a6268;
+        border-color: #5a6268;
+        color: white;
+        text-decoration: none;
+    }
+
+    .start-button {
+        background: #28a745;
+        color: white;
+        border: 2px solid #28a745;
+    }
+
+    .start-button:hover {
+        background: #218838;
+        border-color: #218838;
+        color: white;
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .story-header h1 {
+            font-size: 28px;
+        }
+        
+        .story-title-chinese {
+            font-size: 22px;
+        }
+        
+        .story-meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .story-part {
+            padding: 15px;
+        }
+        
+        .part-chinese {
+            font-size: 18px;
+        }
+        
+        .story-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .back-button, .start-button {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+</style>
+{% endblock %} 

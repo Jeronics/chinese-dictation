@@ -123,30 +123,20 @@ def menu():
     for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
         session.pop(key, None)
 
-    return render_template("menu.html")
+    # Get saved stories for logged-in users
+    saved_stories = []
+    user_id = session.get("user_id")
+    if user_id and not str(user_id).startswith("guest-"):
+        try:
+            result = supabase.table("story_progress").select("story_id").eq("user_id", user_id).execute()
+            saved_stories = [row["story_id"] for row in result.data] if result.data else []
+        except Exception as e:
+            print(f"Error loading saved stories: {e}")
+            saved_stories = []
 
-@dictation_bp.route("/practice/<sid>", methods=["GET", "POST"])
-def practice(sid):
-    if "score" not in session:
-        session.update(score=0, level=1)
+    return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories)
 
-    s = ctx.get_sentence(sid)
-    s["id"] = sid
-    if not ctx.audio_path(sid, s["difficulty"]):
-        return "Missing audio file", 500
 
-    if request.method == "POST":
-        user_input = request.form["user_input"].strip()
-        return render_dictation_result(user_input, s, session_score_key="score")
-
-    return render_template("index.html",
-        correct_sentence=s["chinese"],
-        audio_file=ctx.audio_path(sid, s["difficulty"]),
-        score=session["score"],
-        level=session.get("level", 1),
-        difficulty=s["difficulty"],
-        show_result=False
-    )
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
@@ -333,44 +323,11 @@ def hsk_level_detail(level):
         })
     return render_template("hsk_level_detail.html", level=level, char_data=char_data, min=min)
 
-@dictation_bp.route("/phrases")
-def phrases():
-    level = request.args.get("hsk")
-    phrases = ctx.get_phrases_by_level(level)
-    return render_template("phrases.html", phrases=phrases, selected_level=level)
 
-@dictation_bp.route("/stories")
-def stories():
-    # Get saved stories for logged-in users
-    saved_stories = []
-    user_id = session.get("user_id")
-    if user_id and not str(user_id).startswith("guest-"):
-        try:
-            result = supabase.table("story_progress").select("story_id").eq("user_id", user_id).execute()
-            saved_stories = [row["story_id"] for row in result.data] if result.data else []
-            session["saved_stories"] = saved_stories
-        except Exception as e:
-            print(f"Error loading saved stories: {e}")
-            saved_stories = []
-    
-    return render_template("stories.html", stories=ctx.stories, saved_stories=saved_stories)
 
-@dictation_bp.route("/story/<story_id>")
-def story_detail(story_id):
-    # Handle both story IDs and story titles
-    story = ctx.get_story(story_id)
-    actual_story_id = story_id
-    if not story:
-        # Try to find story by title
-        for sid, s in ctx.stories.items():
-            if s["title"].lower().replace(" ", "_").replace("'", "") == story_id:
-                story = s
-                actual_story_id = sid
-                break
-    
-    if not story:
-        return "Story not found", 404
-    return render_template("story_detail.html", story=story, story_id=actual_story_id)
+
+
+
 
 @dictation_bp.route("/story/<story_id>/session", methods=["GET", "POST"])
 def story_session(story_id):
@@ -428,7 +385,8 @@ def story_session(story_id):
         # Clear session data
         for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
             session.pop(key, None)
-
+        return redirect(f"/story/{story_id}/session")
+    
     # Check for existing progress if no session data
     if "story_session_ids" not in session or session.get("story_id") != story_id:
         # Try to load existing progress for logged-in users
