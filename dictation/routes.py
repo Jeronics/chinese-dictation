@@ -134,6 +134,8 @@ def menu():
             print(f"Error loading saved stories: {e}")
             saved_stories = []
 
+    print(f"Debug: Loading menu with {len(ctx.stories)} stories")
+    print(f"Debug: Stories keys: {list(ctx.stories.keys())}")
     return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories)
 
 
@@ -368,10 +370,10 @@ def story_session(story_id):
         else:
             flash("Please log in to save your progress.", "warning")
         
-        # Clear session and redirect to stories page
+        # Clear session and redirect to main menu
         for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
             session.pop(key, None)
-        return redirect("/stories")
+        return redirect("/")
     
     if request.method == "POST" and "restart" in request.form:
         # Clear any existing progress and restart
