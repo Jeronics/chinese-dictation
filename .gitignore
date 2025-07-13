@@ -31,3 +31,10 @@ progress.db
 __pycache__/
 
 xvenv/
+
+# Ignore credentials and sensitive files
+*.json
+!hsk_characters.json
+!sentences.json
+!short_chinese_stories.json
+!stories.json

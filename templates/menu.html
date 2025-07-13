@@ -3,6 +3,14 @@
 {% block title %}Menu{% endblock %}
 
 {% block content %}
+<style>
+    .blog-card {
+        border: 2px solid red;
+        border-radius: 12px;
+        padding: 1rem;
+        height: 100%;
+    }
+</style>
     {% if not session.get("email") %}
         <p style="color: gray;">
             👋 Estàs fent servir l'app com a convidat.
@@ -18,33 +26,152 @@
     <div class="menu-section">
         <h2>📝 Common Phrases</h2>
         
-        <div class="phrases-options">
-            <div class="option-card">
-                <a href="/session"><button>▶ Start Mixed Session</button></a>
+        <div class="row row-cols-1 row-cols-md-3 g-4 custom-grid">
+            <div class="col custom-grid-cell">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">Mixed Practice</span>
+                            <span class="hsk-subtitle">All Levels Combined</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>Mixed</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.values() | sum }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        All HSK levels combined
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK1"><button>▶ Start HSK1 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 1</span>
+                            <span class="hsk-subtitle">Beginner</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK1</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK1', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK1', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK1" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK2"><button>▶ Start HSK2 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 2</span>
+                            <span class="hsk-subtitle">Elementary</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK2</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK2', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK2', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK2" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK3"><button>▶ Start HSK3 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 3</span>
+                            <span class="hsk-subtitle">Intermediate</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK3</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK3', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK3', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK3" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK4"><button>▶ Start HSK4 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 4</span>
+                            <span class="hsk-subtitle">Upper Intermediate</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK4</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK4', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK4', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK4" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK5"><button>▶ Start HSK5 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 5</span>
+                            <span class="hsk-subtitle">Advanced</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK5</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK5', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK5', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK5" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="option-card">
-                <a href="/session?hsk=HSK6"><button>▶ Start HSK6 Session</button></a>
+            <div class="col">
+                <div class="option-card blog-card">
+                    <div class="hsk-header">
+                        <div class="hsk-title-row">
+                            <span class="hsk-title">HSK Level 6</span>
+                            <span class="hsk-subtitle">Mastery</span>
+                        </div>
+                    </div>
+                    <div class="hsk-info-row">
+                        <span class="hsk-difficulty">Level: <b>HSK6</b></span>
+                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK6', 0) }}</b></span>
+                    </div>
+                    <div class="hsk-description">
+                        {{ hsk_totals.get('HSK6', 0) }} characters
+                    </div>
+                    <div class="hsk-actions">
+                        <a href="/session?hsk=HSK6" class="start-button">▶ Start</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -52,36 +179,40 @@
     <div class="menu-section">
         <h2>📚 Short Stories</h2>
         <p>Debug: Found {{ stories|length }} stories</p>
-        <div class="stories-grid">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
                 <!-- Debug: Rendering story {{ story_id }} -->
-                <div class="story-card">
-                    <div class="story-header">
-                        <div class="story-title-row">
-                            <span class="story-title">{{ story.title }}</span>
-                            <span class="story-title-chinese">{{ story.title_chinese }}</span>
+                <div class="col">
+                    <div class="story-card blog-card">
+                        <div class="story-header">
+                            <div class="story-title-row">
+                                <span class="story-title">{{ story.title }}</span>
+                                <span class="story-title-chinese">{{ story.title_chinese }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="story-info-row">
-                        <span class="story-difficulty">HSK: <b>{{ story.difficulty }}</b></span>
-                        <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
-                    </div>
-                    {% if story.description %}
-                    <div class="story-description">
-                        {{ story.description }}
-                    </div>
-                    {% endif %}
-                    <div class="story-actions">
-                        {% if story_id in saved_stories %}
-                            <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume</a>
-                        {% else %}
-                            <a href="/story/{{ story_id }}/session" class="start-button">▶ Start</a>
+                        <div class="story-info-row">
+                            <span class="story-difficulty">HSK: <b>{{ story.difficulty }}</b></span>
+                            <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
+                        </div>
+                        {% if story.description %}
+                        <div class="story-description">
+                            {{ story.description }}
+                        </div>
                         {% endif %}
+                        <div class="story-actions">
+                            {% if story_id in saved_stories %}
+                                <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume</a>
+                            {% else %}
+                                <a href="/story/{{ story_id }}/session" class="start-button">▶ Start</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+
 {% endblock %}
 
 {% block extra_css %}
@@ -123,89 +254,162 @@
         font-size: 1.8rem;
     }
 
-    .phrases-options {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1rem;
-    }
-
     .option-card {
         background-color: var(--surface);
-        border: 2px solid var(--primary);
-        border-radius: 12px;
+        border: 6px solid red !important;
+        border-radius: 16px;
         padding: 1.5rem;
-        box-shadow: var(--shadow);
-        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 12px rgba(208, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .option-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 3px solid var(--secondary);
+        border-radius: 16px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
     }
 
     .option-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(208, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(208, 0, 0, 0.2);
         border-color: var(--secondary);
     }
 
-    .option-card h3 {
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
+    .option-card:hover::before {
+        opacity: 1;
     }
 
-    .option-card p {
-        color: var(--text);
-        margin-bottom: 1rem;
-        line-height: 1.5;
-    }
-
-    .option-card select {
-        width: 100%;
-        margin-bottom: 1rem;
-        padding: 0.6rem;
-        border: 2px solid var(--primary);
-        border-radius: 6px;
-        background-color: var(--white);
-        color: var(--text);
-    }
-
-    .option-card button {
-        width: 100%;
-        padding: 0.8rem;
-        font-size: 1rem;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .option-card button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(208, 0, 0, 0.3);
-    }
-
-    /* Stories Grid - Simple 3 Column Layout */
-    .stories-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr !important;
-        gap: 20px;
-        margin-top: 20px;
-        border: 3px solid red !important;
-        background-color: yellow !important;
+    /* Grid Cell Borders - More Specific Selectors */
+    .row .col {
+        border: 5px solid red !important;
+        border-radius: 12px;
+        padding: 12px;
+        margin: 6px;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3) !important;
     }
     
+    /* Even more specific for Bootstrap grid */
+    .row.row-cols-1.row-cols-md-3.g-4 .col {
+        border: 5px solid red !important;
+        border-radius: 12px;
+        padding: 12px;
+        margin: 6px;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3) !important;
+    }
+    
+    /* Target specific sections */
+    .menu-section .row .col {
+        border: 5px solid red !important;
+        border-radius: 12px;
+        padding: 12px;
+        margin: 6px;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3) !important;
+    }
+    
+    /* Custom grid classes to override Bootstrap */
+    .custom-grid {
+        border: 3px solid red !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+    }
+    
+    .custom-grid-cell {
+        border: 5px solid red !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        margin: 6px !important;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3) !important;
+    }
+
+    /* HSK Card Styles */
+    .hsk-title-row {
+        margin-bottom: 10px;
+    }
+    
+    .hsk-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--primary);
+        display: block;
+    }
+    
+    .hsk-subtitle {
+        font-size: 1rem;
+        color: var(--text);
+        opacity: 0.8;
+        display: block;
+        margin-top: 5px;
+    }
+    
+    .hsk-info-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        color: var(--text);
+    }
+    
+    .hsk-description {
+        font-size: 0.9rem;
+        color: var(--text);
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+    
+    .hsk-actions {
+        text-align: right;
+    }
+
+    /* Story Card Styles */
     .story-card {
         background: var(--surface);
-        border: 2px solid var(--primary);
-        border-radius: 12px;
+        border: 6px solid red !important;
+        border-radius: 16px;
         padding: 20px;
-        box-shadow: var(--shadow);
-        transition: all 0.2s ease;
-        border: 3px solid blue !important;
-        background-color: lightblue !important;
+        box-shadow: 0 4px 12px rgba(208, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .story-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 3px solid var(--secondary);
+        border-radius: 16px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
     }
     
     .story-card:hover {
         border-color: var(--secondary);
-        box-shadow: 0 8px 25px rgba(208, 0, 0, 0.15);
-        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(208, 0, 0, 0.2);
+        transform: translateY(-4px);
+    }
+    
+    .story-card:hover::before {
+        opacity: 1;
     }
     
     .story-title-row {
@@ -279,6 +483,8 @@
         background-color: var(--primary-hover);
         border-color: var(--primary-hover);
     }
+
+
 </style>
 {% endblock %}
 

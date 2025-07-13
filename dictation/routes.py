@@ -136,7 +136,8 @@ def menu():
 
     print(f"Debug: Loading menu with {len(ctx.stories)} stories")
     print(f"Debug: Stories keys: {list(ctx.stories.keys())}")
-    return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories)
+    print(f"Debug: HSK totals: {ctx.hsk_totals}")
+    return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
 
 
 
