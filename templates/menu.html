@@ -12,17 +12,21 @@
     }
 </style>
     {% if not session.get("email") %}
-        <p style="color: gray;">
-            👋 Estàs fent servir l'app com a convidat.
-            <a href="/login">🔐 Inicia sessió</a> per guardar el teu progrés a la base de dades i accedir-hi des de qualsevol dispositiu.
-        </p>
+        <div class="login-required-notice" style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 1rem; margin-bottom: 2rem; color: #721c24;">
+            <h3>🔐 Login Required</h3>
+            <p>You need to <a href="/login" style="color: #721c24; font-weight: bold;">log in</a> to use this app and save your progress.</p>
+            <p>Don't have an account? <a href="/signup" style="color: #721c24; font-weight: bold;">Sign up</a> for free!</p>
+        </div>
     {% endif %}
 
     <div class="menu-header">
         <h1>📚 Chinese Dictation – Menu</h1>
-        <a href="/dashboard" class="progress-button">📊 Show Progress</a>
+        {% if session.get("email") %}
+            <a href="/dashboard" class="progress-button">📊 Show Progress</a>
+        {% endif %}
     </div>
 
+    {% if session.get("email") %}
     <div class="menu-section">
         <h2>📝 Common Phrases</h2>
         
@@ -211,6 +215,7 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
 
 {% endblock %}

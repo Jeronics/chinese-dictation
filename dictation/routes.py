@@ -4,7 +4,8 @@ load_dotenv()
 
 import uuid
 
-from flask import Blueprint, render_template, request, session, redirect, flash
+from flask import Blueprint, render_template, request, session, redirect, flash, url_for
+from functools import wraps
 from .app_context import DictationContext
 from .corrector import Corrector
 from supabase import create_client
@@ -20,38 +21,52 @@ dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("user_id"):
+            flash("Please log in to access this feature.", "warning")
+            return redirect(url_for("dictation.login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
 # --- Helper functions for character progress tracking ---
 def update_character_progress(user_id, hanzi, hsk_level, correct):
-    # Fetch existing record
-    result = supabase.table("character_progress").select("*") \
-        .eq("user_id", user_id).eq("hanzi", hanzi).execute()
-    if result.data:
-        progress = result.data[0]
-        correct_count = progress["correct_count"] + (1 if correct else 0)
-        fail_count = progress["fail_count"] + (0 if correct else 1)
-        # Determine new status
-        if correct_count >= 3:
-            status = "known"
-        elif fail_count >= 2:
-            status = "failed"
+    try:
+        # Fetch existing record
+        result = supabase.table("character_progress").select("*") \
+            .eq("user_id", user_id).eq("hanzi", hanzi).execute()
+        if result.data:
+            progress = result.data[0]
+            correct_count = progress["correct_count"] + (1 if correct else 0)
+            fail_count = progress["fail_count"] + (0 if correct else 1)
+            # Determine new status
+            if correct_count >= 3:
+                status = "known"
+            elif fail_count >= 2:
+                status = "failed"
+            else:
+                status = "learning"
+            supabase.table("character_progress").update({
+                "correct_count": correct_count,
+                "fail_count": fail_count,
+                "status": status,
+                "last_seen": "now()"
+            }).eq("user_id", user_id).eq("hanzi", hanzi).execute()
         else:
-            status = "learning"
-        supabase.table("character_progress").update({
-            "correct_count": correct_count,
-            "fail_count": fail_count,
-            "status": status,
-            "last_seen": "now()"
-        }).eq("user_id", user_id).eq("hanzi", hanzi).execute()
-    else:
-        supabase.table("character_progress").insert({
-            "user_id": user_id,
-            "hanzi": hanzi,
-            "hsk_level": hsk_level,
-            "correct_count": 1 if correct else 0,
-            "fail_count": 0 if correct else 1,
-            "status": "known" if correct else "failed",
-            "last_seen": "now()"
-        }).execute()
+            supabase.table("character_progress").insert({
+                "user_id": user_id,
+                "hanzi": hanzi,
+                "hsk_level": hsk_level,
+                "correct_count": 1 if correct else 0,
+                "fail_count": 0 if correct else 1,
+                "status": "known" if correct else "failed",
+                "last_seen": "now()"
+            }).execute()
+    except Exception as e:
+        print(f"Error updating character progress for user {user_id}, hanzi {hanzi}: {e}")
+        # Don't raise the exception - just log it and continue
+        # This prevents the app from crashing due to database issues
 
 def get_user_character_status(user_id):
     # Returns a dict: {hanzi: status}
@@ -68,8 +83,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     session[session_score_key] += 1
     user_id = session.get("user_id")
 
-    # Only update character progress for logged-in users (not guests)
-    if user_id and not str(user_id).startswith("guest-"):
+    # Update character progress for logged-in users
+    if user_id:
         for hanzi in set(sentence_data["chinese"]):
             match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
             if match:
@@ -77,8 +92,6 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
                 # If the hanzi is in the correct_segments, mark as correct, else as failed
                 correct = hanzi in correct_segments
                 update_character_progress(user_id, hanzi, hsk_level, correct)
-    else:
-        print("[INFO] Not saving progress: user is not logged in.")
 
     # Determine audio file path based on whether it's a story part or regular sentence
     if is_story_part:
@@ -126,7 +139,7 @@ def menu():
     # Get saved stories for logged-in users
     saved_stories = []
     user_id = session.get("user_id")
-    if user_id and not str(user_id).startswith("guest-"):
+    if user_id:
         try:
             result = supabase.table("story_progress").select("story_id").eq("user_id", user_id).execute()
             saved_stories = [row["story_id"] for row in result.data] if result.data else []
@@ -142,6 +155,7 @@ def menu():
 
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
+@login_required
 def session_practice():
     if "session_ids" not in session:
         level = request.args.get("hsk")
@@ -190,6 +204,7 @@ def session_practice():
     )
 
 @dictation_bp.route("/dashboard")
+@login_required
 def dashboard():
     user_id = session.get("user_id")
     try:
@@ -223,9 +238,9 @@ def dashboard():
     return render_template("dashboard.html", levels=levels)
 
 @dictation_bp.before_app_request
-def assign_guest_user_id():
-    if "user_id" not in session:
-        session["user_id"] = f"guest-{uuid.uuid4()}"
+def check_user_authentication():
+    # No guest users - users must be logged in to use the app
+    pass
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -249,17 +264,7 @@ def login():
                 raise Exception("No user returned from Supabase.")
             
             print(f"Login successful for user: {user.id}")
-            old_guest_id = session.get("user_id")
             new_user_id = user.id
-
-            # Update character progress for guest user
-            try:
-                supabase.table("character_progress").update({
-                    "user_id": new_user_id
-                }).eq("user_id", old_guest_id).execute()
-                print(f"Updated character progress from {old_guest_id} to {new_user_id}")
-            except Exception as e:
-                print(f"Warning: Could not update character progress: {e}")
 
             session["user_id"] = new_user_id
             session["email"] = user.email
@@ -298,6 +303,7 @@ def logout():
     return redirect("/")
 
 @dictation_bp.route("/hsk/<level>")
+@login_required
 def hsk_level_detail(level):
     user_id = session.get("user_id")
     # Get all hanzi for this level
@@ -333,6 +339,7 @@ def hsk_level_detail(level):
 
 
 @dictation_bp.route("/story/<story_id>/session", methods=["GET", "POST"])
+@login_required
 def story_session(story_id):
     # Handle both story IDs and story titles
     story = ctx.get_story(story_id)
@@ -352,7 +359,7 @@ def story_session(story_id):
     # Check if user wants to resume or restart
     if request.method == "POST" and "resume_later" in request.form:
         # Save current progress to database for logged-in users
-        if user_id and not str(user_id).startswith("guest-"):
+        if user_id:
             try:
                 # Save story progress
                 supabase.table("story_progress").upsert({
@@ -378,7 +385,7 @@ def story_session(story_id):
     
     if request.method == "POST" and "restart" in request.form:
         # Clear any existing progress and restart
-        if user_id and not str(user_id).startswith("guest-"):
+        if user_id:
             try:
                 supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
                 print(f"Cleared story progress for user {user_id}, story {story_id}")
@@ -394,7 +401,7 @@ def story_session(story_id):
     if "story_session_ids" not in session or session.get("story_id") != story_id:
         # Try to load existing progress for logged-in users
         existing_progress = None
-        if user_id and not str(user_id).startswith("guest-"):
+        if user_id:
             try:
                 result = supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).execute()
                 if result.data:
@@ -428,7 +435,7 @@ def story_session(story_id):
             total = len(story["parts"])
             
             # Clear story progress from database when completed
-            if user_id and not str(user_id).startswith("guest-"):
+            if user_id:
                 try:
                     supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
                     print(f"Cleared completed story progress for user {user_id}, story {story_id}")

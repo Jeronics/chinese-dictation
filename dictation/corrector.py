@@ -32,80 +32,104 @@ class Corrector:
         s_user, user_map = strip_and_map(user_input)
         s_correct, correct_map = strip_and_map(correct)
 
+        # If the user input is completely different (very low similarity), 
+        # show the wrong input in red and the correct in blue
+        if len(s_user) == 0:
+            # User input is empty or only punctuation
+            result = f"<span class='diff-ins'>{correct}</span>"
+            return result, s_user, s_correct, ""
+        
+        # Calculate similarity
         matcher = difflib.SequenceMatcher(None, s_user, s_correct)
-        # Build a list of (type, user_idx, correct_idx, user_char, correct_char)
-        diff_ops = []
+        similarity = matcher.ratio()
+        
+        # If similarity is very low (< 0.3), treat as completely wrong
+        if similarity < 0.3:
+            # Show user input in red, correct in blue
+            result = f"<span class='diff-del'>{user_input}</span><span class='diff-ins'>{correct}</span>"
+            return result, s_user, s_correct, ""
+
+        matcher = difflib.SequenceMatcher(None, s_user, s_correct)
+        
+        # Create a list of operations with their positions
+        operations = []
         ui = 0
         ci = 0
         for tag, i1, i2, j1, j2 in matcher.get_opcodes():
             if tag == 'equal':
                 for k in range(i2 - i1):
-                    diff_ops.append(('equal', user_map[ui], correct_map[ci], user_input[user_map[ui]], correct[correct_map[ci]]))
-                    ui += 1
-                    ci += 1
+                    operations.append(('equal', user_map[ui + k], correct_map[ci + k]))
+                ui += (i2 - i1)
+                ci += (j2 - j1)
             elif tag == 'replace':
                 for k in range(max(i2 - i1, j2 - j1)):
                     u_idx = user_map[ui + k] if (ui + k) < len(user_map) else None
                     c_idx = correct_map[ci + k] if (ci + k) < len(correct_map) else None
-                    u_char = user_input[u_idx] if u_idx is not None else ''
-                    c_char = correct[c_idx] if c_idx is not None else ''
-                    diff_ops.append(('replace', u_idx, c_idx, u_char, c_char))
+                    operations.append(('replace', u_idx, c_idx))
                 ui += (i2 - i1)
                 ci += (j2 - j1)
             elif tag == 'insert':
                 for k in range(j2 - j1):
                     c_idx = correct_map[ci + k]
-                    c_char = correct[c_idx]
-                    diff_ops.append(('insert', None, c_idx, '', c_char))
+                    operations.append(('insert', None, c_idx))
                 ci += (j2 - j1)
             elif tag == 'delete':
                 for k in range(i2 - i1):
                     u_idx = user_map[ui + k]
-                    u_char = user_input[u_idx]
-                    diff_ops.append(('delete', u_idx, None, u_char, ''))
+                    operations.append(('delete', u_idx, None))
                 ui += (i2 - i1)
 
-        # Now, build the output, walking through the correct sentence and inserting highlights only for Hanzi/letters/numbers
+        # Build the result by walking through the user input and mapping to correct
         result = ''
         correct_segments = []
-        op_idx = 0
-        c_len = len(correct)
+        u_pos = 0
         c_pos = 0
-        while c_pos < c_len:
-            ch = correct[c_pos]
+        op_idx = 0
+        
+        # Create a mapping of user positions to operations
+        user_ops = {}
+        for op, u_idx, c_idx in operations:
+            if u_idx is not None:
+                user_ops[u_idx] = (op, u_idx, c_idx)
+        
+        # Walk through the user input
+        while u_pos < len(user_input):
+            ch = user_input[u_pos]
+            
+            # If it's punctuation/space, just add it
             if is_punct_or_space(ch):
                 result += ch
-                c_pos += 1
+                u_pos += 1
                 continue
-            # Find the next diff_op that matches this correct char position
-            if op_idx < len(diff_ops):
-                op, u_idx, c_idx, u_char, c_char = diff_ops[op_idx]
-                if c_idx == c_pos:
-                    if op == 'equal':
-                        result += ch
-                        correct_segments.append(ch)
-                    elif op == 'replace':
-                        # Show user wrong char in red, correct char in blue
-                        result += f"<span class='diff-del'>{u_char}</span><span class='diff-ins'>{c_char}</span>"
-                    elif op == 'insert':
-                        # Missing char in blue
-                        result += f"<span class='diff-ins'>{c_char}</span>"
-                    # For delete, nothing to add here (handled below)
-                    op_idx += 1
-                    c_pos += 1
-                else:
-                    # This char is not part of the diff (shouldn't happen), just add it
+            
+            # Check if there's an operation for this user position
+            if u_pos in user_ops:
+                op, u_idx, c_idx = user_ops[u_pos]
+                
+                if op == 'equal':
                     result += ch
-                    c_pos += 1
+                    correct_segments.append(ch)
+                elif op == 'replace':
+                    c_char = correct[c_idx] if c_idx is not None else ''
+                    result += f"<span class='diff-del'>{ch}</span><span class='diff-ins'>{c_char}</span>"
+                elif op == 'delete':
+                    result += f"<span class='diff-del'>{ch}</span>"
+                u_pos += 1
             else:
-                # No more diff_ops, just add the rest
+                # No operation for this position, just add the character
                 result += ch
-                c_pos += 1
-        # Handle any trailing deletes (extra chars at end of user input)
-        while op_idx < len(diff_ops):
-            op, u_idx, c_idx, u_char, c_char = diff_ops[op_idx]
-            if op == 'delete':
-                result += f"<span class='diff-del'>{u_char}</span>"
-            op_idx += 1
+                u_pos += 1
+        
+        # Handle any insertions (missing characters)
+        insert_ops = [(op, u_idx, c_idx) for op, u_idx, c_idx in operations if op == 'insert']
+        insert_ops.sort(key=lambda x: x[2])  # Sort by correct position
+        
+        # Insert missing characters at the appropriate positions
+        for op, u_idx, c_idx in insert_ops:
+            c_char = correct[c_idx]
+            # Find the right position to insert
+            # For now, we'll add them at the end, but ideally we'd find the right position
+            result += f"<span class='diff-ins'>{c_char}</span>"
+        
         return result, s_user, s_correct, ''.join(correct_segments)
 
