@@ -1,0 +1,14 @@
+{% macro dictation_form(show_result, request_path, user_input_disabled, show_next_button) %}
+<form method="POST" id="dictation-form" action="{{ request_path }}">
+    <label for="user_input">Type what you hear:</label>
+    <div class="input-and-button">
+        <input type="text" name="user_input" id="user_input" style="flex:1;" {% if user_input_disabled %}disabled{% endif %}>
+        {% if show_result %}
+            <input type="hidden" name="next" value="1">
+            <button type="submit" class="dictation-btn">Next ▶</button>
+        {% else %}
+            <button type="submit" class="dictation-btn" id="submit-answer-btn">Submit</button>
+        {% endif %}
+    </div>
+</form>
+{% endmacro %} 

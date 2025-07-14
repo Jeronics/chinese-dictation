@@ -819,6 +819,15 @@ label:focus-within {
     color: white;
 }
 
+.next-btn:disabled,
+.next-btn[disabled] {
+    background: #bdbdbd !important;
+    color: #666 !important;
+    border: 1px solid #aaa !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+}
+
 .restart-btn {
     background-color: var(--danger);
     color: white;
@@ -956,5 +965,46 @@ label:focus-within {
     .login-required-notice a {
         color: var(--white);
     }
+}
+
+.input-and-button {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.input-and-button input[type='text'] {
+    min-width: 0;
+}
+.input-and-button button {
+    white-space: nowrap;
+}
+
+.dictation-btn {
+    padding: 0.5em 1.2em;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    background: #007bff;
+    color: #fff;
+    font-weight: 600;
+    transition: background 0.2s, border 0.2s;
+    min-width: 90px;
+    height: 40px;
+    box-sizing: border-box;
+}
+.dictation-btn:hover, .dictation-btn:focus {
+    background: #0056b3;
+    border-color: #0056b3;
+    color: #fff;
+}
+.dictation-btn:disabled {
+    background: #bdbdbd !important;
+    color: #666 !important;
+    border: 1px solid #aaa !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
 }
 

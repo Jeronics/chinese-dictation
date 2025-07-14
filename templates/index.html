@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_dictation_form.html" import dictation_form %}
 
 {% block title %}Chinese Dictation{% endblock %}
 
@@ -40,13 +41,9 @@
                 {% endif %}
 
                 {% if not show_result %}
-                    <form method="POST" id="dictation-form">
-                        <label for="user_input">Type what you hear:</label><br>
-                        <input type="text" name="user_input" id="user_input" style="width:100%;">
-                        <br><br>
-                        <button type="submit" id="submit-answer-btn">Submit</button>
-                    </form>
+                    {{ dictation_form(false, request.path, false, show_next_button) }}
                 {% else %}
+                    {{ dictation_form(true, request.path, true, show_next_button) }}
                     <div class="result">
                         <h3>{{ result }}</h3>
                         <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
@@ -55,20 +52,10 @@
                         <p><strong>Translation:</strong> {{ translation }}</p>
                         <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
                     </div>
-
-                    {% if show_next_button %}
-                        <div class="result-actions">
-                            <form action="{{ request.path }}" method="post" style="display: inline;">
-                                <input type="hidden" name="next" value="1">
-                                <button type="submit" class="next-btn">Next ▶</button>
-                            </form>
-                        </div>
-                    {% else %}
+                    {% if not show_next_button %}
                         <a href="/stories">Back to Stories</a>
                     {% endif %}
                 {% endif %}
-
-                <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
             </div>
 
             <!-- Context Panel -->
@@ -117,13 +104,9 @@
         {% endif %}
 
         {% if not show_result %}
-            <form method="POST">
-                <label for="user_input">Type what you hear:</label><br>
-                <input type="text" name="user_input" id="user_input" required style="width:100%;">
-                <br><br>
-                <button type="submit">Submit</button>
-            </form>
+            {{ dictation_form(false, '/session', false, show_next_button) }}
         {% else %}
+            {{ dictation_form(true, '/session', true, show_next_button) }}
             <div class="result">
                 <h3>{{ result }}</h3>
                 <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
@@ -132,18 +115,10 @@
                 <p><strong>Translation:</strong> {{ translation }}</p>
                 <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
             </div>
-
-            {% if show_next_button %}
-                <form action="/session" method="post">
-                    <input type="hidden" name="next" value="1">
-                    <button type="submit">Next ▶</button>
-                </form>
-            {% else %}
+            {% if not show_next_button %}
                 <a href="/">Back to Menu</a>
             {% endif %}
         {% endif %}
-
-        <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
     {% endif %}
 
     <script>
