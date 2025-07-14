@@ -3,12 +3,23 @@ import os
 load_dotenv()
 
 import uuid
+from datetime import date, datetime, timedelta
 
 from flask import Blueprint, render_template, request, session, redirect, flash, url_for
 from functools import wraps
 from .app_context import DictationContext
 from .corrector import Corrector
+from .db_helpers import (
+    update_character_progress,
+    get_user_character_status,
+    update_daily_work_registry,
+    get_daily_work_stats
+)
+from .utils import login_required
 from supabase import create_client
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 # Configuració de Supabase
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -21,59 +32,17 @@ dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get("user_id"):
-            flash("Please log in to access this feature.", "warning")
-            return redirect(url_for("dictation.login"))
-        return f(*args, **kwargs)
-    return decorated_function
-
 # --- Helper functions for character progress tracking ---
-def update_character_progress(user_id, hanzi, hsk_level, correct):
-    try:
-        # Fetch existing record
-        result = supabase.table("character_progress").select("*") \
-            .eq("user_id", user_id).eq("hanzi", hanzi).execute()
-        if result.data:
-            progress = result.data[0]
-            correct_count = progress["correct_count"] + (1 if correct else 0)
-            fail_count = progress["fail_count"] + (0 if correct else 1)
-            # Determine new status
-            if correct_count >= 3:
-                status = "known"
-            elif fail_count >= 2:
-                status = "failed"
-            else:
-                status = "learning"
-            supabase.table("character_progress").update({
-                "correct_count": correct_count,
-                "fail_count": fail_count,
-                "status": status,
-                "last_seen": "now()"
-            }).eq("user_id", user_id).eq("hanzi", hanzi).execute()
-        else:
-            supabase.table("character_progress").insert({
-                "user_id": user_id,
-                "hanzi": hanzi,
-                "hsk_level": hsk_level,
-                "correct_count": 1 if correct else 0,
-                "fail_count": 0 if correct else 1,
-                "status": "known" if correct else "failed",
-                "last_seen": "now()"
-            }).execute()
-    except Exception as e:
-        print(f"Error updating character progress for user {user_id}, hanzi {hanzi}: {e}")
-        # Don't raise the exception - just log it and continue
-        # This prevents the app from crashing due to database issues
+# (Moved to db_helpers.py)
 
-def get_user_character_status(user_id):
-    # Returns a dict: {hanzi: status}
-    result = supabase.table("character_progress").select("hanzi, status").eq("user_id", user_id).execute()
-    return {row["hanzi"]: row["status"] for row in result.data} if result.data else {}
+# --- Helper functions for daily work tracking ---
+# (Moved to db_helpers.py)
 
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None):
+    """
+    Render the result page for a dictation attempt, showing correction, accuracy, and updating user progress.
+    Handles both regular sentences and story parts.
+    """
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
@@ -92,6 +61,15 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
                 # If the hanzi is in the correct_segments, mark as correct, else as failed
                 correct = hanzi in correct_segments
                 update_character_progress(user_id, hanzi, hsk_level, correct)
+        
+        # Store accuracy scores in session for later averaging
+        # Initialize accuracy tracking if not exists
+        if "accuracy_scores" not in session:
+            session["accuracy_scores"] = []
+        
+        # Store the distance score (0-10 scale) for this sentence
+        session["accuracy_scores"].append(distance)
+        logging.debug(f"Added distance score {distance} to accuracy_scores. Current scores: {session['accuracy_scores']}")
 
     # Determine audio file path based on whether it's a story part or regular sentence
     if is_story_part:
@@ -131,7 +109,9 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
 @dictation_bp.route("/")
 def menu():
-    
+    """
+    Main menu route. Clears session state and loads available stories and HSK totals for the user.
+    """
     # clear HSK level, session_ids, etc.
     for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
         session.pop(key, None)
@@ -144,19 +124,21 @@ def menu():
             result = supabase.table("story_progress").select("story_id").eq("user_id", user_id).execute()
             saved_stories = [row["story_id"] for row in result.data] if result.data else []
         except Exception as e:
-            print(f"Error loading saved stories: {e}")
+            logging.error(f"Error loading saved stories: {e}")
             saved_stories = []
 
-    print(f"Debug: Loading menu with {len(ctx.stories)} stories")
-    print(f"Debug: Stories keys: {list(ctx.stories.keys())}")
-    print(f"Debug: HSK totals: {ctx.hsk_totals}")
+    logging.info(f"Loading menu with {len(ctx.stories)} stories")
+    logging.info(f"Stories keys: {list(ctx.stories.keys())}")
+    logging.info(f"HSK totals: {ctx.hsk_totals}")
     return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
 
 
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
-@login_required
 def session_practice():
+    """
+    Main dictation practice session route. Handles session state, user answers, and session summary.
+    """
     if "session_ids" not in session:
         level = request.args.get("hsk")
         session.update(
@@ -171,9 +153,27 @@ def session_practice():
         if session["session_index"] >= 5:
             score = session["session_score"]
             level = session.get("hsk_level")
-            for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
+            user_id = session.get("user_id")
+            
+            # Calculate average accuracy for the session
+            average_accuracy = 0
+            logging.debug(f"Session accuracy_scores: {session.get('accuracy_scores', 'Not found')}")
+            logging.debug(f"User ID: {user_id}")
+            if user_id and "accuracy_scores" in session and session["accuracy_scores"]:
+                average_accuracy = sum(session["accuracy_scores"]) / len(session["accuracy_scores"])
+                logging.debug(f"Calculated average accuracy: {average_accuracy}")
+                # Update daily work registry with session average
+                update_daily_work_registry(user_id, "practice", average_accuracy, 5)
+            else:
+                logging.debug(f"No accuracy scores found or user not logged in")
+            
+            # Get daily work stats for summary
+            daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
+            
+            # Clear session data
+            for key in ["session_ids", "session_index", "session_score", "hsk_level", "accuracy_scores"]:
                 session.pop(key, None)
-            return render_template("session_summary.html", score=score, total=5, level=level)
+            return render_template("session_summary.html", score=score, total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     sid = session["session_ids"][session["session_index"]]
     s = ctx.get_sentence(sid)
@@ -206,6 +206,9 @@ def session_practice():
 @dictation_bp.route("/dashboard")
 @login_required
 def dashboard():
+    """
+    User dashboard showing HSK progress and daily work statistics.
+    """
     user_id = session.get("user_id")
     try:
         response = supabase.table("character_progress") \
@@ -220,7 +223,7 @@ def dashboard():
                 stats[level] = {"known": 0, "failed": 0, "learning": 0}
             stats[level][status] += 1
     except Exception as e:
-        print("Error loading progress from Supabase:", e)
+        logging.error("Error loading progress from Supabase:", e)
         stats = {}
     # Prepare levels for dashboard
     levels = []
@@ -235,23 +238,33 @@ def dashboard():
             "total": total,
             "percent": percent
         })
-    return render_template("dashboard.html", levels=levels)
+    
+    # Get daily work statistics
+    daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
+    
+    return render_template("dashboard.html", levels=levels, daily_stats=daily_stats)
 
 @dictation_bp.before_app_request
 def check_user_authentication():
+    """
+    (Optional) Hook for enforcing authentication before each request. Currently a no-op.
+    """
     # No guest users - users must be logged in to use the app
     pass
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
 def login():
+    """
+    User login route. Authenticates user with Supabase and sets session state.
+    """
     error = None
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
         
-        print(f"Login attempt for email: {email}")
-        print(f"Supabase URL: {SUPABASE_URL}")
-        print(f"Supabase Key exists: {SUPABASE_KEY is not None}")
+        logging.info(f"Login attempt for email: {email}")
+        logging.info(f"Supabase URL: {SUPABASE_URL}")
+        logging.info(f"Supabase Key exists: {SUPABASE_KEY is not None}")
         
         try:
             result = supabase.auth.sign_in_with_password({
@@ -263,48 +276,57 @@ def login():
             if user is None:
                 raise Exception("No user returned from Supabase.")
             
-            print(f"Login successful for user: {user.id}")
+            logging.info(f"Login successful for user: {user.id}")
             new_user_id = user.id
 
             session["user_id"] = new_user_id
             session["email"] = user.email
             return redirect("/")
         except Exception as e:
-            print(f"Login error: {e}")
+            logging.error(f"Login error: {e}")
             error = f"Login failed: {str(e)}"
 
     return render_template("login.html", error=error)
 
 @dictation_bp.route("/signup", methods=["GET", "POST"])
 def signup():
+    """
+    User signup route. Registers a new user with Supabase.
+    """
     error = None
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
 
-        print(f"Signup attempt for email: {email}")
+        logging.info(f"Signup attempt for email: {email}")
         
         try:
             result = supabase.auth.sign_up({
                 "email": email,
                 "password": password
             })
-            print(f"Signup successful for user: {result.user.id if result.user else 'No user'}")
+            logging.info(f"Signup successful for user: {result.user.id if result.user else 'No user'}")
             return redirect("/login")
         except Exception as e:
-            print(f"Signup error: {e}")
+            logging.error(f"Signup error: {e}")
             error = f"Signup failed: {str(e)}"
 
     return render_template("signup.html", error=error)
 
 @dictation_bp.route("/logout")
 def logout():
+    """
+    User logout route. Clears session and redirects to menu.
+    """
     session.clear()
     return redirect("/")
 
 @dictation_bp.route("/hsk/<level>")
 @login_required
 def hsk_level_detail(level):
+    """
+    Shows character progress for a specific HSK level for the logged-in user.
+    """
     user_id = session.get("user_id")
     # Get all hanzi for this level
     hanzi_list = [item for item in ctx.hsk_data if item["hsk_level"] == level]
@@ -339,8 +361,10 @@ def hsk_level_detail(level):
 
 
 @dictation_bp.route("/story/<story_id>/session", methods=["GET", "POST"])
-@login_required
 def story_session(story_id):
+    """
+    Handles dictation sessions for short stories, including progress saving and resuming.
+    """
     # Handle both story IDs and story titles
     story = ctx.get_story(story_id)
     if not story:
@@ -370,16 +394,16 @@ def story_session(story_id):
                     "total_parts": len(story["parts"]),
                     "last_updated": "now()"
                 }).execute()
-                print(f"Saved story progress for user {user_id}, story {story_id}")
+                logging.info(f"Saved story progress for user {user_id}, story {story_id}")
                 flash(f"Progress saved! You can resume '{story['title']}' later.", "success")
             except Exception as e:
-                print(f"Error saving story progress: {e}")
+                logging.error(f"Error saving story progress: {e}")
                 flash("Failed to save progress. Please try again.", "error")
         else:
             flash("Please log in to save your progress.", "warning")
         
         # Clear session and redirect to main menu
-        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores"]:
             session.pop(key, None)
         return redirect("/")
     
@@ -388,12 +412,12 @@ def story_session(story_id):
         if user_id:
             try:
                 supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
-                print(f"Cleared story progress for user {user_id}, story {story_id}")
+                logging.info(f"Cleared story progress for user {user_id}, story {story_id}")
             except Exception as e:
-                print(f"Error clearing story progress: {e}")
+                logging.error(f"Error clearing story progress: {e}")
         
         # Clear session data
-        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+        for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores"]:
             session.pop(key, None)
         return redirect(f"/story/{story_id}/session")
     
@@ -406,9 +430,9 @@ def story_session(story_id):
                 result = supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).execute()
                 if result.data:
                     existing_progress = result.data[0]
-                    print(f"Found existing progress for user {user_id}, story {story_id}")
+                    logging.info(f"Found existing progress for user {user_id}, story {story_id}")
             except Exception as e:
-                print(f"Error loading story progress: {e}")
+                logging.error(f"Error loading story progress: {e}")
         
         if existing_progress:
             # Resume from saved progress
@@ -434,18 +458,28 @@ def story_session(story_id):
             score = session["story_session_score"]
             total = len(story["parts"])
             
+            # Calculate average accuracy for the story session
+            average_accuracy = 0
+            if user_id and "accuracy_scores" in session and session["accuracy_scores"]:
+                average_accuracy = sum(session["accuracy_scores"]) / len(session["accuracy_scores"])
+                # Update daily work registry with story session average
+                update_daily_work_registry(user_id, "story", average_accuracy, total, story_id, total)
+            
             # Clear story progress from database when completed
             if user_id:
                 try:
                     supabase.table("story_progress").delete().eq("user_id", user_id).eq("story_id", story_id).execute()
-                    print(f"Cleared completed story progress for user {user_id}, story {story_id}")
+                    logging.info(f"Cleared completed story progress for user {user_id}, story {story_id}")
                 except Exception as e:
-                    print(f"Error clearing completed story progress: {e}")
+                    logging.error(f"Error clearing completed story progress: {e}")
+            
+            # Get daily work stats for summary
+            daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
             
             # Clear story session data
-            for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id"]:
+            for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores"]:
                 session.pop(key, None)
-            return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id)
+            return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     part_id = session["story_session_ids"][session["story_session_index"]]
     part = ctx.get_story_part(story_id, part_id)

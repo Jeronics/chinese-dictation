@@ -12,10 +12,10 @@
     }
 </style>
     {% if not session.get("email") %}
-        <div class="login-required-notice" style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 1rem; margin-bottom: 2rem; color: #721c24;">
+        <div class="login-required-notice">
             <h3>🔐 Login Required</h3>
-            <p>You need to <a href="/login" style="color: #721c24; font-weight: bold;">log in</a> to use this app and save your progress.</p>
-            <p>Don't have an account? <a href="/signup" style="color: #721c24; font-weight: bold;">Sign up</a> for free!</p>
+            <p>You need to <a href="/login">log in</a> to save your progress.</p>
+            <p>Don't have an account? <a href="/signup">Sign up</a> for free!</p>
         </div>
     {% endif %}
 
@@ -26,10 +26,8 @@
         {% endif %}
     </div>
 
-    {% if session.get("email") %}
     <div class="menu-section">
         <h2>📝 Common Phrases</h2>
-        
         <div class="row row-cols-1 row-cols-md-3 g-4 custom-grid">
             <div class="col custom-grid-cell">
                 <div class="option-card blog-card">
@@ -51,7 +49,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -72,7 +69,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -93,7 +89,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -114,7 +109,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -135,7 +129,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -156,7 +149,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="option-card blog-card">
                     <div class="hsk-header">
@@ -185,7 +177,6 @@
         <p>Debug: Found {{ stories|length }} stories</p>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
-                <!-- Debug: Rendering story {{ story_id }} -->
                 <div class="col">
                     <div class="story-card blog-card">
                         <div class="story-header">
@@ -204,7 +195,7 @@
                         </div>
                         {% endif %}
                         <div class="story-actions">
-                            {% if story_id in saved_stories %}
+                            {% if session.get("email") and story_id in saved_stories %}
                                 <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume</a>
                             {% else %}
                                 <a href="/story/{{ story_id }}/session" class="start-button">▶ Start</a>
@@ -215,8 +206,6 @@
             {% endfor %}
         </div>
     </div>
-    {% endif %}
-
 
 {% endblock %}
 
@@ -489,6 +478,33 @@
         border-color: var(--primary-hover);
     }
 
+    .login-required-notice {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        color: #721c24;
+    }
+
+    .login-required-notice h3 {
+        color: #721c24;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .login-required-notice p {
+        margin-bottom: 0.5rem;
+    }
+
+    .login-required-notice a {
+        color: #721c24;
+        font-weight: bold;
+    }
+
+    .login-required-notice a:hover {
+        text-decoration: underline;
+    }
 
 </style>
 {% endblock %}

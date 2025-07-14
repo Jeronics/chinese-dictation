@@ -1,31 +1,36 @@
 :root {
-    --bg: #fef2f2;
-    --text: #4a5568;
-    --primary: #d00000;
-    --primary-hover: #a30000;
-    --secondary: #fa4c4c;
-    --secondary-hover: #dc2626;
-    --danger: #b91c1c;
-    --danger-hover: #7f1d1d;
-    --muted: #7f1d1d;
+    /* Colorblind-friendly, high-contrast palette */
+    --bg: #fefefe;
+    --text: #22223b;
+    --primary: #1976d2;         /* Blue */
+    --primary-hover: #115293;
+    --secondary: #ff9800;       /* Orange */
+    --secondary-hover: #c66900;
+    --danger: #8e24aa;          /* Purple */
+    --danger-hover: #5c007a;
+    --success: #00897b;         /* Teal */
+    --success-hover: #005b4f;
+    --muted: #757575;
     --white: #ffffff;
-    --surface: #fff5f5;
+    --surface: #f5f5fa;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #1e0a0a;
-        --text: #ffffff;
-        --primary: #f87171;
-        --primary-hover: #ef4444;
-        --secondary: #fca5a5;
-        --secondary-hover: #f87171;
-        --danger: #fecaca;
-        --danger-hover: #fca5a5;
-        --muted: #f87171;
-        --white: #1f1f1f;
-        --surface: #2c0a0a;
+        --bg: #181825;
+        --text: #f8f8f2;
+        --primary: #82aaff;
+        --primary-hover: #1976d2;
+        --secondary: #ffb74d;
+        --secondary-hover: #ff9800;
+        --danger: #ce93d8;
+        --danger-hover: #8e24aa;
+        --success: #26a69a;
+        --success-hover: #00897b;
+        --muted: #bdbdbd;
+        --white: #232136;
+        --surface: #232136;
         --shadow: none;
     }
 }
@@ -439,8 +444,18 @@ label:focus-within {
     border-radius: 6px;
 }
 
-.diff-del { color: #d32f2f; opacity: 0.5; }
-.diff-ins { color: #90caf9; }
+/* Diff/Correction colors: colorblind-friendly and with underline for clarity */
+.diff-del {
+    color: #ff7043; /* Strong orange */
+    text-decoration: underline wavy #ff7043;
+    opacity: 1;
+    font-weight: bold;
+}
+.diff-ins {
+    color: #1976d2; /* Strong blue */
+    text-decoration: underline wavy #1976d2;
+    font-weight: bold;
+}
 
 @media (prefers-color-scheme: dark) {
     .result {
@@ -828,28 +843,26 @@ label:focus-within {
     }
 }
 
+/* Alert/flash message color adjustments */
 .flash-success {
-    background-color: #d4edda;
-    color: #155724;
-    border-left-color: #28a745;
+    background: var(--success);
+    color: var(--white);
+    border-left: 6px solid var(--success-hover);
 }
-
 .flash-info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border-left-color: #17a2b8;
+    background: var(--primary);
+    color: var(--white);
+    border-left: 6px solid var(--primary-hover);
 }
-
 .flash-warning {
-    background-color: #fff3cd;
-    color: #856404;
-    border-left-color: #ffc107;
+    background: var(--secondary);
+    color: var(--white);
+    border-left: 6px solid var(--secondary-hover);
 }
-
 .flash-error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-left-color: #dc3545;
+    background: var(--danger);
+    color: var(--white);
+    border-left: 6px solid var(--danger-hover);
 }
 
 @keyframes slideIn {
@@ -904,6 +917,44 @@ label:focus-within {
     
     .session-progress-fill::after {
         background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+    }
+}
+
+/* Add comments for maintainability */
+/*
+- Blue: Primary actions, links
+- Orange: Secondary actions, highlights
+- Purple: Danger, errors, destructive actions
+- Teal: Success, confirmations
+- All colors chosen for colorblind accessibility and high contrast
+*/
+
+.login-required-notice {
+    background: var(--primary);
+    color: var(--white);
+    border: 2px solid var(--primary-hover);
+    border-radius: 8px;
+    padding: 1.25rem 1rem 1rem 1rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+.login-required-notice a {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: bold;
+}
+.login-required-notice a:hover {
+    color: var(--secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+    .login-required-notice {
+        background: var(--primary-hover);
+        color: var(--white);
+        border-color: var(--primary);
+    }
+    .login-required-notice a {
+        color: var(--white);
     }
 }
 
