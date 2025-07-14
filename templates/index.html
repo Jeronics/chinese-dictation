@@ -23,9 +23,9 @@
 
         <!-- Story Mode Layout with Context Panel -->
         <div class="story-layout">
-            <!-- Main Content Column -->
-            <div class="story-main-content">
+            <div class="dictation-header">
                 <h1>{{ story_title }}</h1>
+<<<<<<< HEAD
 
                 <p><strong>HSK Level:</strong> {{ difficulty }}</p>
 
@@ -56,24 +56,59 @@
                         <a href="/stories">Back to Stories</a>
                     {% endif %}
                 {% endif %}
+=======
+                <p class="hsk-level"><strong>HSK Level:</strong> {{ difficulty }}</p>
+>>>>>>> e57139c (Refine story mode layout: align dictation/context panels, fix spacing, and reverse panel order)
             </div>
-
-            <!-- Context Panel -->
-            <div class="story-context-panel">
-                <h3>📖 Story Context</h3>
-                <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
-                <div class="context-content">
-                    {% if story_context and story_context|length > 0 %}
-                        {% for part in story_context %}
-                            <div class="context-part">
-                                <div class="context-text">{{ part.chinese }}</div>
-                                <div class="context-pinyin hidden">{{ part.pinyin }}</div>
-                                <div class="context-translation hidden">{{ part.translation }}</div>
-                            </div>
-                        {% endfor %}
+            <div class="story-panels-row">
+                <div class="story-context-panel">
+                    <h3>📖 Story Context</h3>
+                    <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
+                    <div class="context-content">
+                        {% if story_context and story_context|length > 0 %}
+                            {% for part in story_context %}
+                                <div class="context-part">
+                                    <div class="context-text">{{ part.chinese }}</div>
+                                    <div class="context-pinyin hidden">{{ part.pinyin }}</div>
+                                    <div class="context-translation hidden">{{ part.translation }}</div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-context">📖 This is the beginning of the story. Previous context will appear here as you progress.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="dictation-frame">
+                    <h3>📝 Dictation</h3>
+                    {% if audio_file %}
+                        <audio controls autoplay>
+                            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
                     {% else %}
-                        <p class="no-context">📖 This is the beginning of the story. Previous context will appear here as you progress.</p>
+                        <div class="no-audio-notice">
+                            <p>📖 <strong>Story Mode:</strong> Read the text below and type what you see.</p>
+                        </div>
                     {% endif %}
+
+                    {% if not show_result %}
+                        {{ dictation_form(false, request.path, false, show_next_button) }}
+                    {% else %}
+                        {{ dictation_form(true, request.path, true, show_next_button) }}
+                        <div class="result">
+                            <h3>{{ result }}</h3>
+                            <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
+                            <p><strong>Correction:</strong> {{ correction|safe }}</p>
+                            <p><strong>Pinyin:</strong> {{ pinyin }}</p>
+                            <p><strong>Translation:</strong> {{ translation }}</p>
+                            <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+                        </div>
+                        {% if not show_next_button %}
+                            <a href="/stories">Back to Stories</a>
+                        {% endif %}
+                    {% endif %}
+
+                    <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
                 </div>
             </div>
         </div>
