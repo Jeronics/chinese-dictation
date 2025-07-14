@@ -566,9 +566,9 @@ label:focus-within {
     top: 20px;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
+    margin-bottom: 1.2em;
     padding-top: 1.5em;
 }
-
 .story-context-panel h3 {
     color: var(--primary);
     margin: 0 0 20px 0;
@@ -576,6 +576,30 @@ label:focus-within {
     text-align: center;
     border-bottom: 2px solid var(--primary);
     padding-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+}
+.story-context-panel > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .story-context-panel {
+        position: static;
+        max-height: none;
+        order: -1;
+    }
+}
+@media (max-width: 768px) {
+    .story-context-panel {
+        padding: 15px;
+    }
 }
 
 .context-content {
@@ -1004,14 +1028,14 @@ label:focus-within {
 .dictation-frame {
     margin: 1.2em auto 1.2em auto;
     max-width: 500px;
-    padding: 0 1.5em 2em 1.5em;
+    padding: 20px;
+    padding-top: 1.5em;
     background: var(--surface);
     border-radius: 12px;
     box-shadow: 0 2px 8px #0001;
     border: 1px solid #e0e0e0;
     margin-top: 0;
     position: relative;
-    padding-top: 0;
 }
 
 .audio-next-row,
@@ -1086,5 +1110,24 @@ audio {
     margin-top: 0 !important;
     margin-bottom: 1em;
     display: block;
+}
+
+.dictation-frame audio {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- UNIFIED PANEL STYLES --- */
+.story-context-panel, .dictation-frame {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+}
+.story-context-panel {
+    border-color: var(--primary) !important;
+}
+.dictation-frame {
+    border-color: var(--secondary) !important;
 }
 
