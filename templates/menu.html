@@ -186,15 +186,15 @@
                                 <span class="story-title-chinese">{{ story.title_chinese }}</span>
                             </div>
                         </div>
-                        <div class="story-info-row">
-                            <span class="story-difficulty">HSK: <b>{{ story.difficulty }}</b></span>
-                            <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
-                        </div>
                         {% if story.description %}
                         <div class="story-description">
-                            {{ story.description }}
+                            {{ story.description[:100] }}{% if story.description|length > 100 %}...{% endif %}
                         </div>
                         {% endif %}
+                        <div class="story-info-row">
+                            <span class="story-difficulty">Level: <b>{{ story.difficulty }}</b></span>
+                            <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
+                        </div>
                         <div class="story-actions">
                             {% if session.get("email") and story_id in saved_stories %}
                                 <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
