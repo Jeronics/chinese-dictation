@@ -10,24 +10,32 @@
         padding: 1rem;
         height: 100%;
     }
+    .hsk-title {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .story-title {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
 </style>
     {% if not session.get("email") %}
         <div class="login-required-notice">
-            <h3>🔐 Login Required</h3>
+            <h3>Login Required</h3>
             <p>You need to <a href="/login">log in</a> to save your progress.</p>
             <p>Don't have an account? <a href="/signup">Sign up</a> for free!</p>
         </div>
     {% endif %}
 
     <div class="menu-header">
-        <h1>📚 Chinese Dictation – Menu</h1>
+        <h1>Menu</h1>
         {% if session.get("email") %}
-            <a href="/dashboard" class="progress-button">📊 Show Progress</a>
+            <a href="/dashboard" class="progress-button">Show Progress</a>
         {% endif %}
     </div>
 
     <div class="menu-section">
-        <h2>📝 Common Phrases</h2>
+        <h2>Common Phrases</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4 custom-grid">
             <div class="col custom-grid-cell">
                 <div class="option-card blog-card">
@@ -41,11 +49,10 @@
                         <span class="hsk-difficulty">Level: <b>Mixed</b></span>
                         <span class="hsk-words">Characters: <b>{{ hsk_totals.values() | sum }}</b></span>
                     </div>
-                    <div class="hsk-description">
-                        All HSK levels combined
-                    </div>
                     <div class="hsk-actions">
-                        <a href="/session" class="start-button">▶ Start</a>
+                        <form action="/session" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -57,15 +64,14 @@
                             <span class="hsk-subtitle">Beginner</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK1</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK1', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK1', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK1</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK1', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK1" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK1" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -77,15 +83,14 @@
                             <span class="hsk-subtitle">Elementary</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK2</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK2', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK2', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK2</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK2', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK2" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK2" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -97,15 +102,14 @@
                             <span class="hsk-subtitle">Intermediate</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK3</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK3', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK3', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK3</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK3', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK3" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK3" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -117,15 +121,14 @@
                             <span class="hsk-subtitle">Upper Intermediate</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK4</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK4', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK4', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK4</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK4', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK4" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK4" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -137,15 +140,14 @@
                             <span class="hsk-subtitle">Advanced</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK5</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK5', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK5', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK5</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK5', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK5" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK5" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -157,15 +159,14 @@
                             <span class="hsk-subtitle">Mastery</span>
                         </div>
                     </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>HSK6</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK6', 0) }}</b></span>
-                    </div>
-                    <div class="hsk-description">
-                        {{ hsk_totals.get('HSK6', 0) }} characters
+                    <div class="hsk-info-row" style="display: block;">
+                        <div class="hsk-difficulty">Level: <b>HSK6</b></div>
+                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK6', 0) }}</b></div>
                     </div>
                     <div class="hsk-actions">
-                        <a href="/session?hsk=HSK6" class="start-button">▶ Start</a>
+                        <form action="/session?hsk=HSK6" method="get" style="display:inline;">
+                            <button type="submit" class="start-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -173,7 +174,7 @@
     </div>
 
     <div class="menu-section">
-        <h2>📚 Short Stories</h2>
+        <h2>Short Stories</h2>
         <p>Debug: Found {{ stories|length }} stories</p>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
@@ -196,9 +197,13 @@
                         {% endif %}
                         <div class="story-actions">
                             {% if session.get("email") and story_id in saved_stories %}
-                                <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume</a>
+                                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
+                                    <button type="submit" class="resume-button">Resume</button>
+                                </form>
                             {% else %}
-                                <a href="/story/{{ story_id }}/session" class="start-button">▶ Start</a>
+                                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
+                                    <button type="submit" class="start-button">Start</button>
+                                </form>
                             {% endif %}
                         </div>
                     </div>
@@ -445,15 +450,17 @@
     }
     
     .start-button, .resume-button {
+        padding: 0.25em 1em;
+        margin: 0.1em 0;
+        font-size: 1em;
+        line-height: 1.2;
+        height: auto;
         display: inline-block;
-        padding: 8px 16px;
         border-radius: 6px;
         text-decoration: none;
         font-weight: bold;
-        font-size: 0.9rem;
         border: 2px solid;
         cursor: pointer;
-        transition: all 0.2s ease;
     }
     
     .start-button {
@@ -476,34 +483,6 @@
     .resume-button:hover {
         background-color: var(--primary-hover);
         border-color: var(--primary-hover);
-    }
-
-    .login-required-notice {
-        background: #f8d7da;
-        border: 1px solid #f5c6cb;
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        color: #721c24;
-    }
-
-    .login-required-notice h3 {
-        color: #721c24;
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-    }
-
-    .login-required-notice p {
-        margin-bottom: 0.5rem;
-    }
-
-    .login-required-notice a {
-        color: #721c24;
-        font-weight: bold;
-    }
-
-    .login-required-notice a:hover {
-        text-decoration: underline;
     }
 
 </style>
