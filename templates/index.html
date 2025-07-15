@@ -25,8 +25,32 @@
         <div class="story-layout">
             <div class="dictation-header">
                 <h1>{{ story_title }}</h1>
-                <p class="hsk-level"><strong>HSK Level:</strong> {{ difficulty }}</p>
+                <p class="hsk-level"><strong>Level:</strong> {{ difficulty }}</p>
             </div>
+            {% if current and total %}
+            <div class="session-progress-container">
+                <div class="session-progress-info">
+                    <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
+                    <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
+                </div>
+                <div class="segmented-progress-bar">
+                    {% set num_groups = (total // 5) %}
+                    {% set remainder = total % 5 %}
+                    {% for i in range(num_groups + (1 if remainder else 0)) %}
+                        {% set segment_size = 5 if i < num_groups else remainder %}
+                        {% set start = i * 5 + 1 %}
+                        {% set end = start + segment_size - 1 %}
+                        {% set filled = (current > end) %}
+                        {% set partial = (current >= start and current <= end) %}
+                        <div class="progress-segment">
+                            <div class="progress-segment-fill{% if filled %} completed{% endif %}"
+                                 style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             <div class="story-panels-row">
                 <div class="story-context-panel">
                     <h3>📖 Story Context</h3>
@@ -74,8 +98,6 @@
                             <a href="/stories">Back to Stories</a>
                         {% endif %}
                     {% endif %}
-
-                    <p>🎯 Score: {{ score }} | 🧑‍🎓 Level: {{ level }}</p>
                 </div>
             </div>
         </div>
@@ -90,13 +112,26 @@
                     <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
                     <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
                 </div>
-                <div class="session-progress-bar">
-                    <div class="session-progress-fill" style="width: {{ (current / total) * 100 }}%"></div>
+                <div class="segmented-progress-bar">
+                    {% set num_groups = (total // 5) %}
+                    {% set remainder = total % 5 %}
+                    {% for i in range(num_groups + (1 if remainder else 0)) %}
+                        {% set segment_size = 5 if i < num_groups else remainder %}
+                        {% set start = i * 5 + 1 %}
+                        {% set end = start + segment_size - 1 %}
+                        {% set filled = (current > end) %}
+                        {% set partial = (current >= start and current <= end) %}
+                        <div class="progress-segment">
+                            <div class="progress-segment-fill{% if filled %} completed{% endif %}"
+                                 style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% endif %}
 
-        <p><strong>HSK Level:</strong> {{ difficulty }}</p>
+        <p><strong>Level:</strong> {{ difficulty }}</p>
 
         {% if audio_file %}
             <audio controls autoplay>
