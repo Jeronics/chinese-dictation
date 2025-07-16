@@ -1,40 +1,27 @@
+/* =========================
+   COLOR VARIABLES & GLOBALS
+   ========================= */
 :root {
-    /* Colorblind-friendly, high-contrast palette */
-    --bg: #fefefe;
-    --text: #22223b;
-    --primary: #1976d2;         /* Blue */
-    --primary-hover: #115293;
-    --secondary: #ff9800;       /* Orange */
-    --secondary-hover: #c66900;
-    --danger: #8e24aa;          /* Purple */
-    --danger-hover: #5c007a;
-    --success: #00897b;         /* Teal */
-    --success-hover: #005b4f;
-    --muted: #757575;
-    --white: #ffffff;
-    --surface: #f5f5fa;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Dark mode palette (always on) */
+    --bg: #181825;
+    --text: #f8f8f2;
+    --primary: #82aaff;
+    --primary-hover: #1976d2;
+    --secondary: #ffb74d;
+    --secondary-hover: #ff9800;
+    --danger: #ce93d8;
+    --danger-hover: #8e24aa;
+    --success: #26a69a;
+    --success-hover: #00897b;
+    --muted: #bdbdbd;
+    --white: #232136; /* Use as dark surface */
+    --surface: #232136;
+    --shadow: none;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #181825;
-        --text: #f8f8f2;
-        --primary: #82aaff;
-        --primary-hover: #1976d2;
-        --secondary: #ffb74d;
-        --secondary-hover: #ff9800;
-        --danger: #ce93d8;
-        --danger-hover: #8e24aa;
-        --success: #26a69a;
-        --success-hover: #00897b;
-        --muted: #bdbdbd;
-        --white: #232136;
-        --surface: #232136;
-        --shadow: none;
-    }
-}
-
+/* =========================
+   BASE LAYOUT & TYPOGRAPHY
+   ========================= */
 body {
     background-color: var(--bg) !important;
     color: var(--text) !important;
@@ -46,20 +33,13 @@ body {
     min-height: 100vh;
 }
 
-/* Override Bootstrap text colors */
 body, body * {
     color: var(--text) !important;
 }
 
-/* Exceptions for specific elements that should keep their colors */
-.btn, .btn * {
-    color: inherit !important;
-}
-
-.nav-link, .nav-link * {
-    color: inherit !important;
-}
-
+/* =========================
+   NAVBAR / MENU
+   ========================= */
 header {
     background-color: var(--surface);
     box-shadow: var(--shadow);
@@ -69,7 +49,6 @@ header {
     align-items: center;
 }
 
-/* Navbar Styles */
 .topbar {
     background-color: var(--surface);
     box-shadow: var(--shadow);
@@ -82,6 +61,9 @@ header {
     align-items: center;
     padding: 1rem 2rem;
     width: 100%;
+    background-color: var(--surface); /* Ensure menu background is always themed */
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--primary);
 }
 
 .brand {
@@ -136,64 +118,59 @@ header {
     box-shadow: var(--shadow);
 }
 
-/* Login/Signup specific styles */
+/* =========================
+   NAVBAR LOGIN/SIGNUP/LOGOUT
+   ========================= */
 .user-links a[href="/login"] {
     color: var(--primary);
     background-color: var(--white);
     border-color: var(--primary);
 }
-
 .user-links a[href="/login"]:hover {
     background-color: var(--primary);
     color: var(--white);
 }
-
 .user-links a[href="/signup"] {
     color: var(--white);
     background-color: var(--secondary);
     border-color: var(--secondary);
 }
-
 .user-links a[href="/signup"]:hover {
     background-color: var(--secondary-hover);
     border-color: var(--secondary-hover);
 }
-
 .user-links a[href="/logout"] {
     color: var(--white);
     background-color: var(--danger);
     border-color: var(--danger);
 }
-
 .user-links a[href="/logout"]:hover {
     background-color: var(--danger-hover);
     border-color: var(--danger-hover);
 }
 
-/* High contrast mode for accessibility */
+/* =========================
+   HIGH CONTRAST MODE
+   ========================= */
 @media (prefers-contrast: high) {
     .user-email {
         border-width: 3px;
         background-color: var(--white);
         color: var(--text);
     }
-    
     .nav-link {
         border-width: 3px;
     }
-    
     .user-links a[href="/login"] {
         border-width: 3px;
         background-color: var(--white);
         color: var(--primary);
     }
-    
     .user-links a[href="/signup"] {
         border-width: 3px;
         background-color: var(--secondary);
         color: var(--white);
     }
-    
     .user-links a[href="/logout"] {
         border-width: 3px;
         background-color: var(--danger);
@@ -201,33 +178,163 @@ header {
     }
 }
 
-/* Mobile responsiveness */
+/* =========================
+   MOBILE STYLES (RESPONSIVE)
+   ========================= */
 @media (max-width: 768px) {
+    /* --- NAVBAR / MENU: Ensure background is always themed --- */
     .navbar {
-        padding: 1rem;
+        padding: 1.2rem 2rem;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.2rem;
+        background-color: var(--surface) !important; /* Fix: always themed, not white */
+        box-shadow: var(--shadow);
+        border-bottom: 2px solid var(--primary);
     }
-    
     .brand a {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        color: var(--text) !important;
     }
-    
     .user-links {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
         width: 100%;
         margin-left: 0;
+        background: none;
     }
-    
+    .nav-link, .user-email {
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+        background-color: var(--white);
+        border: 2px solid var(--primary);
+        border-radius: 6px;
+        box-shadow: var(--shadow);
+        margin-bottom: 0.5rem;
+    }
     .nav-link {
-        width: 100%;
-        text-align: center;
+        color: var(--primary);
     }
-    
     .user-email {
+        color: var(--text) !important;
+    }
+    /* --- FORMS --- */
+    .form-container {
+        margin: 1.5rem auto;
+        padding: 2rem;
+        background-color: var(--surface);
+        border: 2px solid var(--primary);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+    }
+    input[type="email"], input[type="password"] {
+        max-width: 100%;
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        background-color: var(--white);
+        color: var(--text);
+        box-shadow: var(--shadow);
+    }
+    /* --- STORY PANELS --- */
+    .story-context-panel {
+        padding: 20px;
+        background: var(--surface);
+        border: 2px solid var(--primary);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+    }
+    .story-main-content {
+        padding: 25px;
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        border: 1px solid #e9ecef;
+    }
+    .result-actions {
+        flex-direction: column;
+        gap: 1rem;
+        background: none;
+        box-shadow: none;
+    }
+    .next-btn, .restart-btn {
         width: 100%;
         text-align: center;
+        background-color: var(--primary);
+        color: var(--white);
+        border-radius: 8px;
+        font-size: 1rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 0.5rem;
+    }
+    .flash-success, .flash-info, .flash-warning, .flash-error {
+        border-left-width: 6px;
+        border-radius: 8px;
+        font-size: 1rem;
+        box-shadow: var(--shadow);
+    }
+    .dictation-frame {
+        max-width: 100%;
+        padding: 20px;
+        background: var(--surface);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #0001;
+        border: 1px solid #e0e0e0;
+    }
+    .input-and-button {
+        flex-direction: column;
+        gap: 0.7em;
+    }
+    .input-and-button input[type='text'] {
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+    }
+    .input-and-button button {
+        font-size: 1rem;
+        padding: 0.8rem 1.2rem;
+        background-color: var(--primary);
+        color: var(--white);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+    .session-progress-container {
+        background-color: var(--surface);
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        padding: 1rem;
+    }
+    .story-layout {
+        width: 100%;
+        background: none;
+    }
+    .story-panels-row {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+    .story-context-panel h3 {
+        font-size: 1.2rem;
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary);
+    }
+    .result {
+        background-color: var(--white);
+        border-left: 4px solid var(--primary);
+        border-radius: 6px;
+        box-shadow: var(--shadow);
+        font-size: 1rem;
+    }
+    .error-message {
+        color: var(--danger);
+        background-color: var(--white);
+        border: 2px solid var(--danger);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        font-size: 1rem;
+        box-shadow: var(--shadow);
     }
 }
 
@@ -395,20 +502,13 @@ label:focus-within {
 /* Error message styles */
 .error-message {
     color: var(--danger);
-    background-color: #fff5f5;
+    background-color: var(--white);
     border: 2px solid var(--danger);
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1rem;
     font-weight: 500;
     text-align: center;
-}
-
-@media (prefers-color-scheme: dark) {
-    .error-message {
-        background-color: #2c0a0a;
-        color: var(--danger);
-    }
 }
 
 @media (max-width: 768px) {
@@ -425,7 +525,7 @@ label:focus-within {
 .result {
     margin-top: 1rem;
     padding: 1rem;
-    background-color: #fff;
+    background-color: var(--white);
     border-left: 4px solid var(--primary);
     border-radius: 6px;
 }
@@ -443,9 +543,9 @@ label:focus-within {
     font-weight: bold;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (max-width: 768px) {
     .result {
-        background-color: #3a3a1a;
+        background-color: var(--white);
     }
 }
 
@@ -1052,12 +1152,19 @@ audio {
     text-align: center;
 }
 @media (max-width: 900px) {
+    /* On mobile, stack panels vertically with context panel underneath dictation panel */
     .story-panels-row {
-        flex-direction: column;
+        flex-direction: column-reverse;
         gap: 1em;
     }
     .story-context-panel, .dictation-frame {
         max-width: 100%;
+    }
+    /* Ensure context panel is visually balanced and at least as tall as dictation panel */
+    .story-context-panel {
+        min-height: 300px; /* Adjust as needed for your content */
+        height: auto;
+        /* Optionally, use flex: 1 1 0; if .story-panels-row is display: flex */
     }
 }
 
