@@ -1164,7 +1164,7 @@ audio {
     .story-context-panel {
         min-height: 300px; /* Adjust as needed for your content */
         height: auto;
-        /* Optionally, use flex: 1 1 0; if .story-panels-row is display: flex */
+        width: 100%; /* Fill parent container width on mobile */
     }
 }
 
