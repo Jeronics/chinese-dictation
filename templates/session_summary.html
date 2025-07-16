@@ -3,16 +3,16 @@
 {% block title %}Session Completed{% endblock %}
 
 {% block content %}
-    <h1>🎉 Dictation Session Complete!</h1>
+    <h1>Dictation Session Complete!</h1>
 
     <p>You scored <strong>{{ score }} / {{ total }}</strong>.</p>
 
     {% if score == total %}
-        <p>🏅 Perfect! Great job!</p>
+        <p>Perfect! Great job!</p>
     {% elif score >= 3 %}
-        <p>👍 Nice! You're getting there!</p>
+        <p>Nice! You're getting there!</p>
     {% else %}
-        <p>💪 Don’t give up! Try another round!</p>
+        <p>Don’t give up! Try another round!</p>
     {% endif %}
 
     {% if level %}
@@ -20,8 +20,8 @@
     {% endif %}
 
     <p>
-        <a href="/session"><button>🔁 Start New Session</button></a>
-        <a href="/"><button>🏠 Back to Menu</button></a>
+        <a href="/session"><button>Start New Session</button></a>
+        <a href="/"><button>Back to Menu</button></a>
     </p>
 {% endblock %}
 

@@ -140,11 +140,12 @@ def main():
         story_voice = random.choice(voice_list)
         story_voice_desc = CHINESE_VOICES[story_voice]
         
-        print(f"📖 [{story_idx}/{total_stories}] Story: {story_title} ({story_title_chinese})")
-        print(f"   Level: {difficulty}")
-        print(f"   Parts: {len(parts)}")
-        print(f"   Voice: {story_voice} ({story_voice_desc})")
-        print()
+        # Remove or comment out all print statements except for errors and the final summary.
+        # print(f"📖 [{story_idx}/{total_stories}] Story: {story_title} ({story_title_chinese})")
+        # print(f"   Level: {difficulty}")
+        # print(f"   Parts: {len(parts)}")
+        # print(f"   Voice: {story_voice} ({story_voice_desc})")
+        # print()
         
         story_success = 0
         story_failed = 0
@@ -161,34 +162,34 @@ def main():
             
             # Skip if file already exists
             if os.path.exists(path):
-                print(f"   ⏩ [{part_idx}/{len(parts)}] Skipped (already exists): {filename}")
+                # print(f"   ⏩ [{part_idx}/{len(parts)}] Skipped (already exists): {filename}")
                 skipped_parts += 1
                 continue
             
-            print(f"   🎵 [{part_idx}/{len(parts)}] Generating: {filename}")
-            print(f"      Text: {text}")
+            # print(f"   🎵 [{part_idx}/{len(parts)}] Generating: {filename}")
+            # print(f"      Text: {text}")
             
             # Use the same voice for all parts of this story
             success_flag, error = synthesize_text(client, text, path, voice_name=story_voice)
             
             if success_flag:
-                print(f"      ✅ Saved: {filename}")
+                # print(f"      ✅ Saved: {filename}")
                 story_success += 1
                 success_parts += 1
             else:
-                print(f"      ❌ Failed: {error}")
+                # print(f"      ❌ Failed: {error}")
                 story_failed += 1
                 failed_parts += 1
         
         # Story summary
         if story_success == len(parts):
-            print(f"   🎉 Story complete: {story_success}/{len(parts)} parts generated")
+            # print(f"   🎉 Story complete: {story_success}/{len(parts)} parts generated")
             success_stories += 1
         else:
-            print(f"   ⚠️  Story incomplete: {story_success}/{len(parts)} parts generated, {story_failed} failed")
+            # print(f"   ⚠️  Story incomplete: {story_success}/{len(parts)} parts generated, {story_failed} failed")
             failed_stories += 1
         
-        print()
+        # print()
 
     # Final summary
     print("=" * 60)

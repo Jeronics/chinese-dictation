@@ -101,6 +101,50 @@
                 </div>
             </div>
         </div>
+        {% if story_mode and story_audio_files %}
+        <div style="margin: 1em 0;">
+          <button id="play-whole-story" aria-label="Listen to whole story" style="font-size:1.1em;">▶️ Listen to whole story</button>
+          <audio id="whole-story-audio" style="display:none;"></audio>
+        </div>
+        <script>
+          const audioFiles = {{ story_audio_files|tojson }};
+          const playButton = document.getElementById('play-whole-story');
+          const audioElement = document.getElementById('whole-story-audio');
+          let currentIdx = 0;
+          let isPlaying = false;
+
+          function playNext() {
+            if (currentIdx < audioFiles.length) {
+              audioElement.src = "/static/" + audioFiles[currentIdx];
+              audioElement.play();
+              currentIdx++;
+            } else {
+              isPlaying = false;
+              playButton.textContent = '▶️ Listen to whole story';
+              currentIdx = 0;
+            }
+          }
+
+          playButton.addEventListener('click', function() {
+            if (!isPlaying) {
+              isPlaying = true;
+              playButton.textContent = '⏸️ Pause';
+              currentIdx = 0;
+              playNext();
+            } else {
+              isPlaying = false;
+              playButton.textContent = '▶️ Listen to whole story';
+              audioElement.pause();
+            }
+          });
+
+          audioElement.addEventListener('ended', function() {
+            if (isPlaying) {
+              playNext();
+            }
+          });
+        </script>
+        {% endif %}
     {% else %}
         <!-- Regular Session Layout -->
         <h1>Chinese Dictation</h1>

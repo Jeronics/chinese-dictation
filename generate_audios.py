@@ -26,7 +26,7 @@ total = len(sentences)
 success = 0
 failed = 0
 
-print(f"🔊 Generating audio for {total} sentences...")
+# Removed all print statements for a cleaner script
 
 # Generate audio for each sentence
 for sid, data in sentences.items():
@@ -37,16 +37,11 @@ for sid, data in sentences.items():
 
     # Skip if file already exists
     if os.path.exists(path):
-        print(f"⏩ Skipped (already exists): {filename}")
         continue
 
     try:
         tts = gTTS(text=text, lang='zh')
         tts.save(path)
-        print(f"✅ Saved: {filename}")
         success += 1
     except Exception as e:
-        print(f"❌ Failed {sid}: {e}")
         failed += 1
-
-print(f"\n🎉 Done. {success} files created, {failed} failed, {total - success - failed} skipped.")

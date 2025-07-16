@@ -25,11 +25,11 @@
         </div>
         <div class="user-links">
             {% if session.get("email") %}
-                <span class="user-email">👤 {{ session["email"] }}</span>
-                <a class="nav-link" href="/logout">🚪 Logout</a>
+                <span class="user-email">{{ session["email"] }}</span>
+                <a class="nav-link" href="/logout">Logout</a>
             {% else %}
-                <a class="nav-link" href="/login">🔐 Login</a>
-                <a class="nav-link" href="/signup">📝 Sign up</a>
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/signup">Sign up</a>
             {% endif %}
         </div>
     </nav>

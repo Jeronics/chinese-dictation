@@ -82,7 +82,6 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
             story_id = None
             part_number = None
         audio_file = ctx.story_audio_path(story_id, part_number) if story_id and part_number else None
-        logging.info(f"[DEBUG] Looking up story audio: id={sentence_data['id']} story_id={story_id} part_number={part_number} audio_file={audio_file}")
     else:
         audio_file = ctx.audio_path(sentence_data["id"], sentence_data["difficulty"])
 
@@ -136,9 +135,6 @@ def menu():
             logging.error(f"Error loading saved stories: {e}")
             saved_stories = []
 
-    logging.info(f"Loading menu with {len(ctx.stories)} stories")
-    logging.info(f"Stories keys: {list(ctx.stories.keys())}")
-    logging.info(f"HSK totals: {ctx.hsk_totals}")
     return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
 
 
