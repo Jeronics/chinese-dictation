@@ -22,50 +22,238 @@
 /* =========================
    BASE LAYOUT & TYPOGRAPHY
    ========================= */
+
+/* =========================
+   SIDEBAR LAYOUT
+   ========================= */
 body {
     background-color: var(--bg) !important;
     color: var(--text) !important;
     font-family: 'Shanghai', 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 body, body * {
     color: var(--text) !important;
 }
 
-/* =========================
-   NAVBAR / MENU
-   ========================= */
-header {
+/* Sidebar always hidden by default, overlays content when open */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
     background-color: var(--surface);
+    border-right: 2px solid var(--primary);
     box-shadow: var(--shadow);
-    padding: 1rem 2rem;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar.sidebar-open, .sidebar-open {
+    left: 0;
+}
+
+/* Remove margin-left on .main-wrapper for all screen sizes */
+.main-wrapper {
+    margin-left: 0;
+    transition: none;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hamburger always visible */
+.sidebar-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: var(--white);
+}
+
+.sidebar-toggle span {
+    width: 24px;
+    height: 3px;
+    background-color: var(--text);
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-toggle:hover span {
+    background-color: var(--primary);
+}
+
+/* Remove all desktop-only sidebar and hamburger rules */
+@media (min-width: 769px) {
+    .main-wrapper {
+        margin-left: 0;
+    }
+    .sidebar {
+        left: -280px;
+    }
+    .sidebar-toggle {
+        display: flex;
+    }
+}
+
+/* Sidebar overlay always works the same */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (min-width: 769px) {
+    .sidebar-overlay {
+        display: block;
+    }
+}
+
+.sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    background-color: var(--white);
 }
 
+.sidebar-close {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-close:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+/* Hide close button on desktop */
+@media (min-width: 769px) {
+    .sidebar-close {
+        display: none;
+    }
+}
+
+.sidebar-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.sidebar-link:hover {
+    background-color: var(--white);
+    border-color: var(--primary);
+    transform: translateX(4px);
+}
+
+.sidebar-icon {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-text {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 2px solid var(--primary);
+    background-color: var(--white);
+}
+
+.user-info {
+    margin-bottom: 1rem;
+}
+
+.sidebar-link-logout {
+    color: var(--white);
+    background-color: var(--danger);
+    border-color: var(--danger);
+}
+
+.sidebar-link-logout:hover {
+    background-color: var(--danger-hover);
+    border-color: var(--danger-hover);
+}
+
+/* =========================
+   TOPBAR
+   ========================= */
 .topbar {
     background-color: var(--surface);
     box-shadow: var(--shadow);
     border-bottom: 2px solid var(--primary);
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 1rem 2rem;
-    width: 100%;
-    background-color: var(--surface); /* Ensure menu background is always themed */
-    box-shadow: var(--shadow);
-    border-bottom: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
+.page-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text);
+}
+
+/* =========================
+   OVERLAY
+   ========================= */
 .brand {
     display: flex;
     align-items: center;
@@ -85,13 +273,6 @@ header {
     color: var(--primary);
 }
 
-.user-links {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-left: auto;
-}
-
 .user-email {
     color: var(--text) !important;
     font-weight: 500;
@@ -103,50 +284,26 @@ header {
     box-shadow: var(--shadow);
 }
 
-.nav-link {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: all 0.2s ease-in-out;
-    border: 2px solid transparent;
-}
-
-.nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
-}
-
 /* =========================
-   NAVBAR LOGIN/SIGNUP/LOGOUT
+   SIDEBAR LINK STYLES
    ========================= */
-.user-links a[href="/login"] {
+.sidebar-link[href="/login"] {
     color: var(--primary);
     background-color: var(--white);
     border-color: var(--primary);
 }
-.user-links a[href="/login"]:hover {
+.sidebar-link[href="/login"]:hover {
     background-color: var(--primary);
     color: var(--white);
 }
-.user-links a[href="/signup"] {
+.sidebar-link[href="/signup"] {
     color: var(--white);
     background-color: var(--secondary);
     border-color: var(--secondary);
 }
-.user-links a[href="/signup"]:hover {
+.sidebar-link[href="/signup"]:hover {
     background-color: var(--secondary-hover);
     border-color: var(--secondary-hover);
-}
-.user-links a[href="/logout"] {
-    color: var(--white);
-    background-color: var(--danger);
-    border-color: var(--danger);
-}
-.user-links a[href="/logout"]:hover {
-    background-color: var(--danger-hover);
-    border-color: var(--danger-hover);
 }
 
 /* =========================
@@ -158,20 +315,20 @@ header {
         background-color: var(--white);
         color: var(--text);
     }
-    .nav-link {
+    .sidebar-link {
         border-width: 3px;
     }
-    .user-links a[href="/login"] {
+    .sidebar-link[href="/login"] {
         border-width: 3px;
         background-color: var(--white);
         color: var(--primary);
     }
-    .user-links a[href="/signup"] {
+    .sidebar-link[href="/signup"] {
         border-width: 3px;
         background-color: var(--secondary);
         color: var(--white);
     }
-    .user-links a[href="/logout"] {
+    .sidebar-link-logout {
         border-width: 3px;
         background-color: var(--danger);
         color: var(--white);
@@ -182,41 +339,43 @@ header {
    MOBILE STYLES (RESPONSIVE)
    ========================= */
 @media (max-width: 768px) {
-    /* --- NAVBAR / MENU: Ensure background is always themed --- */
-    .navbar {
-        padding: 1.2rem 2rem;
-        flex-direction: column;
-        gap: 1.2rem;
-        background-color: var(--surface) !important; /* Fix: always themed, not white */
-        box-shadow: var(--shadow);
-        border-bottom: 2px solid var(--primary);
+    /* --- SIDEBAR MOBILE STYLES --- */
+    .sidebar {
+        width: 80vw;
+        max-width: 320px;
+        left: -80vw;
     }
-    .brand a {
-        font-size: 1.2rem;
-        color: var(--text) !important;
+    
+    .sidebar-header {
+        padding: 1rem;
     }
-    .user-links {
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-        margin-left: 0;
-        background: none;
+    
+    .sidebar-content {
+        padding: 0.5rem 0;
     }
-    .nav-link, .user-email {
-        width: 100%;
-        text-align: center;
-        font-size: 1rem;
-        background-color: var(--white);
-        border: 2px solid var(--primary);
-        border-radius: 6px;
-        box-shadow: var(--shadow);
+    
+    .sidebar-nav {
+        padding: 0 0.5rem;
+    }
+    
+    .sidebar-link {
+        padding: 1.2rem;
+        font-size: 1.1rem;
         margin-bottom: 0.5rem;
     }
-    .nav-link {
-        color: var(--primary);
+    
+    .sidebar-icon {
+        font-size: 1.4rem;
+        margin-right: 1.2rem;
     }
+    
+    .sidebar-footer {
+        padding: 1rem;
+    }
+    
     .user-email {
-        color: var(--text) !important;
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
     }
     /* --- FORMS --- */
     .form-container {
@@ -372,13 +531,21 @@ main {
     margin: auto;
 }
 
+.content {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--bg);
+    min-height: calc(100vh - 200px);
+}
+
 footer {
     background-color: var(--surface);
     color: var(--muted);
     font-size: 0.85rem;
     text-align: center;
     padding: 1rem;
-    border-top: 1px solid #fca5a5;
+    border-top: 2px solid var(--primary);
+    box-shadow: var(--shadow);
 }
 
 button {
