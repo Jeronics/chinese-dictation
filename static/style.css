@@ -411,20 +411,6 @@ label:focus-within {
     }
 }
 
-@media (prefers-contrast: high) {
-    input[type="email"], input[type="password"] {
-        border-width: 3px;
-    }
-    
-    .form-container {
-        border-width: 3px;
-    }
-    
-    .error-message {
-        border-width: 3px;
-    }
-}
-
 @media (max-width: 768px) {
     .form-container {
         margin: 1rem;
@@ -673,13 +659,13 @@ label:focus-within {
 }
 
 .no-context {
-    color: #111 !important;
-    background: #fffbe6 !important;
+    color: var(--muted) !important;
+    background: var(--surface) !important;
     border-radius: 8px;
     border: 1px dashed #bdb76b;
     margin: 10px 0;
     padding: 15px;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 1.1em;
     text-align: center;
     box-shadow: 0 1px 2px #0001;
@@ -724,7 +710,6 @@ label:focus-within {
 
 /* Story Action Buttons */
 .story-actions {
-    margin-bottom: 30px;
     text-align: center;
     display: flex;
     gap: 15px;
@@ -772,19 +757,7 @@ label:focus-within {
 }
 
 /* High contrast and colorblind-friendly styles */
-@media (prefers-contrast: high) {
-    .resume-later-btn {
-        background-color: #495057;
-        border-color: #000000;
-        color: #ffffff;
-    }
-    
-    .restart-btn {
-        background-color: #721c24;
-        border-color: #000000;
-        color: #ffffff;
-    }
-}
+/* Removed all @media (prefers-contrast: high) blocks for easier debugging */
 
 /* Focus styles for accessibility */
 .resume-later-btn:focus, .restart-btn:focus {
@@ -987,14 +960,6 @@ label:focus-within {
     color: var(--secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-    .login-required-notice {
-        background: #2563eb !important;
-        color: #1e3a8a !important;
-        border-color: #2563eb !important;
-    }
-}
-
 .input-and-button {
     display: flex;
     flex-direction: row;
@@ -1054,10 +1019,6 @@ audio {
 }
 
 .result {
-    margin-bottom: 1.2em;
-}
-
-.no-context {
     margin-bottom: 1.2em;
 }
 
@@ -1163,5 +1124,28 @@ audio {
 
 .progress-segment-fill.completed {
     background: #00e676;
+}
+
+.hsk-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 0 !important;
+    text-align: center;
+    width: 100%;
+}
+.hsk-actions form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin: 0;
+}
+.start-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 

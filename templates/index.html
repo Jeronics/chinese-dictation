@@ -10,13 +10,13 @@
             <form method="POST" style="display: inline;">
                 <input type="hidden" name="resume_later" value="1">
                 <button type="submit" class="resume-later-btn">
-                    💾 Save & Resume Later
+                    Save & Resume Later
                 </button>
             </form>
             <form method="POST" style="display: inline;">
                 <input type="hidden" name="restart" value="1">
                 <button type="submit" class="restart-btn">
-                    🔄 Restart Story
+                    Restart Story
                 </button>
             </form>
         </div>
@@ -53,7 +53,7 @@
             {% endif %}
             <div class="story-panels-row">
                 <div class="story-context-panel">
-                    <h3>📖 Story Context</h3>
+                    <h3>Story Context</h3>
                     <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
                     <div class="context-content">
                         {% if story_context and story_context|length > 0 %}
@@ -65,12 +65,12 @@
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <p class="no-context">📖 This is the beginning of the story. Previous context will appear here as you progress.</p>
+                            <p class="no-context"><em>This is the beginning of the story. Previous context will appear here as you progress.</em></p>
                         {% endif %}
                     </div>
                 </div>
                 <div class="dictation-frame">
-                    <h3>📝 Dictation</h3>
+                    <h3>Dictation</h3>
                     {% if audio_file %}
                         <audio controls autoplay>
                             <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
@@ -78,7 +78,7 @@
                         </audio>
                     {% else %}
                         <div class="no-audio-notice">
-                            <p>📖 <strong>Story Mode:</strong> Read the text below and type what you see.</p>
+                            <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
                         </div>
                     {% endif %}
 
