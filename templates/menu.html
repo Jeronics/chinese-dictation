@@ -27,7 +27,7 @@
         </div>
     {% endif %}
 
-    <div class="menu-header">
+    <div class="menu-header" style="margin-top: 2rem;">
         <h1>Menu</h1>
         {% if session.get("email") %}
             <a href="/dashboard" class="progress-button">Show Progress</a>
@@ -37,177 +37,21 @@
     <div class="menu-section">
         <h2>Common Phrases</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4 custom-grid">
-            <div class="col custom-grid-cell">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">Mixed Practice</span>
-                            <span class="hsk-subtitle">All Levels Combined</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row">
-                        <span class="hsk-difficulty">Level: <b>Mixed</b></span>
-                        <span class="hsk-words">Characters: <b>{{ hsk_totals.values() | sum }}</b></span>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 1</span>
-                            <span class="hsk-subtitle">Beginner</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK1</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK1', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK1" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 2</span>
-                            <span class="hsk-subtitle">Elementary</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK2</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK2', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK2" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 3</span>
-                            <span class="hsk-subtitle">Intermediate</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK3</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK3', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK3" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 4</span>
-                            <span class="hsk-subtitle">Upper Intermediate</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK4</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK4', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK4" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 5</span>
-                            <span class="hsk-subtitle">Advanced</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK5</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK5', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK5" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="option-card blog-card">
-                    <div class="hsk-header">
-                        <div class="hsk-title-row">
-                            <span class="hsk-title">HSK Level 6</span>
-                            <span class="hsk-subtitle">Mastery</span>
-                        </div>
-                    </div>
-                    <div class="hsk-info-row" style="display: block;">
-                        <div class="hsk-difficulty">Level: <b>HSK6</b></div>
-                        <div class="hsk-words">Characters: <b>{{ hsk_totals.get('HSK6', 0) }}</b></div>
-                    </div>
-                    <div class="hsk-actions">
-                        <form action="/session?hsk=HSK6" method="get" style="display:inline;">
-                            <button type="submit" class="start-button">Start</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {{ hsk_cell(1, hsk_totals.get('HSK1', 0), '/session?hsk=HSK1') }}
+            {{ hsk_cell(2, hsk_totals.get('HSK2', 0), '/session?hsk=HSK2') }}
+            {{ hsk_cell(3, hsk_totals.get('HSK3', 0), '/session?hsk=HSK3') }}
+            {{ hsk_cell(4, hsk_totals.get('HSK4', 0), '/session?hsk=HSK4') }}
+            {{ hsk_cell(5, hsk_totals.get('HSK5', 0), '/session?hsk=HSK5') }}
+            {{ hsk_cell(6, hsk_totals.get('HSK6', 0), '/session?hsk=HSK6') }}
+            {{ mixed_practice_cell(hsk_totals.values() | sum) }}
         </div>
     </div>
 
-    <div class="menu-section">
+    <div class="menu-section" style="margin-top: 2rem;">
         <h2>Short Stories</h2>
-        <p>Debug: Found {{ stories|length }} stories</p>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
-                <div class="col">
-                    <div class="story-card blog-card">
-                        <div class="story-header">
-                            <div class="story-title-row">
-                                <span class="story-title">{{ story.title }}</span>
-                                <span class="story-title-chinese">{{ story.title_chinese }}</span>
-                            </div>
-                        </div>
-                        {% if story.description %}
-                        <div class="story-description">
-                            {{ story.description[:100] }}{% if story.description|length > 100 %}...{% endif %}
-                        </div>
-                        {% endif %}
-                        <div class="story-info-row">
-                            <span class="story-difficulty">Level: <b>{{ story.difficulty }}</b></span>
-                            <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
-                        </div>
-                        <div class="story-actions">
-                            {% if session.get("email") and story_id in saved_stories %}
-                                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
-                                    <button type="submit" class="resume-button">Resume</button>
-                                </form>
-                            {% else %}
-                                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
-                                    <button type="submit" class="start-button">Start</button>
-                                </form>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+                {{ story_cell(story_id, story, session.get('email') and story_id in saved_stories, stories) }}
             {% endfor %}
         </div>
     </div>
@@ -487,4 +331,6 @@
 
 </style>
 {% endblock %}
+
+{% from "_grid_cells.html" import hsk_cell, mixed_practice_cell, story_cell %}
 

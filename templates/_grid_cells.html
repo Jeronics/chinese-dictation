@@ -1,0 +1,74 @@
+{% macro hsk_cell(level, total, url) %}
+<div class="col">
+    <div class="option-card blog-card">
+        <div class="hsk-header">
+            <div class="hsk-title-row">
+                <span class="hsk-title">HSK Level {{ level }}</span>
+            </div>
+        </div>
+        <div class="hsk-info-row" style="display: block;">
+            <div class="hsk-difficulty">Level: <b>HSK{{ level }}</b></div>
+            <div class="hsk-words">Characters: <b>{{ total }}</b></div>
+        </div>
+        <div class="hsk-actions">
+            <form action="{{ url }}" method="get" style="display:inline;">
+                <button type="submit" class="start-button">Start</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro mixed_practice_cell(total) %}
+<div class="col custom-grid-cell">
+    <div class="option-card blog-card">
+        <div class="hsk-header">
+            <div class="hsk-title-row">
+                <span class="hsk-title">Mixed Practice</span>
+            </div>
+        </div>
+        <div class="hsk-info-row" style="display: block;">
+            <div class="hsk-difficulty">Level: <b>Mixed</b></div>
+            <div class="hsk-words">Characters: <b>{{ total }}</b></div>
+        </div>
+        <div class="hsk-actions">
+            <form action="/session" method="get" style="display:inline;">
+                <button type="submit" class="start-button">Start</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro story_cell(story_id, story, saved, stories) %}
+<div class="col">
+    <div class="story-card blog-card">
+        <div class="story-header">
+            <div class="story-title-row">
+                <span class="story-title">{{ story.title }}</span><br>
+                <span class="story-title-chinese">{{ story.title_chinese }}</span>
+            </div>
+        </div>
+        {% if story.description %}
+        <div class="story-description">
+            {{ story.description[:100] }}{% if story.description|length > 100 %}...{% endif %}
+        </div>
+        {% endif %}
+        <div class="story-info-row">
+            <span class="story-difficulty">Level: <b>{{ story.difficulty }}</b></span>
+            <span class="story-parts">Parts: <b>{{ story.parts|length }}</b></span>
+        </div>
+        <div class="story-actions">
+            {% if saved %}
+                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
+                    <button type="submit" class="resume-button">Resume</button>
+                </form>
+            {% else %}
+                <form action="/story/{{ story_id }}/session" method="get" style="display:inline;">
+                    <button type="submit" class="start-button">Start</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endmacro %} 

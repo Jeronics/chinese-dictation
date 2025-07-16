@@ -151,12 +151,12 @@ def main():
         
         # Generate audio for each part of the story
         for part_idx, part in enumerate(parts, 1):
-            part_id = part["id"]
+            part["id"] = f"story_{story_id}_{part_idx}"
             text = part["chinese"]
-            part_number = part["part_number"]
+            part_number = part_idx
             
-            # Create filename: story_id_part_id.mp3
-            filename = f"{part_id}.mp3"
+            # Create filename: story_<story_id>_<part_number>.mp3
+            filename = f"story_{story_id}_{part_number}.mp3"
             path = os.path.join(OUTPUT_DIR, filename)
             
             # Skip if file already exists

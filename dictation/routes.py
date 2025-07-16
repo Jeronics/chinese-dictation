@@ -73,7 +73,16 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
     # Determine audio file path based on whether it's a story part or regular sentence
     if is_story_part:
-        audio_file = ctx.story_audio_path(sentence_data["id"])
+        # Extract story_id and part_number from sentence_data['id']
+        try:
+            parts = sentence_data["id"].split('_')
+            story_id = parts[1]
+            part_number = int(parts[2])
+        except Exception:
+            story_id = None
+            part_number = None
+        audio_file = ctx.story_audio_path(story_id, part_number) if story_id and part_number else None
+        logging.info(f"[DEBUG] Looking up story audio: id={sentence_data['id']} story_id={story_id} part_number={part_number} audio_file={audio_file}")
     else:
         audio_file = ctx.audio_path(sentence_data["id"], sentence_data["difficulty"])
 
@@ -86,7 +95,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     return render_template(
         "index.html",
         correct_sentence=sentence_data["chinese"],
-        result="✅ Correct!" if is_correct else "❌ Try again.",
+        result="Correct!" if is_correct else "Try again.",
         correction=correction,
         accuracy=accuracy,
         score=session[session_score_key],
@@ -486,6 +495,15 @@ def story_session(story_id):
     if not part:
         return "Story part not found", 500
 
+    # Get all audio file paths for the story (for sequential playback)
+    story_audio_files = ctx.story_all_audio_paths(story_id)
+
+    # Get part number from part id (should be in the format story_<story_id>_<part_number>)
+    try:
+        part_number = int(part_id.split('_')[-1])
+    except Exception:
+        part_number = session["story_session_index"] + 1
+
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
         return render_dictation_result(
@@ -505,7 +523,7 @@ def story_session(story_id):
     
     return render_template("index.html",
         correct_sentence=part["chinese"],
-        audio_file=ctx.story_audio_path(part_id),  # Use story audio path
+        audio_file=ctx.story_audio_path(story_id, part_number),  # Use story audio path
         score=session["story_session_score"],
         level=session.get("level", 1),
         difficulty=story["difficulty"],
@@ -515,5 +533,6 @@ def story_session(story_id):
         total=len(story["parts"]),
         story_mode=True,
         story_title=story["title"],
-        story_context=story_context
+        story_context=story_context,
+        story_audio_files=story_audio_files
     )

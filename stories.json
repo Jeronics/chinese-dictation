@@ -1,145 +1,145 @@
 {
-  "emperor_new_clothes": {
+  "1": {
     "title": "The Emperor's New Clothes",
     "title_chinese": "皇帝的新装",
     "description": "A vain emperor is tricked by swindlers into believing he is wearing magical clothes that only the wise can see, until a child reveals the truth.",
     "difficulty": "HSK3",
     "parts": [
       {
-        "id": "emperor_1",
+        "id": "story_emperor_new_clothes_1",
         "chinese": "很久以前，有一个皇帝。",
         "pinyin": "Hěn jiǔ yǐqián, yǒu yī gè huángdì.",
         "translation": "Long ago, there was an emperor.",
         "part_number": 1
       },
       {
-        "id": "emperor_2",
+        "id": "story_emperor_new_clothes_2",
         "chinese": "他非常喜欢穿新衣服。",
         "pinyin": "Tā fēicháng xǐhuān chuān xīn yīfu.",
         "translation": "He loved wearing new clothes very much.",
         "part_number": 2
       },
       {
-        "id": "emperor_3",
+        "id": "story_emperor_new_clothes_3",
         "chinese": "每天他都要换很多次衣服。",
         "pinyin": "Měi tiān tā dōu yào huàn hěn duō cì yīfu.",
         "translation": "Every day he changed clothes many times.",
         "part_number": 3
       },
       {
-        "id": "emperor_4",
+        "id": "story_emperor_new_clothes_4",
         "chinese": "有一天，两个骗子来到皇宫。",
         "pinyin": "Yǒu yī tiān, liǎng gè piànzi lái dào huánggōng.",
         "translation": "One day, two swindlers came to the palace.",
         "part_number": 4
       },
       {
-        "id": "emperor_5",
+        "id": "story_emperor_new_clothes_5",
         "chinese": "他们说能织出最漂亮的衣服。",
         "pinyin": "Tāmen shuō néng zhī chū zuì piàoliang de yīfu.",
         "translation": "They said they could weave the most beautiful clothes.",
         "part_number": 5
       },
       {
-        "id": "emperor_6",
+        "id": "story_emperor_new_clothes_6",
         "chinese": "这种衣服只有聪明人才能看见。",
         "pinyin": "Zhè zhǒng yīfu zhǐ yǒu cōngmíng rén cái néng kànjiàn.",
         "translation": "Only smart people could see these clothes.",
         "part_number": 6
       },
       {
-        "id": "emperor_7",
+        "id": "story_emperor_new_clothes_7",
         "chinese": "皇帝听了很高兴。",
         "pinyin": "Huángdì tīng le hěn gāoxìng.",
         "translation": "The emperor was very happy to hear this.",
         "part_number": 7
       },
       {
-        "id": "emperor_8",
+        "id": "story_emperor_new_clothes_8",
         "chinese": "他给了骗子很多钱。",
         "pinyin": "Tā gěi le piànzi hěn duō qián.",
         "translation": "He gave the swindlers a lot of money.",
         "part_number": 8
       },
       {
-        "id": "emperor_9",
+        "id": "story_emperor_new_clothes_9",
         "chinese": "骗子开始假装织布。",
         "pinyin": "Piànzi kāishǐ jiǎzhuāng zhī bù.",
         "translation": "The swindlers began to pretend to weave cloth.",
         "part_number": 9
       },
       {
-        "id": "emperor_10",
+        "id": "story_emperor_new_clothes_10",
         "chinese": "皇帝派人去看衣服织得怎么样。",
         "pinyin": "Huángdì pài rén qù kàn yīfu zhī de zěnmeyàng.",
         "translation": "The emperor sent people to see how the clothes were being woven.",
         "part_number": 10
       },
       {
-        "id": "emperor_11",
+        "id": "story_emperor_new_clothes_11",
         "chinese": "大臣们什么也看不见。",
         "pinyin": "Dàchén men shénme yě kàn bù jiàn.",
         "translation": "The ministers could see nothing.",
         "part_number": 11
       },
       {
-        "id": "emperor_12",
+        "id": "story_emperor_new_clothes_12",
         "chinese": "但是他们不敢说真话。",
         "pinyin": "Dànshì tāmen bù gǎn shuō zhēnhuà.",
         "translation": "But they didn't dare tell the truth.",
         "part_number": 12
       },
       {
-        "id": "emperor_13",
+        "id": "story_emperor_new_clothes_13",
         "chinese": "他们都说衣服很漂亮。",
         "pinyin": "Tāmen dōu shuō yīfu hěn piàoliang.",
         "translation": "They all said the clothes were beautiful.",
         "part_number": 13
       },
       {
-        "id": "emperor_14",
+        "id": "story_emperor_new_clothes_14",
         "chinese": "皇帝穿上新衣服去游行。",
         "pinyin": "Huángdì chuān shàng xīn yīfu qù yóuxíng.",
         "translation": "The emperor put on the new clothes and went for a parade.",
         "part_number": 14
       },
       {
-        "id": "emperor_15",
+        "id": "story_emperor_new_clothes_15",
         "chinese": "街上的人都假装看见衣服。",
         "pinyin": "Jiē shàng de rén dōu jiǎzhuāng kànjiàn yīfu.",
         "translation": "People on the street pretended to see the clothes.",
         "part_number": 15
       },
       {
-        "id": "emperor_16",
+        "id": "story_emperor_new_clothes_16",
         "chinese": "突然，一个小孩子说。",
         "pinyin": "Tūrán, yī gè xiǎo háizi shuō.",
         "translation": "Suddenly, a little child said.",
         "part_number": 16
       },
       {
-        "id": "emperor_17",
+        "id": "story_emperor_new_clothes_17",
         "chinese": "皇帝没有穿衣服！",
         "pinyin": "Huángdì méiyǒu chuān yīfu!",
         "translation": "The emperor is not wearing any clothes!",
         "part_number": 17
       },
       {
-        "id": "emperor_18",
+        "id": "story_emperor_new_clothes_18",
         "chinese": "大家都开始笑。",
         "pinyin": "Dàjiā dōu kāishǐ xiào.",
         "translation": "Everyone started laughing.",
         "part_number": 18
       },
       {
-        "id": "emperor_19",
+        "id": "story_emperor_new_clothes_19",
         "chinese": "皇帝这才知道被骗了。",
         "pinyin": "Huángdì zhè cái zhīdào bèi piàn le.",
         "translation": "Only then did the emperor realize he had been fooled.",
         "part_number": 19
       },
       {
-        "id": "emperor_20",
+        "id": "story_emperor_new_clothes_20",
         "chinese": "但是游行已经开始了。",
         "pinyin": "Dànshì yóuxíng yǐjīng kāishǐ le.",
         "translation": "But the parade had already begun.",
@@ -147,175 +147,175 @@
       }
     ]
   },
-  "turtle_hare": {
+  "2": {
     "title": "The Turtle and the Hare",
     "title_chinese": "龟兔赛跑",
     "description": "A boastful hare challenges a slow turtle to a race, but the turtle's persistence and patience lead to an unexpected victory.",
     "difficulty": "HSK2",
     "parts": [
       {
-        "id": "turtle_1",
+        "id": "story_turtle_hare_1",
         "chinese": "从前，有一只兔子和一只乌龟。",
         "pinyin": "Cóngqián, yǒu yī zhī tùzi hé yī zhī wūguī.",
         "translation": "Once upon a time, there was a rabbit and a turtle.",
         "part_number": 1
       },
       {
-        "id": "turtle_2",
+        "id": "story_turtle_hare_2",
         "chinese": "兔子跑得很快。",
         "pinyin": "Tùzi pǎo de hěn kuài.",
         "translation": "The rabbit ran very fast.",
         "part_number": 2
       },
       {
-        "id": "turtle_3",
+        "id": "story_turtle_hare_3",
         "chinese": "乌龟走得很慢。",
         "pinyin": "Wūguī zǒu de hěn màn.",
         "translation": "The turtle walked very slowly.",
         "part_number": 3
       },
       {
-        "id": "turtle_4",
+        "id": "story_turtle_hare_4",
         "chinese": "兔子总是嘲笑乌龟。",
         "pinyin": "Tùzi zǒngshì cháoxiào wūguī.",
         "translation": "The rabbit always made fun of the turtle.",
         "part_number": 4
       },
       {
-        "id": "turtle_5",
+        "id": "story_turtle_hare_5",
         "chinese": "有一天，兔子对乌龟说。",
         "pinyin": "Yǒu yī tiān, tùzi duì wūguī shuō.",
         "translation": "One day, the rabbit said to the turtle.",
         "part_number": 5
       },
       {
-        "id": "turtle_6",
+        "id": "story_turtle_hare_6",
         "chinese": "我们来比赛跑步吧！",
         "pinyin": "Wǒmen lái bǐsài pǎobù ba!",
         "translation": "Let's have a running race!",
         "part_number": 6
       },
       {
-        "id": "turtle_7",
+        "id": "story_turtle_hare_7",
         "chinese": "乌龟同意了。",
         "pinyin": "Wūguī tóngyì le.",
         "translation": "The turtle agreed.",
         "part_number": 7
       },
       {
-        "id": "turtle_8",
+        "id": "story_turtle_hare_8",
         "chinese": "比赛开始了。",
         "pinyin": "Bǐsài kāishǐ le.",
         "translation": "The race began.",
         "part_number": 8
       },
       {
-        "id": "turtle_9",
+        "id": "story_turtle_hare_9",
         "chinese": "兔子跑得很快。",
         "pinyin": "Tùzi pǎo de hěn kuài.",
         "translation": "The rabbit ran very fast.",
         "part_number": 9
       },
       {
-        "id": "turtle_10",
+        "id": "story_turtle_hare_10",
         "chinese": "乌龟慢慢地走。",
         "pinyin": "Wūguī mànmàn de zǒu.",
         "translation": "The turtle walked slowly.",
         "part_number": 10
       },
       {
-        "id": "turtle_11",
+        "id": "story_turtle_hare_11",
         "chinese": "兔子很快就看不见了。",
         "pinyin": "Tùzi hěn kuài jiù kàn bù jiàn le.",
         "translation": "The rabbit quickly disappeared from sight.",
         "part_number": 11
       },
       {
-        "id": "turtle_12",
+        "id": "story_turtle_hare_12",
         "chinese": "兔子想，我跑得这么快。",
         "pinyin": "Tùzi xiǎng, wǒ pǎo de zhème kuài.",
         "translation": "The rabbit thought, I run so fast.",
         "part_number": 12
       },
       {
-        "id": "turtle_13",
+        "id": "story_turtle_hare_13",
         "chinese": "乌龟肯定追不上我。",
         "pinyin": "Wūguī kěndìng zhuī bù shàng wǒ.",
         "translation": "The turtle definitely can't catch up to me.",
         "part_number": 13
       },
       {
-        "id": "turtle_14",
+        "id": "story_turtle_hare_14",
         "chinese": "我休息一下也没关系。",
         "pinyin": "Wǒ xiūxi yīxià yě méi guānxi.",
         "translation": "It's okay if I rest for a while.",
         "part_number": 14
       },
       {
-        "id": "turtle_15",
+        "id": "story_turtle_hare_15",
         "chinese": "兔子躺下睡觉了。",
         "pinyin": "Tùzi tǎng xià shuìjiào le.",
         "translation": "The rabbit lay down and fell asleep.",
         "part_number": 15
       },
       {
-        "id": "turtle_16",
+        "id": "story_turtle_hare_16",
         "chinese": "乌龟继续慢慢地走。",
         "pinyin": "Wūguī jìxù mànmàn de zǒu.",
         "translation": "The turtle continued walking slowly.",
         "part_number": 16
       },
       {
-        "id": "turtle_17",
+        "id": "story_turtle_hare_17",
         "chinese": "他一步一步地向前走。",
         "pinyin": "Tā yī bù yī bù de xiàng qián zǒu.",
         "translation": "He walked forward step by step.",
         "part_number": 17
       },
       {
-        "id": "turtle_18",
+        "id": "story_turtle_hare_18",
         "chinese": "兔子睡得很香。",
         "pinyin": "Tùzi shuì de hěn xiāng.",
         "translation": "The rabbit slept soundly.",
         "part_number": 18
       },
       {
-        "id": "turtle_19",
+        "id": "story_turtle_hare_19",
         "chinese": "乌龟终于到达了终点。",
         "pinyin": "Wūguī zhōngyú dàodá le zhōngdiǎn.",
         "translation": "The turtle finally reached the finish line.",
         "part_number": 19
       },
       {
-        "id": "turtle_20",
+        "id": "story_turtle_hare_20",
         "chinese": "兔子醒来时，比赛已经结束了。",
         "pinyin": "Tùzi xǐng lái shí, bǐsài yǐjīng jiéshù le.",
         "translation": "When the rabbit woke up, the race was already over.",
         "part_number": 20
       },
       {
-        "id": "turtle_21",
+        "id": "story_turtle_hare_21",
         "chinese": "乌龟赢了比赛。",
         "pinyin": "Wūguī yíng le bǐsài.",
         "translation": "The turtle won the race.",
         "part_number": 21
       },
       {
-        "id": "turtle_22",
+        "id": "story_turtle_hare_22",
         "chinese": "兔子很后悔。",
         "pinyin": "Tùzi hěn hòuhuǐ.",
         "translation": "The rabbit was very regretful.",
         "part_number": 22
       },
       {
-        "id": "turtle_23",
+        "id": "story_turtle_hare_23",
         "chinese": "他明白了，不能骄傲。",
         "pinyin": "Tā míngbái le, bù néng jiāo'ào.",
         "translation": "He understood that he shouldn't be arrogant.",
         "part_number": 23
       },
       {
-        "id": "turtle_24",
+        "id": "story_turtle_hare_24",
         "chinese": "坚持就是胜利。",
         "pinyin": "Jiānchí jiùshì shènglì.",
         "translation": "Persistence leads to victory.",
@@ -323,4 +323,4 @@
       }
     ]
   }
-} 
+}

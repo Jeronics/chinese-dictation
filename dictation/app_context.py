@@ -45,11 +45,30 @@ class DictationContext:
         path = os.path.join(self.audio_dir, filename)
         return f"audio_files/{filename}" if os.path.exists(path) else None
 
-    def story_audio_path(self, part_id):
-        """Get audio path for a story part"""
-        filename = f"{part_id}.mp3"
+    def story_audio_path(self, story_id, part_number):
+        """Get audio path for a story part using the new naming convention."""
+        filename = f"story_{story_id}_{part_number}.mp3"
         path = os.path.join(self.audio_dir, filename)
         return f"audio_files/{filename}" if os.path.exists(path) else None
+
+    def story_all_audio_paths(self, story_id):
+        """Return a list of audio file paths for all parts of a story, using the new naming convention."""
+        story = self.get_story(story_id)
+        if not story:
+            return []
+        audio_paths = []
+        for idx, part in enumerate(story["parts"], 1):
+            filename = f"story_{story_id}_{idx}.mp3"
+            path = os.path.join(self.audio_dir, filename)
+            if os.path.exists(path):
+                audio_paths.append(f"audio_files/{filename}")
+            else:
+                # fallback: try old convention (e.g., emperor_1.mp3)
+                fallback_filename = f"{story_id}_{idx}.mp3"
+                fallback_path = os.path.join(self.audio_dir, fallback_filename)
+                if os.path.exists(fallback_path):
+                    audio_paths.append(f"audio_files/{fallback_filename}")
+        return audio_paths
 
     def get_random_ids(self, count=5, level=None):
         sents = [sid for sid, s in self.sentences.items() if s["difficulty"] == level] if level else list(self.sentences)
