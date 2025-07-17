@@ -155,4 +155,17 @@ def get_daily_work_stats(user_id: str) -> Dict[str, Any]:
             "today_total_sentences": 0,
             "current_streak": 0,
             "last_7_days": []
-        } 
+        }
+
+def get_daily_session_count(user_id: str) -> int:
+    """
+    Returns the number of daily sessions completed today for the user.
+    A session is a row in daily_work_registry for today and user_id, regardless of session_type.
+    """
+    try:
+        today = date.today().isoformat()
+        result = supabase.table("daily_work_registry").select("id").eq("user_id", user_id).eq("session_date", today).execute()
+        return len(result.data) if result.data else 0
+    except Exception as e:
+        print(f"Error getting daily session count for user {user_id}: {e}")
+        return 0 

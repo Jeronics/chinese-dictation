@@ -5,7 +5,7 @@ load_dotenv()
 import uuid
 from datetime import date, datetime, timedelta
 
-from flask import Blueprint, render_template, request, session, redirect, flash, url_for
+from flask import Blueprint, render_template, request, session, redirect, flash, url_for, g
 from functools import wraps
 from .app_context import DictationContext
 from .corrector import Corrector
@@ -13,7 +13,8 @@ from .db_helpers import (
     update_character_progress,
     get_user_character_status,
     update_daily_work_registry,
-    get_daily_work_stats
+    get_daily_work_stats,
+    get_daily_session_count
 )
 from .utils import login_required
 from supabase import create_client
@@ -256,6 +257,18 @@ def check_user_authentication():
     """
     # No guest users - users must be logged in to use the app
     pass
+
+@dictation_bp.before_app_request
+def inject_daily_session_count():
+    user_id = session.get("user_id")
+    if user_id:
+        g.daily_session_count = get_daily_session_count(user_id)
+    else:
+        g.daily_session_count = None
+
+@dictation_bp.app_context_processor
+def inject_daily_session_count_context():
+    return {"daily_session_count": getattr(g, "daily_session_count", None)}
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
 def login():
