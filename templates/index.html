@@ -42,8 +42,9 @@
                         {% set end = start + segment_size - 1 %}
                         {% set filled = (current > end) %}
                         {% set partial = (current >= start and current <= end) %}
+                        {% set group_score = group_scores[i] if group_scores and i < group_scores|length else None %}
                         <div class="progress-segment">
-                            <div class="progress-segment-fill{% if filled %} completed{% endif %}"
+                            <div class="progress-segment-fill{% if filled %} completed{% endif %}{% if group_score is not none and group_score >= 7 %} progress-segment-green{% endif %}"
                                  style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
                             </div>
                         </div>
@@ -126,6 +127,11 @@
             }
           }
         </style>
+        <style>
+.progress-segment-green {
+    background-color: #26a69a !important; /* High-contrast green */
+}
+</style>
         <div style="margin: 1em 0;">
           <button id="open-story-audio-modal" style="font-size:1.1em; font-weight:bold; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.5em 1.2em; cursor:pointer;">🎧 Listen to Full Story</button>
         </div>

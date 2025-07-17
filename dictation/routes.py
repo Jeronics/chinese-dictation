@@ -50,7 +50,15 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     accuracy = round(len(correct_segments)/len(stripped_correct)*100)
     is_correct = stripped_user == correct_segments
 
-    session[session_score_key] += 1
+    if is_correct:
+        session[session_score_key] += 1
+    # Store per-sentence correctness for group scoring
+    if current is not None:
+        idx = current - 1
+        if is_story_part:
+            session[f"story_part_{idx}_correct"] = is_correct
+        else:
+            session[f"hsk_part_{idx}_correct"] = is_correct
     user_id = session.get("user_id")
 
     # Update character progress for logged-in users
@@ -470,7 +478,23 @@ def story_session(story_id):
                 story_session_score=0
             )
 
+    if "story_group_scores" not in session or session.get("story_id") != story_id:
+        session["story_group_scores"] = []
+
     if request.method == "POST" and "next" in request.form:
+        # Track per-group scores
+        group_size = 5
+        idx = session["story_session_index"]
+        total_parts = len(story["parts"])
+        # If finishing a group or the story, record the group score
+        if (idx + 1) % group_size == 0 or (idx + 1) == total_parts:
+            # Calculate score for this group using per-sentence correctness
+            start = idx - ((idx) % group_size)
+            end = idx + 1
+            group_score = sum([1 for i in range(start, end) if session.get(f"story_part_{i}_correct", False)])
+            # Store as out of 10 (scale up if group smaller than 5)
+            group_score_scaled = int((group_score / (end - start)) * 10)
+            session["story_group_scores"].append(group_score_scaled)
         session["story_session_index"] += 1
         if session["story_session_index"] >= len(story["parts"]):
             score = session["story_session_score"]
@@ -494,8 +518,10 @@ def story_session(story_id):
             # Get daily work stats for summary
             daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
             
-            # Clear story session data
-            for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores"]:
+            # Clear per-sentence correctness keys
+            for i in range(len(story["parts"])):
+                session.pop(f"story_part_{i}_correct", None)
+            for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores", "story_group_scores"]:
                 session.pop(key, None)
             return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
@@ -543,5 +569,6 @@ def story_session(story_id):
         story_mode=True,
         story_title=story["title"],
         story_context=story_context,
-        story_audio_files=story_audio_files
+        story_audio_files=story_audio_files,
+        group_scores=session.get("story_group_scores", [])
     )
