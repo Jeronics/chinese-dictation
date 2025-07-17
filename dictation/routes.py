@@ -153,8 +153,18 @@ def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
     """
-    if "session_ids" not in session:
-        level = request.args.get("hsk")
+    level = request.args.get("hsk")
+    if level:
+        # Always start a new session if a level is specified
+        session.update(
+            hsk_level=level,
+            session_ids=ctx.get_random_ids(level=level),
+            session_index=0,
+            session_score=0
+        )
+    elif "session_ids" not in session:
+        # Fallback: start a random session if no level is specified
+        level = None
         session.update(
             hsk_level=level,
             session_ids=ctx.get_random_ids(level=level),
