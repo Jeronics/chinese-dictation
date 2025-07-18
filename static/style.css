@@ -11,8 +11,8 @@
     --secondary-hover: #ff9800;
     --danger: #ce93d8;
     --danger-hover: #8e24aa;
-    --success: #26a69a;
-    --success-hover: #00897b;
+    --success: #00ff00;
+    --success-hover: #00cc00;
     --muted: #bdbdbd;
     --white: #232136; /* Use as dark surface */
     --surface: #232136;
@@ -458,7 +458,7 @@ body, body * {
         box-shadow: var(--shadow);
     }
     .session-progress-container {
-        background-color: var(--surface);
+        background-color: transparent !important;
         border: 2px solid var(--primary);
         border-radius: 8px;
         box-shadow: var(--shadow);
@@ -734,7 +734,7 @@ label:focus-within {
 
 /* Session Progress Bar Styles */
 .session-progress-container {
-    background-color: var(--surface);
+    background-color: transparent !important;
     border: 2px solid var(--primary);
     border-radius: 8px;
     padding: 1rem;
@@ -814,7 +814,7 @@ label:focus-within {
 }
 
 .story-main-content {
-    background: var(--white);
+    background-color: transparent !important;
     padding: 25px;
     border-radius: 12px;
     box-shadow: var(--shadow);
@@ -822,7 +822,7 @@ label:focus-within {
 }
 
 .story-context-panel {
-    background: var(--surface);
+    background-color: transparent !important;
     border: 2px solid var(--primary);
     border-radius: 12px;
     padding: 20px;
@@ -1130,9 +1130,9 @@ label:focus-within {
 
 /* Alert/flash message color adjustments */
 .flash-success {
-    background: var(--success);
-    color: var(--white);
-    border-left: 6px solid var(--success-hover);
+    background: #00ff00 !important;
+    color: #181825 !important;
+    border-left: 6px solid #00cc00 !important;
 }
 .flash-info {
     background: var(--primary);
@@ -1278,7 +1278,7 @@ label:focus-within {
     max-width: 500px;
     padding: 20px;
     padding-top: 1.5em;
-    background: var(--surface);
+    background-color: transparent !important;
     border-radius: 12px;
     box-shadow: 0 2px 8px #0001;
     border: 1px solid #e0e0e0;
@@ -1324,7 +1324,7 @@ audio {
     display: flex;
     align-items: center;
     gap: 0.5em;
-    border-bottom: 2px solid var(--primary);
+    /* border-bottom: 2px solid var(--primary); */
     padding-bottom: 0.2em;
     justify-content: center;
     text-align: center;
@@ -1412,7 +1412,7 @@ audio {
 }
 
 .progress-segment-green {
-    background-color: #26a69a !important; /* High-contrast green */
+    background-color: #00ff00 !important; /* Extremely bright green */
 }
 @media (max-width: 600px) {
   #story-audio-modal > div {

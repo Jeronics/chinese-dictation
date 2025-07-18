@@ -39,6 +39,18 @@ corrector = Corrector()
 # --- Helper functions for daily work tracking ---
 # (Moved to db_helpers.py)
 
+def get_gradient_feedback(accuracy):
+    if accuracy == 100:
+        return ("Perfect!", "#00ff00")  # Extremely bright green
+    elif accuracy >= 85:
+        return ("Very Good", "#1976d2")  # High-contrast blue
+    elif accuracy >= 70:
+        return ("Good", "#00cc00")       # Bright green
+    elif accuracy >= 40:
+        return ("Needs Practice", "#fbc02d") # High-contrast yellow
+    else:
+        return ("Poor", "#c62828")        # High-contrast red
+
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None):
     """
     Render the result page for a dictation attempt, showing correction, accuracy, and updating user progress.
@@ -49,6 +61,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
     accuracy = round(len(correct_segments)/len(stripped_correct)*100)
     is_correct = stripped_user == correct_segments
+
+    feedback, feedback_color = get_gradient_feedback(accuracy)
 
     if is_correct:
         session[session_score_key] += 1
@@ -67,9 +81,14 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
             match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
             if match:
                 hsk_level = match["hsk_level"]
+                # Convert 'HSK1' to integer 1, 'HSK2' to 2, etc.
+                if isinstance(hsk_level, str) and hsk_level.startswith("HSK"):
+                    hsk_level_int = int(hsk_level.replace("HSK", ""))
+                else:
+                    hsk_level_int = int(hsk_level)
                 # If the hanzi is in the correct_segments, mark as correct, else as failed
                 correct = hanzi in correct_segments
-                update_character_progress(user_id, hanzi, hsk_level, correct)
+                update_character_progress(user_id, hanzi, hsk_level_int, correct)
         
         # Store accuracy scores in session for later averaging
         # Initialize accuracy tracking if not exists
@@ -103,7 +122,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     return render_template(
         "index.html",
         correct_sentence=sentence_data["chinese"],
-        result="Correct!" if is_correct else "Try again.",
+        result=feedback,
+        result_color=feedback_color,
         correction=correction,
         accuracy=accuracy,
         score=session[session_score_key],
