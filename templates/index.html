@@ -87,8 +87,8 @@
                         {{ dictation_form(false, request.path, false, show_next_button) }}
                     {% else %}
                         {{ dictation_form(true, request.path, true, show_next_button) }}
-                        <div class="result">
-                            <h3>{{ result }}</h3>
+                        <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
+                            <h3 class="result-title">{{ result }}</h3>
                             <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
                             <p><strong>Correction:</strong> {{ correction|safe }}</p>
                             <p><strong>Pinyin:</strong> {{ pinyin }}</p>
@@ -251,8 +251,8 @@
             {{ dictation_form(false, '/session', false, show_next_button) }}
         {% else %}
             {{ dictation_form(true, '/session', true, show_next_button) }}
-            <div class="result">
-                <h3>{{ result }}</h3>
+            <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
+                <h3 class="result-title">{{ result }}</h3>
                 <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
                 <p><strong>Correction:</strong> {{ correction|safe }}</p>
                 <p><strong>Pinyin:</strong> {{ pinyin }}</p>

@@ -693,8 +693,14 @@ label:focus-within {
     margin-top: 1rem;
     padding: 1rem;
     background-color: var(--white);
-    border-left: 4px solid var(--primary);
+    border-left: 4px solid var(--result-color, #1976d2);
     border-radius: 6px;
+    padding-left: 1em;
+}
+
+.result-title {
+    color: var(--result-color, #1976d2);
+    font-weight: bold;
 }
 
 /* Diff/Correction colors: colorblind-friendly and with underline for clarity */
@@ -714,6 +720,11 @@ label:focus-within {
     .result {
         background-color: var(--white);
     }
+}
+
+.result .result-title {
+    color: var(--result-color, #1976d2) !important;
+    font-weight: bold;
 }
 
 .logo {
@@ -1421,5 +1432,31 @@ audio {
     justify-content: center;
     align-items: center;
     margin: 0;
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        flex-wrap: nowrap;
+        padding: 1rem 2rem;
+        gap: 1rem;
+    }
+    .page-title {
+        font-size: 1.1rem;
+        flex-basis: auto;
+        text-align: left;
+        margin-bottom: 0;
+    }
+    .topbar-right {
+        width: auto;
+        justify-content: flex-end;
+        display: flex;
+        margin-left: auto;
+        margin-top: 0;
+    }
+    .daily-session-counter {
+        font-size: 1.5rem;
+        width: 2.5em;
+        height: 2.5em;
+    }
 }
 
