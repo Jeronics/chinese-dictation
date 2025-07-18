@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_dictation_form.html" import dictation_form %}
+{% from "_dictation_form.html" import dictation_form, dictation_result_panel %}
 
 {% block title %}Chinese Dictation{% endblock %}
 
@@ -87,14 +87,7 @@
                         {{ dictation_form(false, request.path, false, show_next_button) }}
                     {% else %}
                         {{ dictation_form(true, request.path, true, show_next_button) }}
-                        <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
-                            <h3 class="result-title">{{ result }}</h3>
-                            <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
-                            <p><strong>Correction:</strong> {{ correction|safe }}</p>
-                            <p><strong>Pinyin:</strong> {{ pinyin }}</p>
-                            <p><strong>Translation:</strong> {{ translation }}</p>
-                            <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
-                        </div>
+                        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy) }}
                         {% if not show_next_button %}
                             <a href="/stories">Back to Stories</a>
                         {% endif %}
@@ -251,85 +244,10 @@
             {{ dictation_form(false, '/session', false, show_next_button) }}
         {% else %}
             {{ dictation_form(true, '/session', true, show_next_button) }}
-            <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
-                <h3 class="result-title">{{ result }}</h3>
-                <p><strong>Correct sentence:</strong> {{ correct_sentence }}</p>
-                <p><strong>Correction:</strong> {{ correction|safe }}</p>
-                <p><strong>Pinyin:</strong> {{ pinyin }}</p>
-                <p><strong>Translation:</strong> {{ translation }}</p>
-                <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
-            </div>
+            {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy) }}
             {% if not show_next_button %}
                 <a href="/">Back to Menu</a>
             {% endif %}
         {% endif %}
     {% endif %}
-
-    <script>
-        window.onload = function() {
-            const input = document.getElementById("user_input");
-            if (input) input.focus();
-        };
-
-        // Only require input for the Submit button
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('dictation-form');
-            const userInput = document.getElementById('user_input');
-            const submitBtn = document.getElementById('submit-answer-btn');
-
-            if (form && userInput && submitBtn) {
-                form.addEventListener('submit', function(e) {
-                    // Only require input if the submit button was used
-                    if (document.activeElement === submitBtn) {
-                        if (!userInput.value.trim()) {
-                            e.preventDefault();
-                            userInput.focus();
-                            userInput.setCustomValidity('Please enter your answer.');
-                            userInput.reportValidity();
-                        } else {
-                            userInput.setCustomValidity('');
-                        }
-                    } else {
-                        // For other form submissions, allow empty input
-                        userInput.setCustomValidity('');
-                    }
-                });
-            }
-            // Also clear custom validity on input
-            if (userInput) {
-                userInput.addEventListener('input', function() {
-                    userInput.setCustomValidity('');
-                });
-            }
-        });
-
-        function toggleTranslations() {
-            const button = document.querySelector('.toggle-button');
-            const pinyinElements = document.querySelectorAll('.context-pinyin');
-            const translationElements = document.querySelectorAll('.context-translation');
-            
-            const pinyinHidden = pinyinElements[0].classList.contains('hidden');
-            const translationHidden = translationElements[0].classList.contains('hidden');
-            
-            if (pinyinHidden && translationHidden) {
-                // First click: Show pinyin only
-                pinyinElements.forEach(el => el.classList.remove('hidden'));
-                translationElements.forEach(el => el.classList.add('hidden'));
-                button.textContent = 'Show English';
-                button.classList.add('active');
-            } else if (!pinyinHidden && translationHidden) {
-                // Second click: Show both pinyin and English
-                pinyinElements.forEach(el => el.classList.remove('hidden'));
-                translationElements.forEach(el => el.classList.remove('hidden'));
-                button.textContent = 'Hide All';
-                button.classList.add('active');
-            } else {
-                // Third click: Hide everything
-                pinyinElements.forEach(el => el.classList.add('hidden'));
-                translationElements.forEach(el => el.classList.add('hidden'));
-                button.textContent = 'Show Pinyin';
-                button.classList.remove('active');
-            }
-        }
-    </script>
 {% endblock %}

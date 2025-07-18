@@ -1411,6 +1411,32 @@ audio {
     background: #00e676;
 }
 
+.progress-segment-green {
+    background-color: #26a69a !important; /* High-contrast green */
+}
+@media (max-width: 600px) {
+  #story-audio-modal > div {
+    padding: 0.5em !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    width: 100vw !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+  }
+  #story-audio-modal audio,
+  #story-audio-modal ol {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  #story-audio-modal button#close-story-audio-modal {
+    right: 8px !important;
+    top: 8px !important;
+  }
+}
+
 .hsk-actions {
     display: flex;
     justify-content: center;
