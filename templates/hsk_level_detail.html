@@ -7,6 +7,7 @@
 <div style="margin-bottom: 1em;">
   <span style="display:inline-block;width:24px;height:24px;background:#1976d2;border-radius:4px;margin-right:4px;"></span> Known
   <span style="display:inline-block;width:24px;height:24px;background:#fbc02d;border-radius:4px;margin:0 8px 0 16px;"></span> Learning
+  <span style="display:inline-block;width:24px;height:24px;background:#f44336;border-radius:4px;margin:0 8px 0 16px;"></span> Failed
   <span style="display:inline-block;width:24px;height:24px;background:#bdbdbd;border-radius:4px;margin:0 8px 0 16px;"></span> Unseen
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
@@ -18,6 +19,9 @@
     {% elif c.status == 'learning' %}
       {# High-contrast yellow #}
       {% set color = '#fbc02d' %}
+    {% elif c.status == 'failed' %}
+      {# High-contrast red #}
+      {% set color = '#f44336' %}
     {% else %}
       {# Gray for unseen #}
       {% set color = '#bdbdbd' %}
