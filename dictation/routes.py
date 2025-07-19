@@ -80,6 +80,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
 
     # Update character progress for logged-in users
     if user_id:
+        hanzi_updates = []
         for hanzi in set(sentence_data["chinese"]):
             match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
             if match:
@@ -89,9 +90,15 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
                     hsk_level_int = int(hsk_level.replace("HSK", ""))
                 else:
                     hsk_level_int = int(hsk_level)
-                # If the hanzi is in the correct_segments, mark as correct, else as failed
                 correct = hanzi in correct_segments
-                update_character_progress(user_id, hanzi, hsk_level_int, correct)
+                hanzi_updates.append({
+                    "hanzi": hanzi,
+                    "hsk_level": hsk_level_int,
+                    "correct": correct
+                })
+        if hanzi_updates:
+            from .db_helpers import batch_update_character_progress
+            batch_update_character_progress(user_id, hanzi_updates)
         # Store accuracy scores in session for later averaging
         if "accuracy_scores" not in session:
             session["accuracy_scores"] = []
@@ -245,37 +252,45 @@ def dashboard():
     """
     user_id = session.get("user_id")
     try:
-        response = supabase.table("character_progress") \
-            .select("hsk_level, status") \
-            .eq("user_id", user_id).execute()
-        # Count known, failed, and learning per HSK level
-        stats = {}
-        for row in response.data:
-            level = row["hsk_level"]
-            status = row["status"]
-            if level not in stats:
-                stats[level] = {"known": 0, "failed": 0, "learning": 0}
-            stats[level][status] += 1
+        # Get all user progress for all hanzi
+        progress_rows = supabase.table("character_progress") \
+            .select("hanzi, hsk_level, grade") \
+            .eq("user_id", user_id).execute().data or []
+        # Map hanzi to grade for quick lookup
+        hanzi_to_grade = {row["hanzi"]: row["grade"] for row in progress_rows}
+        # For each HSK level, count known, learning, failed, unseen
+        levels = []
+        for hsk_level, total in ctx.hsk_totals.items():
+            # Get all hanzi for this level
+            hanzi_list = [item["hanzi"] for item in ctx.hsk_data if item["hsk_level"] == hsk_level]
+            known = learning = failed = unseen = 0
+            for hanzi in hanzi_list:
+                grade = hanzi_to_grade.get(hanzi, None)
+                if grade is None:
+                    unseen += 1
+                elif grade == -1:
+                    failed += 1
+                elif grade in [0, 1]:
+                    learning += 1
+                elif grade in [2, 3]:
+                    known += 1
+            known_pct = int(100 * known / total) if total else 0
+            failed_pct = int(100 * failed / total) if total else 0
+            unseen_pct = int(100 * unseen / total) if total else 0
+            levels.append({
+                "level": hsk_level,
+                "known": known,
+                "failed": failed,
+                "learning": learning,
+                "unseen": unseen,
+                "total": total,
+                "percent": known_pct
+            })
     except Exception as e:
         logging.error("Error loading progress from Supabase:", e)
-        stats = {}
-    # Prepare levels for dashboard
-    levels = []
-    for hsk_level, total in ctx.hsk_totals.items():
-        level_stats = stats.get(hsk_level, {"known": 0, "failed": 0, "learning": 0})
-        percent = int(100 * level_stats["known"] / total) if total else 0
-        levels.append({
-            "level": hsk_level,
-            "known": level_stats["known"],
-            "failed": level_stats["failed"],
-            "learning": level_stats["learning"],
-            "total": total,
-            "percent": percent
-        })
-    
+        levels = []
     # Get daily work statistics
     daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
-    
     return render_template("dashboard.html", levels=levels, daily_stats=daily_stats)
 
 @dictation_bp.before_app_request
@@ -374,29 +389,34 @@ def hsk_level_detail(level):
     Shows character progress for a specific HSK level for the logged-in user.
     """
     user_id = session.get("user_id")
+    level = int(level)  # Ensure level is integer
     # Get all hanzi for this level
-    hanzi_list = [item for item in ctx.hsk_data if item["hsk_level"] == level]
+    hanzi_list = [item for item in ctx.hsk_data if (isinstance(item["hsk_level"], int) and item["hsk_level"] == level) or (isinstance(item["hsk_level"], str) and item["hsk_level"].replace("HSK", "") == str(level))]
     # Get user progress for these hanzi
-    result = supabase.table("character_progress").select("hanzi, correct_count, fail_count, status").eq("user_id", user_id).execute()
+    result = supabase.table("character_progress").select("hanzi, grade").eq("user_id", user_id).eq("hsk_level", level).execute()
     progress = {row["hanzi"]: row for row in result.data} if result.data else {}
     # Prepare data for template
     char_data = []
     for item in hanzi_list:
         hanzi = item["hanzi"]
         p = progress.get(hanzi)
-        if p:
-            status = p["status"]
-            correct_count = p["correct_count"]
-            fail_count = p["fail_count"]
-        else:
+        if not p:
             status = "unseen"
-            correct_count = 0
-            fail_count = 0
+            grade = -1
+        else:
+            grade = p.get("grade", -1)
+            if grade == -1:
+                status = "failed"
+            elif grade in [0, 1]:
+                status = "learning"
+            elif grade in [2, 3]:
+                status = "known"
+            else:
+                status = "unseen"
         char_data.append({
             "hanzi": hanzi,
             "status": status,
-            "correct_count": correct_count,
-            "fail_count": fail_count
+            "grade": grade
         })
     return render_template("hsk_level_detail.html", level=level, char_data=char_data, min=min)
 

@@ -1,32 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}{{ level }} Characters{% endblock %}
+{% block title %}HSK{{ level }} Characters{% endblock %}
 
 {% block content %}
-<h1>{{ level }} – Character Progress</h1>
+<h1>HSK{{ level }} – Character Progress</h1>
 <div style="margin-bottom: 1em;">
-  <span style="display:inline-block;width:24px;height:24px;background:#1565c0;border-radius:4px;margin-right:4px;"></span> Known
-  <span style="display:inline-block;width:24px;height:24px;background:#c62828;border-radius:4px;margin:0 8px 0 16px;"></span> Failed
-  <span style="display:inline-block;width:24px;height:24px;background:#bdbdbd;border-radius:4px;margin:0 8px 0 16px;"></span> Unseen/Learning
+  <span style="display:inline-block;width:24px;height:24px;background:#1976d2;border-radius:4px;margin-right:4px;"></span> Known
+  <span style="display:inline-block;width:24px;height:24px;background:#fbc02d;border-radius:4px;margin:0 8px 0 16px;"></span> Learning
+  <span style="display:inline-block;width:24px;height:24px;background:#bdbdbd;border-radius:4px;margin:0 8px 0 16px;"></span> Unseen
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
   {% for c in char_data %}
     {% set color = '' %}
     {% if c.status == 'known' %}
-      {# Blue, intensity by correct_count #}
-      {% set intensity = 60 + (min(c.correct_count, 8) * 20) %}
-      {% set color = 'rgb(' ~ (21) ~ ',' ~ (101) ~ ',' ~ intensity ~ ')' %}
-    {% elif c.status == 'failed' %}
-      {# Red, intensity by fail_count #}
-      {% set intensity = 60 + (min(c.fail_count, 8) * 20) %}
-      {% set color = 'rgb(' ~ intensity ~ ',' ~ (40) ~ ',' ~ (40) ~ ')' %}
+      {# High-contrast blue #}
+      {% set color = '#1976d2' %}
     {% elif c.status == 'learning' %}
-      {% set color = '#bdbdbd' %}
+      {# High-contrast yellow #}
+      {% set color = '#fbc02d' %}
     {% else %}
-      {% set color = '#e0e0e0' %}
+      {# Gray for unseen #}
+      {% set color = '#bdbdbd' %}
     {% endif %}
-    <div title="{{ c.hanzi }} ({{ c.status }}, correct: {{ c.correct_count }}, failed: {{ c.fail_count }})"
-         style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; background: {{ color }}; color: white; border-radius: 6px; box-shadow: 0 1px 2px #0001; cursor:pointer;"
+    <div title="{{ c.hanzi }} ({{ c.status }}, grade: {{ c.grade }})"
+         style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; background: {{ color }}; color: #181825; border-radius: 6px; box-shadow: 0 1px 2px #0001; cursor:pointer;"
          onclick="showStrokeOrder('{{ c.hanzi }}')">
       {{ c.hanzi }}
     </div>

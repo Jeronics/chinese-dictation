@@ -85,6 +85,6 @@ class DictationContext:
         for hanzi, level in self.hsk_lookup.items():
             hsk_counts[level] += 1
         return OrderedDict(
-            sorted(hsk_counts.items(), key=lambda x: int(x[0].replace("HSK", "")))
+            sorted(hsk_counts.items(), key=lambda x: int(x[0]))
         )
 
