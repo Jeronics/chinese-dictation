@@ -4,6 +4,26 @@
 
 {% block content %}
 <h1>HSK{{ level }} – Character Progress</h1>
+{# Calculate category counts and percentages #}
+{% set total = char_data|length %}
+{% set known = char_data|selectattr('status', 'equalto', 'known')|list|length %}
+{% set learning = char_data|selectattr('status', 'equalto', 'learning')|list|length %}
+{% set failed = char_data|selectattr('status', 'equalto', 'failed')|list|length %}
+{% set unseen = char_data|selectattr('status', 'equalto', 'unseen')|list|length %}
+{% set known_pct = (100 * known // total) if total else 0 %}
+{% set learning_pct = (100 * learning // total) if total else 0 %}
+{% set failed_pct = (100 * failed // total) if total else 0 %}
+{% set unseen_pct = (100 * unseen // total) if total else 0 %}
+<div style="display: flex; justify-content: flex-start; align-items: center; font-size: 1em; margin-bottom: 1em; gap: 1.5em; white-space: nowrap;">
+  <span style="display:inline-block;width:18px;height:18px;background:#1976d2;border-radius:3px;vertical-align:middle;"></span>
+  <span style="margin-left:4px;">Known: <b>{{ known }}</b> ({{ known_pct }}%)</span>
+  <span style="display:inline-block;width:18px;height:18px;background:#fbc02d;border-radius:3px;vertical-align:middle;margin-left:16px;"></span>
+  <span style="margin-left:4px;">Learning: <b>{{ learning }}</b> ({{ learning_pct }}%)</span>
+  <span style="display:inline-block;width:18px;height:18px;background:#f44336;border-radius:3px;vertical-align:middle;margin-left:16px;"></span>
+  <span style="margin-left:4px;">Failed: <b>{{ failed }}</b> ({{ failed_pct }}%)</span>
+  <span style="display:inline-block;width:18px;height:18px;background:#bdbdbd;border-radius:3px;vertical-align:middle;margin-left:16px;"></span>
+  <span style="margin-left:4px;">Unseen: <b>{{ unseen }}</b> ({{ unseen_pct }}%)</span>
+</div>
 <div style="margin-bottom: 1em;">
   <span style="display:inline-block;width:24px;height:24px;background:#1976d2;border-radius:4px;margin-right:4px;"></span> Known
   <span style="display:inline-block;width:24px;height:24px;background:#fbc02d;border-radius:4px;margin:0 8px 0 16px;"></span> Learning

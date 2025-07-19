@@ -25,12 +25,6 @@
                             <div style="background: #f44336; width: {{ failed_pct }}%;"></div>
                             <div style="background: #bdbdbd; width: {{ unseen_pct }}%;"></div>
                         </div>
-                        <div class="progress-tooltip">
-                            <strong>Known:</strong> {{ known_pct }}% ({{ l.known }})<br>
-                            <strong>Learning:</strong> {{ learning_pct }}% ({{ l.learning }})<br>
-                            <strong>Failed:</strong> {{ failed_pct }}% ({{ l.failed }})<br>
-                            <strong>Unseen:</strong> {{ unseen_pct }}% ({{ l.unseen }})
-                        </div>
                         <!-- Legend: Only color and name -->
                         <div style="display: flex; justify-content: flex-start; align-items: flex-end; font-size: 0.95em; margin-bottom: 0.5em; gap: 0.3em; white-space: nowrap; overflow-x: auto;">
                             <div style="flex:0 0 auto; text-align:left; margin-right: 8px;">
