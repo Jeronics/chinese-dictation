@@ -5,11 +5,12 @@
 {% block content %}
     <h1>Dictation Session Complete!</h1>
 
-    <p>You scored <strong>{{ score }} / {{ total }}</strong>.</p>
+    <p><strong>Average Accuracy:</strong> {{ average_accuracy }}%</p>
+    <p><strong>Good Answers (>=70%):</strong> {{ score }} / {{ total }}</p>
 
-    {% if score == total %}
+    {% if average_accuracy == 100 %}
         <p>Perfect! Great job!</p>
-    {% elif score >= 3 %}
+    {% elif average_accuracy >= 80 %}
         <p>Nice! You're getting there!</p>
     {% else %}
         <p>Don’t give up! Try another round!</p>

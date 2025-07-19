@@ -43,13 +43,15 @@ def get_gradient_feedback(accuracy):
     if accuracy == 100:
         return ("Perfect!", "#00ff00")  # Extremely bright green
     elif accuracy >= 85:
-        return ("Very Good", "#1976d2")  # High-contrast blue
+        return ("Very Good!", "#00cc00")  # Bright green
     elif accuracy >= 70:
-        return ("Good", "#00cc00")       # Bright green
-    elif accuracy >= 40:
-        return ("Needs Practice", "#fbc02d") # High-contrast yellow
+        return ("Good!", "#008000")       # Dull green  
+    elif accuracy >= 50:
+        return ("Getting there..", "#fbc02d") # High-contrast yellow
+    elif accuracy >= 25:
+        return ("Needs Practice..", "#ffa500") # orange
     else:
-        return ("Poor", "#c62828")        # High-contrast red
+        return ("Poor..", "#c62828")        # red
 
 def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None):
     """
@@ -59,20 +61,21 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence_data["chinese"])
     lev = corrector.levenshtein(stripped_user, stripped_correct)
     distance = (len(stripped_correct) - lev) * 10 // len(stripped_correct) if stripped_correct else 0
-    accuracy = round(len(correct_segments)/len(stripped_correct)*100)
+    accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
     is_correct = stripped_user == correct_segments
 
     feedback, feedback_color = get_gradient_feedback(accuracy)
 
-    if is_correct:
+    # Only increment score if accuracy >= 70
+    if accuracy >= 70:
         session[session_score_key] += 1
     # Store per-sentence correctness for group scoring
     if current is not None:
         idx = current - 1
         if is_story_part:
-            session[f"story_part_{idx}_correct"] = is_correct
+            session[f"story_part_{idx}_correct"] = (accuracy >= 70)
         else:
-            session[f"hsk_part_{idx}_correct"] = is_correct
+            session[f"hsk_part_{idx}_correct"] = (accuracy >= 70)
     user_id = session.get("user_id")
 
     # Update character progress for logged-in users
@@ -89,19 +92,14 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
                 # If the hanzi is in the correct_segments, mark as correct, else as failed
                 correct = hanzi in correct_segments
                 update_character_progress(user_id, hanzi, hsk_level_int, correct)
-        
         # Store accuracy scores in session for later averaging
-        # Initialize accuracy tracking if not exists
         if "accuracy_scores" not in session:
             session["accuracy_scores"] = []
-        
-        # Store the distance score (0-10 scale) for this sentence
-        session["accuracy_scores"].append(distance)
-        logging.debug(f"Added distance score {distance} to accuracy_scores. Current scores: {session['accuracy_scores']}")
+        session["accuracy_scores"].append(accuracy)
+        logging.debug(f"Added accuracy score {accuracy} to accuracy_scores. Current scores: {session['accuracy_scores']}")
 
     # Determine audio file path based on whether it's a story part or regular sentence
     if is_story_part:
-        # Extract story_id and part_number from sentence_data['id']
         try:
             parts = sentence_data["id"].split('_')
             story_id = parts[1]
@@ -113,12 +111,15 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
     else:
         audio_file = ctx.audio_path(sentence_data["id"], sentence_data["difficulty"])
 
-    # Determine difficulty based on whether it's a story part or regular sentence
     if is_story_part and story_difficulty:
         difficulty = story_difficulty
     else:
         difficulty = sentence_data.get("difficulty", "Unknown")
-    
+
+    # Calculate running average accuracy for display
+    accuracy_scores = session.get("accuracy_scores", [])
+    average_accuracy = round(sum(accuracy_scores) / len(accuracy_scores), 1) if accuracy_scores else 0
+
     return render_template(
         "index.html",
         correct_sentence=sentence_data["chinese"],
@@ -126,6 +127,7 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         result_color=feedback_color,
         correction=correction,
         accuracy=accuracy,
+        average_accuracy=average_accuracy,
         score=session[session_score_key],
         level=session.get("level", 1),
         difficulty=difficulty,
@@ -175,7 +177,6 @@ def session_practice():
     """
     level = request.args.get("hsk")
     if level:
-        # Always start a new session if a level is specified
         session.update(
             hsk_level=level,
             session_ids=ctx.get_random_ids(level=level),
@@ -183,7 +184,6 @@ def session_practice():
             session_score=0
         )
     elif "session_ids" not in session:
-        # Fallback: start a random session if no level is specified
         level = None
         session.update(
             hsk_level=level,
@@ -198,23 +198,13 @@ def session_practice():
             score = session["session_score"]
             level = session.get("hsk_level")
             user_id = session.get("user_id")
-            
-            # Calculate average accuracy for the session
             average_accuracy = 0
-            logging.debug(f"Session accuracy_scores: {session.get('accuracy_scores', 'Not found')}")
-            logging.debug(f"User ID: {user_id}")
-            if user_id and "accuracy_scores" in session and session["accuracy_scores"]:
-                average_accuracy = sum(session["accuracy_scores"]) / len(session["accuracy_scores"])
-                logging.debug(f"Calculated average accuracy: {average_accuracy}")
-                # Update daily work registry with session average
+            accuracy_scores = session.get("accuracy_scores", [])
+            if accuracy_scores:
+                average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
+            if user_id and accuracy_scores:
                 update_daily_work_registry(user_id, "practice", average_accuracy, 5)
-            else:
-                logging.debug(f"No accuracy scores found or user not logged in")
-            
-            # Get daily work stats for summary
             daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
-            
-            # Clear session data
             for key in ["session_ids", "session_index", "session_score", "hsk_level", "accuracy_scores"]:
                 session.pop(key, None)
             return render_template("session_summary.html", score=score, total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
@@ -532,9 +522,10 @@ def story_session(story_id):
             
             # Calculate average accuracy for the story session
             average_accuracy = 0
-            if user_id and "accuracy_scores" in session and session["accuracy_scores"]:
-                average_accuracy = sum(session["accuracy_scores"]) / len(session["accuracy_scores"])
-                # Update daily work registry with story session average
+            accuracy_scores = session.get("accuracy_scores", [])
+            if accuracy_scores:
+                average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
+            if user_id and accuracy_scores:
                 update_daily_work_registry(user_id, "story", average_accuracy, total, story_id, total)
             
             # Clear story progress from database when completed

@@ -1480,9 +1480,20 @@ audio {
         margin-top: 0;
     }
     .daily-session-counter {
-        font-size: 1.5rem;
-        width: 2.5em;
-        height: 2.5em;
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--secondary);
+        background: none;
+        border: none;
+        border-radius: 6px;
+        width: auto;
+        height: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: none;
+        transition: none;
+        padding: 0;
     }
 }
 

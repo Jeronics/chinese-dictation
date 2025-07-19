@@ -12,25 +12,25 @@
 
         <div class="summary-stats">
             <div class="stat-card">
+                <div class="stat-number">{{ average_accuracy }}%</div>
+                <div class="stat-label">Avg. Accuracy</div>
+            </div>
+            <div class="stat-card">
                 <div class="stat-number">{{ score }}</div>
-                <div class="stat-label">Correct Parts</div>
+                <div class="stat-label">Good Parts (>=70%)</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">{{ total }}</div>
                 <div class="stat-label">Total Parts</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ "%.1f"|format(score / total * 100) }}%</div>
-                <div class="stat-label">Accuracy</div>
-            </div>
         </div>
 
         <div class="summary-message">
-            {% if score == total %}
+            {% if average_accuracy == 100 %}
                 <p class="perfect-score">🎯 Perfect! You got all parts correct!</p>
-            {% elif score >= total * 0.8 %}
+            {% elif average_accuracy >= 80 %}
                 <p class="great-score">🌟 Excellent work! You're doing great!</p>
-            {% elif score >= total * 0.6 %}
+            {% elif average_accuracy >= 60 %}
                 <p class="good-score">👍 Good job! Keep practicing!</p>
             {% else %}
                 <p class="keep-practicing">📚 Keep practicing! You'll improve with time.</p>
