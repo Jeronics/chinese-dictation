@@ -1500,3 +1500,21 @@ audio {
     }
 }
 
+.story-context-panel .context-pinyin,
+.story-context-panel .context-translation {
+    color: #A9A9A9; /* Lighter color for pinyin/translation */
+}
+.hidden {
+    display: none;
+}
+.hanzi-char {
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.hanzi-char:hover {
+    transform: scale(1.25);
+    color: #FFFFFF !important;
+}
+

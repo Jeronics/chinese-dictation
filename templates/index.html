@@ -124,7 +124,7 @@
         <script>
           const audioFiles = {{ story_audio_files|tojson }};
           const openModalBtn = document.getElementById('open-story-audio-modal');
-          const modal = document.getElementById('story-audio-modal');
+          const storyAudioModal = document.getElementById('story-audio-modal');
           const closeModalBtn = document.getElementById('close-story-audio-modal');
           const audioElement = document.getElementById('story-audio');
           let currentIdx = 0;
@@ -145,17 +145,17 @@
           highlightCurrent(currentIdx);
 
           openModalBtn.addEventListener('click', function() {
-            modal.style.display = 'flex';
+            storyAudioModal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; // Prevent background scroll
           });
           closeModalBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
+            storyAudioModal.style.display = 'none';
             document.body.style.overflow = '';
           });
           // Close modal on background click
-          modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-              modal.style.display = 'none';
+          storyAudioModal.addEventListener('click', function(e) {
+            if (e.target === storyAudioModal) {
+              storyAudioModal.style.display = 'none';
               document.body.style.overflow = '';
             }
           });
