@@ -4,7 +4,7 @@
 {% block title %}Chinese Dictation{% endblock %}
 
 {% block content %}
-    {% if story_mode %}
+    {% if story_mode and story_audio_files %}
         <!-- Story Actions - Outside the main layout -->
         <div class="story-actions">
             <form method="POST" style="display: inline;">
@@ -44,7 +44,7 @@
                         {% set partial = (current >= start and current <= end) %}
                         {% set group_score = group_scores[i] if group_scores and i < group_scores|length else None %}
                         <div class="progress-segment">
-                            <div class="progress-segment-fill{% if filled %} completed{% endif %}{% if group_score is not none and group_score >= 7 %} progress-segment-green{% endif %}"
+                            <div class="progress-segment-fill{% if filled %} completed{% endif %}{% if group_score is not none %}{% if group_score >= 7 %} progress-segment-green{% else %} progress-segment-red{% endif %}{% endif %}"
                                  style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
                             </div>
                         </div>
@@ -72,12 +72,18 @@
                 </div>
                 <div class="dictation-frame">
                     <h3>Dictation</h3>
-                    {% if audio_file %}
+                    {% if show_result and audio_file %}
                         <audio controls autoplay>
                             <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
-                    {% else %}
+                    {% elif not show_result and audio_file %}
+                        <h3>Listen to the audio and type what you hear:</h3>
+                        <audio controls autoplay>
+                            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    {% elif not show_result %}
                         <div class="no-audio-notice">
                             <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
                         </div>
@@ -96,35 +102,6 @@
             </div>
         </div>
         {% if story_mode and story_audio_files %}
-        <style>
-          @media (max-width: 600px) {
-            #story-audio-modal > div {
-              padding: 0.5em !important;
-              min-width: 0 !important;
-              max-width: 100vw !important;
-              width: 100vw !important;
-              border-radius: 0 !important;
-              box-shadow: none !important;
-              height: 100vh !important;
-              max-height: 100vh !important;
-              overflow-y: auto !important;
-            }
-            #story-audio-modal audio,
-            #story-audio-modal ol {
-              width: 100vw !important;
-              max-width: 100vw !important;
-            }
-            #story-audio-modal button#close-story-audio-modal {
-              right: 8px !important;
-              top: 8px !important;
-            }
-          }
-        </style>
-        <style>
-.progress-segment-green {
-    background-color: #26a69a !important; /* High-contrast green */
-}
-</style>
         <div style="margin: 1em 0;">
           <button id="open-story-audio-modal" style="font-size:1.1em; font-weight:bold; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.5em 1.2em; cursor:pointer;">🎧 Listen to Full Story</button>
         </div>

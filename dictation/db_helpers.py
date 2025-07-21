@@ -11,25 +11,20 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def update_character_progress(user_id: str, hanzi: str, hsk_level: int, correct: bool) -> None:
     """
-    Update the character progress for a user and hanzi, incrementing correct or fail counts.
+    Update the character progress for a user and hanzi, adjusting the grade field.
     """
     try:
         result = supabase.table("character_progress").select("*") \
             .eq("user_id", user_id).eq("hanzi", hanzi).execute()
         if result.data:
             progress = result.data[0]
-            correct_count = progress["correct_count"] + (1 if correct else 0)
-            fail_count = progress["fail_count"] + (0 if correct else 1)
-            if correct_count >= 3:
-                status = "known"
-            elif fail_count >= 2:
-                status = "failed"
+            prev_grade = progress.get("grade", -1)
+            if correct:
+                new_grade = min(prev_grade + 1, 3)
             else:
-                status = "learning"
+                new_grade = max(prev_grade - 1, -1)
             supabase.table("character_progress").update({
-                "correct_count": correct_count,
-                "fail_count": fail_count,
-                "status": status,
+                "grade": new_grade,
                 "last_seen": "now()"
             }).eq("user_id", user_id).eq("hanzi", hanzi).execute()
         else:
@@ -37,9 +32,7 @@ def update_character_progress(user_id: str, hanzi: str, hsk_level: int, correct:
                 "user_id": user_id,
                 "hanzi": hanzi,
                 "hsk_level": hsk_level,
-                "correct_count": 1 if correct else 0,
-                "fail_count": 0 if correct else 1,
-                "status": "known" if correct else "failed",
+                "grade": 0 if correct else -1,
                 "last_seen": "now()"
             }).execute()
     except Exception as e:
@@ -168,4 +161,41 @@ def get_daily_session_count(user_id: str) -> int:
         return len(result.data) if result.data else 0
     except Exception as e:
         print(f"Error getting daily session count for user {user_id}: {e}")
-        return 0 
+        return 0
+
+def batch_update_character_progress(user_id: str, hanzi_updates: list) -> None:
+    """
+    Batch update character progress for a user. hanzi_updates is a list of dicts:
+    {"hanzi": ..., "hsk_level": ..., "correct": ...}
+    """
+    try:
+        hanzi_list = [u["hanzi"] for u in hanzi_updates]
+        # Fetch current progress for all hanzi in one query
+        result = supabase.table("character_progress").select("hanzi, grade").eq("user_id", user_id).in_("hanzi", hanzi_list).execute()
+        current = {row["hanzi"]: row for row in (result.data or [])}
+        upserts = []
+        for update in hanzi_updates:
+            hanzi = update["hanzi"]
+            hsk_level = update["hsk_level"]
+            correct = update["correct"]
+            prev = current.get(hanzi)
+            if prev:
+                prev_grade = prev.get("grade", -1)
+                print(f"prev_grade: {prev_grade}")
+                if correct:
+                    new_grade = min(prev_grade + 1, 3)
+                else:
+                    new_grade = max(prev_grade - 1, 0)
+            else:
+                new_grade = 0 if correct else -1
+            upserts.append({
+                "user_id": user_id,
+                "hanzi": hanzi,
+                "hsk_level": hsk_level,
+                "grade": new_grade,
+                "last_seen": "now()"
+            })
+        if upserts:
+            supabase.table("character_progress").upsert(upserts, on_conflict="user_id,hanzi").execute()
+    except Exception as e:
+        print(f"Error batch updating character progress for user {user_id}: {e}") 

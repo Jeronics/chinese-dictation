@@ -53,7 +53,7 @@ def get_gradient_feedback(accuracy):
     else:
         return ("Poor..", "#c62828")        # red
 
-def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None):
+def render_dictation_result(user_input, sentence_data, session_score_key, show_next=False, current=None, total=None, is_story_part=False, story_context=None, story_title=None, story_difficulty=None, story_audio_files=None):
     """
     Render the result page for a dictation attempt, showing correction, accuracy, and updating user progress.
     Handles both regular sentences and story parts.
@@ -148,7 +148,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         show_next_button=show_next,
         story_mode=is_story_part,
         story_context=story_context,
-        story_title=story_title
+        story_title=story_title,
+        story_audio_files=story_audio_files
     )
 
 ### ──────── ROUTES ────────
@@ -591,7 +592,8 @@ def story_session(story_id):
             is_story_part=True,
             story_context=story["parts"][:session["story_session_index"]],
             story_title=story["title"],
-            story_difficulty=story["difficulty"]
+            story_difficulty=story["difficulty"],
+            story_audio_files=story_audio_files
         )
 
     # Get story context (previous parts only, not the current one)

@@ -1414,6 +1414,9 @@ audio {
 .progress-segment-green {
     background-color: #00ff00 !important; /* Extremely bright green */
 }
+.progress-segment-red {
+    background-color: #f44336 !important; /* High-contrast red */
+}
 @media (max-width: 600px) {
   #story-audio-modal > div {
     padding: 0.5em !important;
