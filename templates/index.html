@@ -93,7 +93,7 @@
                         {{ dictation_form(false, request.path, false, show_next_button) }}
                     {% else %}
                         {{ dictation_form(true, request.path, true, show_next_button) }}
-                        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy) }}
+                        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input) }}
                         {% if not show_next_button %}
                             <a href="/stories">Back to Stories</a>
                         {% endif %}
@@ -221,7 +221,7 @@
             {{ dictation_form(false, '/session', false, show_next_button) }}
         {% else %}
             {{ dictation_form(true, '/session', true, show_next_button) }}
-            {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy) }}
+            {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input) }}
             {% if not show_next_button %}
                 <a href="/">Back to Menu</a>
             {% endif %}

@@ -20,12 +20,16 @@ def clickable_hanzi(text):
     return Markup(hanzi_re.sub(repl, text))
 
 def create_app():
-    app = Flask(__name__, template_folder="../templates", static_folder="../static")
-
-    app.secret_key = "dev-key"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(base_dir, "templates"),
+        static_folder=os.path.join(base_dir, "static")
+    )
+    app.secret_key = os.environ.get("SECRET_KEY", "dev")
+    app.jinja_env.filters["clickable_hanzi"] = clickable_hanzi
     app.register_blueprint(dictation_bp)
-    
-    # Register the custom filter
-    app.jinja_env.filters['clickable_hanzi'] = clickable_hanzi
-
+    # Register the admin dashboard blueprint
+    from admin_dashboard import admin_bp as admin_dashboard_bp
+    app.register_blueprint(admin_dashboard_bp)
     return app

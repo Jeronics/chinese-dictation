@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Reported Corrections Dashboard{% endblock %}
+{% block content %}
+<h1>Reported Corrections Dashboard</h1>
+<style>
+    .dashboard-frame {
+        background: #232136;
+        color: #f8f8f2;
+        border-radius: 12px;
+        padding: 2em;
+        margin-bottom: 2em;
+        box-shadow: 0 2px 8px #0003;
+        overflow-x: auto;
+    }
+    .dashboard-table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    table.dashboard-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        background: transparent !important;
+        color: #f8f8f2 !important;
+        table-layout: auto;
+        font-size: 1em;
+    }
+    table.dashboard-table th, table.dashboard-table td {
+        border: 1px solid #393552;
+        padding: 0.7em 1em;
+        color: #f8f8f2 !important;
+        vertical-align: top;
+        background: none;
+        white-space: pre-line;
+        word-break: break-word;
+    }
+    table.dashboard-table th {
+        position: sticky;
+        top: 0;
+        background: #181825;
+        z-index: 2;
+        font-weight: bold;
+        text-align: left;
+    }
+    table.dashboard-table tbody tr:nth-of-type(odd) {
+        background-color: #181825 !important;
+    }
+    table.dashboard-table tbody tr:nth-of-type(even) {
+        background-color: #232136 !important;
+    }
+    .diff-wrong {
+        color: #ff2d2d !important;
+    }
+    .diff-added {
+        color: #1976d2 !important;
+    }
+    .diff-missing {
+        color: #bdbdbd !important;
+    }
+</style>
+<div class="dashboard-frame">
+<div class="dashboard-table-container">
+<table class="dashboard-table">
+    <thead>
+        <tr>
+            <th>Created At</th>
+            <th>Correct Sentence</th>
+            <th>Input Sentence</th>
+            <th>Corrected Sentence</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for r in reports %}
+        <tr>
+            <td>{{ r.created_at[:19].replace('T', ' ') }}</td>
+            <td>{{ r.correct_sentence }}</td>
+            <td>{{ r.input_sentence }}</td>
+            <td>{{ r.corrected_sentence|safe }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %} 

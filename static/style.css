@@ -704,16 +704,20 @@ label:focus-within {
 }
 
 /* Diff/Correction colors: colorblind-friendly and with underline for clarity */
-.diff-del {
-    color: #ff7043; /* Strong orange */
-    text-decoration: underline wavy #ff7043;
-    opacity: 1;
+.diff-wrong {
+    color: #ff2d2d !important;
     font-weight: bold;
+    text-decoration: none;
 }
-.diff-ins {
-    color: #1976d2; /* Strong blue */
-    text-decoration: underline wavy #1976d2;
+.diff-added {
+    color: #1976d2 !important;
     font-weight: bold;
+    text-decoration: none;
+}
+.diff-missing {
+    color: #bdbdbd !important;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 @media (max-width: 768px) {

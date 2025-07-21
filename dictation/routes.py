@@ -19,6 +19,8 @@ from .db_helpers import (
 from .utils import login_required
 from supabase import create_client
 import logging
+import smtplib
+from email.mime.text import MIMEText
 
 logging.basicConfig(level=logging.INFO)
 
@@ -149,7 +151,8 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         story_mode=is_story_part,
         story_context=story_context,
         story_title=story_title,
-        story_audio_files=story_audio_files
+        story_audio_files=story_audio_files,
+        user_input=user_input
     )
 
 ### ──────── ROUTES ────────
@@ -615,3 +618,61 @@ def story_session(story_id):
         story_audio_files=story_audio_files,
         group_scores=session.get("story_group_scores", [])
     )
+
+@dictation_bp.route("/report-correction", methods=["POST"])
+def report_correction():
+    correction_html = request.form.get("correction", "")
+    correct_sentence = request.form.get("correct_sentence", "")
+    input_sentence = request.form.get("user_input", "")
+    corrected_sentence = correction_html  # For now, same as correction_html
+    pinyin = request.form.get("pinyin", "")
+    translation = request.form.get("translation", "")
+    user_id = session.get("user_id")
+    user_email = session.get("email", "(not logged in)")
+    try:
+        supabase.table("reported_corrections").insert({
+            "user_id": user_id,
+            "user_email": user_email,
+            "input_sentence": input_sentence,
+            "correct_sentence": correct_sentence,
+            "corrected_sentence": corrected_sentence,
+            "pinyin": pinyin,
+            "translation": translation,
+            "correction_html": correction_html
+        }).execute()
+        flash("Thank you for reporting! We'll review the correction soon.", "success")
+    except Exception as e:
+        flash(f"Failed to save report: {e}", "error")
+    # Re-render the result page with the same data
+    # Use the same context keys as render_dictation_result
+    return render_template(
+        "index.html",
+        result="Report sent!",
+        result_color="#1976d2",
+        correction=correction_html,
+        accuracy=None,
+        average_accuracy=None,
+        score=None,
+        level=None,
+        difficulty=None,
+        show_result=True,
+        audio_file=None,
+        translation=translation,
+        pinyin=pinyin,
+        session_mode=None,
+        current=None,
+        total=None,
+        show_next_button=None,
+        story_mode=None,
+        story_context=None,
+        story_title=None,
+        story_audio_files=None,
+        user_input=input_sentence,
+        correct_sentence=correct_sentence
+    )
+
+@dictation_bp.route("/admin/reported-corrections")
+def reported_corrections_dashboard():
+    # Optionally, add admin check here
+    rows = supabase.table("reported_corrections").select("*").order("created_at", desc=True).execute().data
+    return render_template("reported_corrections_dashboard.html", reports=rows)
