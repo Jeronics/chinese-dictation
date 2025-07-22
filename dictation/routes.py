@@ -152,7 +152,9 @@ def render_dictation_result(user_input, sentence_data, session_score_key, show_n
         story_context=story_context,
         story_title=story_title,
         story_audio_files=story_audio_files,
-        user_input=user_input
+        user_input=user_input,
+        story_id=story_id if is_story_part else None,
+        part_id=sentence_data["id"] if is_story_part else None
     )
 
 ### ──────── ROUTES ────────
@@ -629,6 +631,29 @@ def report_correction():
     translation = request.form.get("translation", "")
     user_id = session.get("user_id")
     user_email = session.get("email", "(not logged in)")
+    # Try to reconstruct audio_file from form or session
+    audio_file = None
+    difficulty = request.form.get("difficulty") or session.get("hsk_level") or None
+    sentence_id = None
+    # Prefer story_id and part_id from form for story corrections
+    story_id = request.form.get("story_id")
+    part_id = request.form.get("part_id")
+    if story_id and part_id:
+        try:
+            # part_id is usually like 'story_<storyid>_<partnum>', extract part number
+            part_num = int(part_id.split('_')[-1])
+            audio_file = ctx.story_audio_path(story_id, part_num)
+        except Exception:
+            audio_file = None
+    else:
+        # Try to get sentence id from session or form (regular session)
+        if "session_ids" in session and "session_index" in session:
+            try:
+                sentence_id = session["session_ids"][session["session_index"]]
+            except Exception:
+                sentence_id = None
+        if sentence_id and difficulty:
+            audio_file = ctx.audio_path(sentence_id, difficulty)
     try:
         supabase.table("reported_corrections").insert({
             "user_id": user_id,
@@ -643,7 +668,7 @@ def report_correction():
         flash("Thank you for reporting! We'll review the correction soon.", "success")
     except Exception as e:
         flash(f"Failed to save report: {e}", "error")
-    # Re-render the result page with the same data
+    # Re-render the result page with the same data, but with audio_file restored if possible
     return render_template(
         "index.html",
         result="Report sent!",
@@ -653,9 +678,9 @@ def report_correction():
         average_accuracy=None,
         score=None,
         level=None,
-        difficulty=None,
+        difficulty=difficulty,
         show_result=True,
-        audio_file=None,
+        audio_file=audio_file,
         translation=translation,
         pinyin=pinyin,
         session_mode=None,
