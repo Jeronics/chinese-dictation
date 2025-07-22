@@ -22,13 +22,13 @@
     <p><strong>Pinyin:</strong> {{ pinyin }}</p>
     <p><strong>Translation:</strong> {{ translation }}</p>
     <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
-    <form method="POST" action="/report-correction" style="margin-top: 0.5em;">
+    <form method="POST" action="/report-correction" style="margin-top: 0.5em; display: inline;">
         <input type="hidden" name="correction" value="{{ correction|safe }}">
         <input type="hidden" name="correct_sentence" value="{{ correct_sentence }}">
         <input type="hidden" name="user_input" value="{{ user_input }}">
         <input type="hidden" name="pinyin" value="{{ pinyin }}">
         <input type="hidden" name="translation" value="{{ translation }}">
-        <button type="submit" class="btn btn-warning" style="margin-bottom: 0.5em;">Report Wrong Correction</button>
+        <input type="submit" value="Report Wrong Correction" class="report-correction-link">
     </form>
 </div>
 {% endmacro %} 

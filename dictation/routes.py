@@ -644,7 +644,6 @@ def report_correction():
     except Exception as e:
         flash(f"Failed to save report: {e}", "error")
     # Re-render the result page with the same data
-    # Use the same context keys as render_dictation_result
     return render_template(
         "index.html",
         result="Report sent!",
