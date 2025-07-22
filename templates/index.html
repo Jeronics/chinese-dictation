@@ -211,7 +211,7 @@
         <p><strong>Level:</strong> {{ difficulty }}</p>
 
         {% if audio_file %}
-            <audio controls autoplay>
+            <audio id="main-dictation-audio" controls autoplay>
                 <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
