@@ -21,6 +21,7 @@ from supabase import create_client
 import logging
 import smtplib
 from email.mime.text import MIMEText
+from .session import HSKSession, StorySession
 
 logging.basicConfig(level=logging.INFO)
 
@@ -205,10 +206,12 @@ def session_practice():
             session_score=0
         )
 
+    hsk_session = HSKSession(ctx)
+
     if request.method == "POST" and "next" in request.form:
-        session["session_index"] += 1
-        if session["session_index"] >= 5:
-            score = session["session_score"]
+        hsk_session.advance()
+        if hsk_session.get_current_index() >= 5:
+            score = hsk_session.get_score()
             level = session.get("hsk_level")
             user_id = session.get("user_id")
             average_accuracy = 0
@@ -222,7 +225,7 @@ def session_practice():
                 session.pop(key, None)
             return render_template("session_summary.html", score=score, total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
-    sid = session["session_ids"][session["session_index"]]
+    sid = hsk_session.get_current_id()
     s = ctx.get_sentence(sid)
     s["id"] = sid
     if not ctx.audio_path(sid, s["difficulty"]):
@@ -230,25 +233,9 @@ def session_practice():
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_dictation_result(
-            user_input, s,
-            session_score_key="session_score",
-            show_next=True,
-            current=session["session_index"] + 1,
-            total=5
-        )
+        return render_template("index.html", **hsk_session.update_score(user_input))
 
-    return render_template("index.html",
-        correct_sentence=s["chinese"],
-        audio_file=ctx.audio_path(sid, s["difficulty"]),
-        score=session["session_score"],
-        level=session.get("level", 1),
-        difficulty=s["difficulty"],
-        show_result=False,
-        session_mode=True,
-        current=session["session_index"] + 1,
-        total=5
-    )
+    return render_template("index.html", **hsk_session.get_context())
 
 @dictation_bp.route("/dashboard")
 @login_required
@@ -527,10 +514,12 @@ def story_session(story_id):
     if "story_group_scores" not in session or session.get("story_id") != story_id:
         session["story_group_scores"] = []
 
+    story_session_obj = StorySession(ctx)
+
     if request.method == "POST" and "next" in request.form:
         # Track per-group scores
         group_size = 5
-        idx = session["story_session_index"]
+        idx = story_session_obj.get_current_index()
         total_parts = len(story["parts"])
         # If finishing a group or the story, record the group score
         if (idx + 1) % group_size == 0 or (idx + 1) == total_parts:
@@ -541,9 +530,9 @@ def story_session(story_id):
             # Store as out of 10 (scale up if group smaller than 5)
             group_score_scaled = int((group_score / (end - start)) * 10)
             session["story_group_scores"].append(group_score_scaled)
-        session["story_session_index"] += 1
-        if session["story_session_index"] >= len(story["parts"]):
-            score = session["story_session_score"]
+        story_session_obj.advance()
+        if story_session_obj.get_current_index() >= len(story["parts"]):
+            score = story_session_obj.get_score()
             total = len(story["parts"])
             
             # Calculate average accuracy for the story session
@@ -572,7 +561,7 @@ def story_session(story_id):
                 session.pop(key, None)
             return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
-    part_id = session["story_session_ids"][session["story_session_index"]]
+    part_id = story_session_obj.get_current_id()
     part = ctx.get_story_part(story_id, part_id)
     if not part:
         return "Story part not found", 500
@@ -584,42 +573,16 @@ def story_session(story_id):
     try:
         part_number = int(part_id.split('_')[-1])
     except Exception:
-        part_number = session["story_session_index"] + 1
+        part_number = story_session_obj.get_current_index() + 1
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_dictation_result(
-            user_input, part,
-            session_score_key="story_session_score",
-            show_next=True,
-            current=session["story_session_index"] + 1,
-            total=len(story["parts"]),
-            is_story_part=True,
-            story_context=story["parts"][:session["story_session_index"]],
-            story_title=story["title"],
-            story_difficulty=story["difficulty"],
-            story_audio_files=story_audio_files
-        )
+        return render_template("index.html", **story_session_obj.update_score(user_input))
 
     # Get story context (previous parts only, not the current one)
-    story_context = story["parts"][:session["story_session_index"]]
+    story_context = story["parts"][:story_session_obj.get_current_index()]
     
-    return render_template("index.html",
-        correct_sentence=part["chinese"],
-        audio_file=ctx.story_audio_path(story_id, part_number),  # Use story audio path
-        score=session["story_session_score"],
-        level=session.get("level", 1),
-        difficulty=story["difficulty"],
-        show_result=False,
-        session_mode=True,
-        current=session["story_session_index"] + 1,
-        total=len(story["parts"]),
-        story_mode=True,
-        story_title=story["title"],
-        story_context=story_context,
-        story_audio_files=story_audio_files,
-        group_scores=session.get("story_group_scores", [])
-    )
+    return render_template("index.html", **story_session_obj.get_context())
 
 @dictation_bp.route("/report-correction", methods=["POST"])
 def report_correction():

@@ -1,0 +1,82 @@
+<button id="open-story-audio-modal" style="font-size:1.1em; font-weight:bold; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.5em 1.2em; cursor:pointer; margin: 1em 0;">🎧 Listen to Full Story</button>
+<div id="story-audio-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center;">
+  <div style="background:#232136; color:#222; padding:2em 2em 1.5em 2em; border-radius:12px; min-width:320px; max-width:95vw; max-height:90vh; box-shadow:0 8px 32px #000a; position:relative; display:flex; flex-direction:column; align-items:center;">
+    <button id="close-story-audio-modal" aria-label="Close" style="position:absolute; top:12px; right:18px; font-size:2em; background:none; border:none; color:#fff; cursor:pointer;">&times;</button>
+    <div style="font-weight:bold; font-size:1.2em; margin-bottom:0.7em; color:#fff;">Full Story Audio</div>
+    <audio id="story-audio" controls preload="auto" style="width:100%; margin-bottom:1em;">
+      <source src="/static/{{ story_audio_files[0] }}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <ol id="story-playlist" style="margin-top:0.5em; padding-left:1.5em; width:100%; color:#fff;">
+      {% for file in story_audio_files %}
+        <li id="playlist-item-{{ loop.index0 }}" style="margin-bottom:0.2em;">Part {{ loop.index }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var audioFiles = {{ story_audio_files|tojson|safe }};
+    var openModalBtn = document.getElementById('open-story-audio-modal');
+    var storyAudioModal = document.getElementById('story-audio-modal');
+    var closeModalBtn = document.getElementById('close-story-audio-modal');
+    var audioElement = document.getElementById('story-audio');
+    var currentIdx = 0;
+
+    function highlightCurrent(idx) {
+      for (var i = 0; i < audioFiles.length; i++) {
+        var item = document.getElementById('playlist-item-' + i);
+        if (item) {
+          item.style.fontWeight = (i === idx) ? 'bold' : 'normal';
+          item.style.color = (i === idx) ? '#1976d2' : '#fff';
+          item.style.background = (i === idx) ? '#e3f2fd' : '';
+          item.style.borderRadius = (i === idx) ? '4px' : '';
+          item.style.padding = (i === idx) ? '0.1em 0.4em' : '';
+        }
+      }
+    }
+
+    highlightCurrent(currentIdx);
+
+    if (openModalBtn && storyAudioModal) {
+      openModalBtn.addEventListener('click', function() {
+        storyAudioModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+      });
+    }
+    if (closeModalBtn && storyAudioModal) {
+      closeModalBtn.addEventListener('click', function() {
+        storyAudioModal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    }
+    // Close modal on background click
+    if (storyAudioModal) {
+      storyAudioModal.addEventListener('click', function(e) {
+        if (e.target === storyAudioModal) {
+          storyAudioModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    if (audioElement) {
+      audioElement.addEventListener('ended', function() {
+        if (currentIdx < audioFiles.length - 1) {
+          currentIdx++;
+          audioElement.src = '/static/' + audioFiles[currentIdx];
+          audioElement.play();
+          highlightCurrent(currentIdx);
+        }
+      });
+
+      audioElement.addEventListener('seeked', function() {
+        if (audioElement.currentTime === 0 && currentIdx !== 0) {
+          currentIdx = 0;
+          audioElement.src = '/static/' + audioFiles[0];
+          highlightCurrent(currentIdx);
+        }
+      });
+    }
+  });
+</script> 

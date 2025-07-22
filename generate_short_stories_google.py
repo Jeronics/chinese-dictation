@@ -140,12 +140,6 @@ def main():
         story_voice = random.choice(voice_list)
         story_voice_desc = CHINESE_VOICES[story_voice]
         
-        # Remove or comment out all print statements except for errors and the final summary.
-        # print(f"📖 [{story_idx}/{total_stories}] Story: {story_title} ({story_title_chinese})")
-        # print(f"   Level: {difficulty}")
-        # print(f"   Parts: {len(parts)}")
-        # print(f"   Voice: {story_voice} ({story_voice_desc})")
-        # print()
         
         story_success = 0
         story_failed = 0
