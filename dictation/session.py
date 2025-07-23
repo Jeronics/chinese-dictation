@@ -60,12 +60,13 @@ class HSKSession(BaseDictationSession):
 
     def get_context(self):
         item = self.get_current_item()
+        hsk_level = item["hsk_level"]
         return {
             "correct_sentence": item["chinese"],
-            "audio_file": self.ctx.audio_path(item["id"], item["difficulty"]),
+            "audio_file": self.ctx.audio_path(item["id"], hsk_level),
             "score": self.get_score(),
-            "level": self.session.get("hsk_level", 1),
-            "difficulty": item["difficulty"],
+            "level": hsk_level,
+            "difficulty": f"HSK{hsk_level}",
             "show_result": False,
             "session_mode": True,
             "current": self.get_current_index() + 1,
@@ -74,6 +75,7 @@ class HSKSession(BaseDictationSession):
 
     def update_score(self, user_input):
         item = self.get_current_item()
+        hsk_level = item["hsk_level"]
         correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, item["chinese"])
         lev = self.corrector.levenshtein(stripped_user, stripped_correct)
         accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
@@ -120,10 +122,10 @@ class HSKSession(BaseDictationSession):
             "accuracy": accuracy,
             "average_accuracy": average_accuracy,
             "score": self.get_score(),
-            "level": self.session.get("level", 1),
-            "difficulty": item["difficulty"],
+            "level": hsk_level,
+            "difficulty": f"HSK{hsk_level}",
             "show_result": True,
-            "audio_file": self.ctx.audio_path(item["id"], item["difficulty"]),
+            "audio_file": self.ctx.audio_path(item["id"], hsk_level),
             "translation": item["translation"],
             "pinyin": item["pinyin"],
             "session_mode": True,
@@ -153,15 +155,13 @@ class StorySession(BaseDictationSession):
         part = self.get_current_item()
         story_id = self.session.get("story_id")
         story = self.ctx.get_story(story_id)
-        print("SESSION", self.session)
-        print("STORY", story)  
-        print("AUDIO FILE", self.ctx.story_audio_path(story_id, part["id"]))
-        print("PART", part)
+        hsk_level = story["hsk_level"]
         return {
             "correct_sentence": part["chinese"],
             "audio_file": self.ctx.story_audio_path(story_id, part["id"]),
             "score": self.get_score(),
-            "difficulty": story["difficulty"],
+            "level": hsk_level,
+            "difficulty": f"HSK{hsk_level}",
             "show_result": False,
             "session_mode": True,
             "current": self.get_current_index() + 1,
@@ -177,6 +177,7 @@ class StorySession(BaseDictationSession):
         part = self.get_current_item()
         story_id = self.session.get("story_id")
         story = self.ctx.get_story(story_id)
+        hsk_level = story["hsk_level"]
         correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, part["chinese"])
         lev = self.corrector.levenshtein(stripped_user, stripped_correct)
         accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
@@ -223,8 +224,8 @@ class StorySession(BaseDictationSession):
             "accuracy": accuracy,
             "average_accuracy": average_accuracy,
             "score": self.get_score(),
-            "level": self.session.get("level", 1),
-            "difficulty": story["difficulty"],
+            "level": hsk_level,
+            "difficulty": f"HSK{hsk_level}",
             "show_result": True,
             "audio_file": self.ctx.story_audio_path(story_id, part["id"]),
             "translation": part["translation"],

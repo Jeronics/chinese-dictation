@@ -1,3 +1,4 @@
+from traceback import print_tb
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -190,6 +191,11 @@ def session_practice():
     Main dictation practice session route. Handles session state, user answers, and session summary.
     """
     level = request.args.get("hsk")
+    print("LEVEL", level)
+    if level and isinstance(level, str) and level.startswith("HSK"):
+        level = int(level.replace("HSK", ""))
+    elif level:
+        level = int(level)
     if level:
         session.update(
             hsk_level=level,
@@ -210,6 +216,7 @@ def session_practice():
 
     if request.method == "POST" and "next" in request.form:
         hsk_session.advance()
+        print("Hsk session", hsk_session.get_current_index())
         if hsk_session.get_current_index() >= 5:
             score = hsk_session.get_score()
             level = session.get("hsk_level")
@@ -226,9 +233,11 @@ def session_practice():
             return render_template("session_summary.html", score=score, total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     sid = hsk_session.get_current_id()
+    print("SID", sid)
+    print("SESSION", session)
     s = ctx.get_sentence(sid)
     s["id"] = sid
-    if not ctx.audio_path(sid, s["difficulty"]):
+    if not ctx.audio_path(sid, s["hsk_level"]):
         return "Missing audio file", 500
 
     if request.method == "POST" and "user_input" in request.form:

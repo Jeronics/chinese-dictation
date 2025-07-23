@@ -161,7 +161,7 @@ chinese-dictation/
     "chinese": "中文文本",
     "pinyin": "Pinyin text",
     "translation": "English translation",
-    "difficulty": "HSK1"
+    "hsk_level": 1
   }
 }
 ```

@@ -40,8 +40,8 @@ class DictationContext:
                     return part
         return None
 
-    def audio_path(self, sid, difficulty):
-        filename = f"{sid}_{difficulty}.mp3"
+    def audio_path(self, sid, hsk_level):
+        filename = f"{sid}_HSK{hsk_level}.mp3"
         path = os.path.join(self.audio_dir, filename)
         return f"audio_files/{filename}" if os.path.exists(path) else None
 
@@ -73,13 +73,13 @@ class DictationContext:
         return audio_paths
 
     def get_random_ids(self, count=5, level=None):
-        sents = [sid for sid, s in self.sentences.items() if s["difficulty"] == level] if level else list(self.sentences)
+        sents = [sid for sid, s in self.sentences.items() if s["hsk_level"] == level] if level else list(self.sentences)
         return random.sample(sents, min(count, len(sents)))
 
     def get_phrases_by_level(self, level=None):
         """Get phrases/sentences filtered by HSK level"""
         if level:
-            return {sid: s for sid, s in self.sentences.items() if s["difficulty"] == level}
+            return {sid: s for sid, s in self.sentences.items() if s["hsk_level"] == int(level)}
         return self.sentences
 
     def count_hanzi_per_hsk(self):

@@ -3,7 +3,7 @@
     "title": "The Emperor's New Clothes",
     "title_chinese": "皇帝的新装",
     "description": "A vain emperor is tricked by swindlers into believing he is wearing magical clothes that only the wise can see, until a child reveals the truth.",
-    "difficulty": "HSK3",
+    "hsk_level": 3,
     "parts": [
       {
         "id": "1",
@@ -131,7 +131,7 @@
     "title": "The Turtle and the Hare",
     "title_chinese": "龟兔赛跑",
     "description": "A boastful hare challenges a slow turtle to a race, but the turtle's persistence and patience lead to an unexpected victory.",
-    "difficulty": "HSK2",
+    "hsk_level": 3,
     "parts": [
       {
         "id": "1",

@@ -1,0 +1,44 @@
+{#
+  Usage:
+  {% include '_progress_bar.html' with context %}
+  Requires: current, total
+  Optional: group_scores (for story mode)
+#}
+<div class="session-progress-container">
+  <div class="session-progress-info">
+    <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
+    <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
+  </div>
+  <div class="segmented-progress-bar">
+    {% set num_groups = (total // 5) %}
+    {% set remainder = total % 5 %}
+    {% for i in range(num_groups + (1 if remainder else 0)) %}
+      {% set segment_size = 5 if i < num_groups else remainder %}
+      {% set start = i * 5 + 1 %}
+      {% set end = start + segment_size - 1 %}
+      {% set filled = (current > end) %}
+      {% set partial = (current >= start and current <= end) %}
+      {% if group_scores is defined %}
+        {% set group_score = group_scores[i] if i < group_scores|length else None %}
+      {% else %}
+        {% set group_score = None %}
+      {% endif %}
+      {% set segment_class = 'progress-segment-fill' %}
+      {% if filled %}
+        {% set segment_class = segment_class + ' completed' %}
+      {% endif %}
+      {% if group_score is not none %}
+        {% if group_score >= 7 %}
+          {% set segment_class = segment_class + ' progress-segment-green' %}
+        {% else %}
+          {% set segment_class = segment_class + ' progress-segment-red' %}
+        {% endif %}
+      {% endif %}
+      <div class="progress-segment">
+        <div class="{{ segment_class }}"
+          style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> 
