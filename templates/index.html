@@ -5,224 +5,23 @@
 
 {% block content %}
     {% if story_mode and story_audio_files %}
-        <!-- Story Actions - Outside the main layout -->
-        <div class="story-actions">
-            <form method="POST" style="display: inline;">
-                <input type="hidden" name="resume_later" value="1">
-                <button type="submit" class="resume-later-btn">
-                    Save & Resume Later
-                </button>
-            </form>
-            <form method="POST" style="display: inline;">
-                <input type="hidden" name="restart" value="1">
-                <button type="submit" class="restart-btn">
-                    Restart Story
-                </button>
-            </form>
-        </div>
-
-        <!-- Story Mode Layout with Context Panel -->
+        {% include '_story_actions.html' %}
         <div class="story-layout">
             <div class="dictation-header">
                 <h1>{{ story_title }}</h1>
                 <p class="hsk-level"><strong>Level:</strong> HSK{{ level }}</p>
             </div>
             {% if current and total %}
-            <div class="session-progress-container">
-                <div class="session-progress-info">
-                    <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
-                    <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
-                </div>
-                <div class="segmented-progress-bar">
-                    {% set num_groups = (total // 5) %}
-                    {% set remainder = total % 5 %}
-                    {% for i in range(num_groups + (1 if remainder else 0)) %}
-                        {% set segment_size = 5 if i < num_groups else remainder %}
-                        {% set start = i * 5 + 1 %}
-                        {% set end = start + segment_size - 1 %}
-                        {% set filled = (current > end) %}
-                        {% set partial = (current >= start and current <= end) %}
-                        {% set group_score = group_scores[i] if group_scores and i < group_scores|length else None %}
-                        <div class="progress-segment">
-                            <div class="progress-segment-fill{% if filled %} completed{% endif %}{% if group_score is not none %}{% if group_score >= 7 %} progress-segment-green{% else %} progress-segment-red{% endif %}{% endif %}"
-                                 style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+                {% include '_progress_bar.html' with context %}
             {% endif %}
             <div class="story-panels-row">
-                <div class="story-context-panel">
-                    <h3>Story Context</h3>
-                    <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
-                    <div class="context-content">
-                        {% if story_context and story_context|length > 0 %}
-                            {% for part in story_context %}
-                                <div class="context-part">
-                                    <div class="context-text">{{ part.chinese }}</div>
-                                    <div class="context-pinyin hidden">{{ part.pinyin }}</div>
-                                    <div class="context-translation hidden">{{ part.translation }}</div>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="no-context"><em>This is the beginning of the story. Previous context will appear here as you progress.</em></p>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="dictation-frame">
-                    <h3>Dictation</h3>
-                    {% if show_result and audio_file %}
-                        <audio controls autoplay>
-                            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                    {% elif not show_result and audio_file %}
-                        <label for="user_input">Listen to the audio:</label>
-                        <audio controls autoplay>
-                            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                    {% elif not show_result %}
-                        <div class="no-audio-notice">
-                            <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
-                        </div>
-                    {% endif %}
-
-                    {% if not show_result %}
-                        {{ dictation_form(false, request.path, false, show_next_button) }}
-                    {% else %}
-                        {{ dictation_form(true, request.path, true, show_next_button) }}
-                        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id) }}
-                        {% if not show_next_button %}
-                            <a href="/stories">Back to Stories</a>
-                        {% endif %}
-                    {% endif %}
-                </div>
+                {% include '_story_context_panel.html' %}
+                {% include '_dictation_frame.html' with context %}
             </div>
         </div>
-        <div style="margin: 1em 0;">
-          <button id="open-story-audio-modal" style="font-size:1.1em; font-weight:bold; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.5em 1.2em; cursor:pointer;">🎧 Listen to Full Story</button>
-        </div>
-        <!-- Modal for Full Story Audio -->
-        <div id="story-audio-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center;">
-          <div style="background:#232136; color:#222; padding:2em 2em 1.5em 2em; border-radius:12px; min-width:320px; max-width:95vw; max-height:90vh; box-shadow:0 8px 32px #000a; position:relative; display:flex; flex-direction:column; align-items:center;">
-            <button id="close-story-audio-modal" aria-label="Close" style="position:absolute; top:12px; right:18px; font-size:2em; background:none; border:none; color:#fff; cursor:pointer;">&times;</button>
-            <div style="font-weight:bold; font-size:1.2em; margin-bottom:0.7em; color:#fff;">Full Story Audio</div>
-            <audio id="story-audio" controls preload="auto" style="width:100%; margin-bottom:1em;">
-              <source src="/static/{{ story_audio_files[0] }}" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
-            <ol id="story-playlist" style="margin-top:0.5em; padding-left:1.5em; width:100%; color:#fff;">
-              {% for file in story_audio_files %}
-                <li id="playlist-item-{{ loop.index0 }}" style="margin-bottom:0.2em;">Part {{ loop.index }}</li>
-              {% endfor %}
-            </ol>
-          </div>
-        </div>
-        <script>
-          const audioFiles = {{ story_audio_files|tojson }};
-          const openModalBtn = document.getElementById('open-story-audio-modal');
-          const storyAudioModal = document.getElementById('story-audio-modal');
-          const closeModalBtn = document.getElementById('close-story-audio-modal');
-          const audioElement = document.getElementById('story-audio');
-          let currentIdx = 0;
-
-          function highlightCurrent(idx) {
-            for (let i = 0; i < audioFiles.length; i++) {
-              const item = document.getElementById('playlist-item-' + i);
-              if (item) {
-                item.style.fontWeight = (i === idx) ? 'bold' : 'normal';
-                item.style.color = (i === idx) ? '#1976d2' : '#fff';
-                item.style.background = (i === idx) ? '#e3f2fd' : '';
-                item.style.borderRadius = (i === idx) ? '4px' : '';
-                item.style.padding = (i === idx) ? '0.1em 0.4em' : '';
-              }
-            }
-          }
-
-          highlightCurrent(currentIdx);
-
-          openModalBtn.addEventListener('click', function() {
-            storyAudioModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent background scroll
-          });
-          closeModalBtn.addEventListener('click', function() {
-            storyAudioModal.style.display = 'none';
-            document.body.style.overflow = '';
-          });
-          // Close modal on background click
-          storyAudioModal.addEventListener('click', function(e) {
-            if (e.target === storyAudioModal) {
-              storyAudioModal.style.display = 'none';
-              document.body.style.overflow = '';
-            }
-          });
-
-          audioElement.addEventListener('ended', function() {
-            if (currentIdx < audioFiles.length - 1) {
-              currentIdx++;
-              audioElement.src = '/static/' + audioFiles[currentIdx];
-              audioElement.play();
-              highlightCurrent(currentIdx);
-            }
-          });
-
-          audioElement.addEventListener('seeked', function() {
-            if (audioElement.currentTime === 0 && currentIdx !== 0) {
-              currentIdx = 0;
-              audioElement.src = '/static/' + audioFiles[0];
-              highlightCurrent(currentIdx);
-            }
-          });
-        </script>
+        {% include '_story_audio_modal.html' %}
+        <script src="{{ url_for('static', filename='story_audio.js') }}"></script>
     {% else %}
-        <!-- Regular Session Layout -->
-        <h1>Chinese Dictation</h1>
-
-        {% if session_mode %}
-            <!-- Session Progress Bar -->
-            <div class="session-progress-container">
-                <div class="session-progress-info">
-                    <span class="session-counter">Sentence {{ current }} of {{ total }}</span>
-                    <span class="session-percentage">{{ ((current / total) * 100) | round(0) | int }}%</span>
-                </div>
-                <div class="segmented-progress-bar">
-                    {% set num_groups = (total // 5) %}
-                    {% set remainder = total % 5 %}
-                    {% for i in range(num_groups + (1 if remainder else 0)) %}
-                        {% set segment_size = 5 if i < num_groups else remainder %}
-                        {% set start = i * 5 + 1 %}
-                        {% set end = start + segment_size - 1 %}
-                        {% set filled = (current > end) %}
-                        {% set partial = (current >= start and current <= end) %}
-                        <div class="progress-segment">
-                            <div class="progress-segment-fill{% if filled %} completed{% endif %}"
-                                 style="width: {% if filled %}100{% elif partial %}{{ ((current - start + 1) / segment_size) * 100 }}{% else %}0{% endif %}%">
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
-        <p><strong>Level:</strong> HSK{{ level }}</p>
-
-        {% if audio_file %}
-            <audio id="main-dictation-audio" controls autoplay>
-                <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        {% endif %}
-
-        {% if not show_result %}
-            {{ dictation_form(false, '/session', false, show_next_button) }}
-        {% else %}
-            {{ dictation_form(true, '/session', true, show_next_button) }}
-            {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input) }}
-            {% if not show_next_button %}
-                <a href="/">Back to Menu</a>
-            {% endif %}
-        {% endif %}
+        {% include '_regular_session_frame.html' with context %}
     {% endif %}
 {% endblock %}

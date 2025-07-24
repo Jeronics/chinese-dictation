@@ -1,0 +1,25 @@
+<div class="story-context-panel">
+    <h3>Story Context</h3>
+    <button class="toggle-button" onclick="toggleTranslations()">Show Pinyin</button>
+    <div class="context-content">
+        {% if story_context and story_context|length > 0 %}
+            {% for part in story_context %}
+                <div class="context-part">
+                    <div class="context-text">{{ part.chinese }}</div>
+                    <div class="context-pinyin hidden">{{ part.pinyin }}</div>
+                    <div class="context-translation hidden">{{ part.translation }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-context"><em>This is the beginning of the story. Previous context will appear here as you progress.</em></p>
+        {% endif %}
+    </div>
+</div>
+<script>
+function toggleTranslations() {
+    const pinyinEls = document.querySelectorAll('.context-pinyin');
+    const translationEls = document.querySelectorAll('.context-translation');
+    pinyinEls.forEach(el => el.classList.toggle('hidden'));
+    translationEls.forEach(el => el.classList.toggle('hidden'));
+}
+</script> 

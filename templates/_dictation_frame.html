@@ -1,0 +1,34 @@
+{#
+  Usage:
+  {% include '_dictation_frame.html' with context %}
+  Requires: show_result, audio_file, dictation_form, dictation_result_panel, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id
+#}
+<div class="dictation-frame">
+    <h3>Dictation</h3>
+    {% if show_result and audio_file %}
+        <audio controls autoplay>
+            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% elif not show_result and audio_file %}
+        <label for="user_input">Listen to the audio:</label>
+        <audio controls autoplay>
+            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% elif not show_result %}
+        <div class="no-audio-notice">
+            <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
+        </div>
+    {% endif %}
+
+    {% if not show_result %}
+        {{ dictation_form(false, request.path, false, show_next_button) }}
+    {% else %}
+        {{ dictation_form(true, request.path, true, show_next_button) }}
+        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id) }}
+        {% if not show_next_button %}
+            <a href="/stories">Back to Stories</a>
+        {% endif %}
+    {% endif %}
+</div> 

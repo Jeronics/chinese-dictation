@@ -1,0 +1,25 @@
+{#
+  Usage:
+  {% include '_regular_session_frame.html' with context %}
+  Requires: session_mode, current, total, audio_file, show_result, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, dictation_form, dictation_result_panel
+#}
+<h1>Chinese Dictation</h1>
+{% if session_mode %}
+    {% include '_progress_bar.html' with context %}
+{% endif %}
+<p><strong>Level:</strong> HSK{{ level }}</p>
+{% if audio_file %}
+    <audio id="main-dictation-audio" controls autoplay>
+        <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+{% endif %}
+{% if not show_result %}
+    {{ dictation_form(false, '/session', false, show_next_button) }}
+{% else %}
+    {{ dictation_form(true, '/session', true, show_next_button) }}
+    {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input) }}
+    {% if not show_next_button %}
+        <a href="/">Back to Menu</a>
+    {% endif %}
+{% endif %} 
