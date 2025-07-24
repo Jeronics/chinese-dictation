@@ -35,6 +35,24 @@ class BaseDictationSession:
     def update_score(self, user_input):
         raise NotImplementedError
 
+    def set_accuracy(self, accuracy):
+        if "accuracy_scores" not in self.session:
+            self.session["accuracy_scores"] = []
+        self.session["accuracy_scores"].append(accuracy)
+
+    def get_last_session_mean(self):
+        scores = self.session.get("accuracy_scores", [])
+        if not scores:
+            return 0
+        n = len(scores)
+        start = n - (n % 5 if n % 5 != 0 else 5)
+        last_session = scores[start:]
+        return round(sum(last_session) / len(last_session), 1) if last_session else 0
+
+    def get_total_accuracy_mean(self):
+        scores = self.session.get("accuracy_scores", [])
+        return round(sum(scores) / len(scores), 1) if scores else 0
+
     def get_gradient_feedback(self, accuracy):
         if accuracy == 100:
             return ("Perfect!", "#00ff00")  # Extremely bright green
@@ -77,15 +95,12 @@ class HSKSession(BaseDictationSession):
         item = self.get_current_item()
         hsk_level = item["hsk_level"]
         correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, item["chinese"])
-        lev = self.corrector.levenshtein(stripped_user, stripped_correct)
         accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
         feedback, feedback_color = self.get_gradient_feedback(accuracy)
-        # Only increment score if accuracy >= 70
-        if accuracy >= 70:
-            self.session[self.score_key] += 1
-        # Store per-sentence correctness for group scoring
-        idx = self.get_current_index()
-        self.session[f"hsk_part_{idx}_correct"] = (accuracy >= 70)
+        
+        # Append accuracy scores to session for later averaging
+        self.set_accuracy(accuracy)
+
         user_id = self.session.get("user_id")
         # Update character progress for logged-in users
         if user_id:
@@ -106,24 +121,14 @@ class HSKSession(BaseDictationSession):
                     })
             if hanzi_updates:
                 batch_update_character_progress(user_id, hanzi_updates)
-            # Store accuracy scores in session for later averaging
-            if "accuracy_scores" not in self.session:
-                self.session["accuracy_scores"] = []
-            self.session["accuracy_scores"].append(accuracy)
-            logging.debug(f"Added accuracy score {accuracy} to accuracy_scores. Current scores: {self.session['accuracy_scores']}")
         # Calculate running average accuracy for display
-        accuracy_scores = self.session.get("accuracy_scores", [])
-        average_accuracy = round(sum(accuracy_scores) / len(accuracy_scores), 1) if accuracy_scores else 0
         return {
             "correct_sentence": item["chinese"],
             "result": feedback,
             "result_color": feedback_color,
             "correction": correction,
             "accuracy": accuracy,
-            "average_accuracy": average_accuracy,
-            "score": self.get_score(),
             "level": hsk_level,
-            "difficulty": f"HSK{hsk_level}",
             "show_result": True,
             "audio_file": self.ctx.audio_path(item["id"], hsk_level),
             "translation": item["translation"],
@@ -133,12 +138,7 @@ class HSKSession(BaseDictationSession):
             "total": len(self.get_ids()),
             "show_next_button": True,
             "story_mode": False,
-            "story_context": None,
-            "story_title": None,
-            "story_audio_files": None,
-            "user_input": user_input,
-            "story_id": None,
-            "part_id": item["id"]
+            "user_input": user_input
         }
 
 class StorySession(BaseDictationSession):
@@ -179,7 +179,6 @@ class StorySession(BaseDictationSession):
         story = self.ctx.get_story(story_id)
         hsk_level = story["hsk_level"]
         correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, part["chinese"])
-        lev = self.corrector.levenshtein(stripped_user, stripped_correct)
         accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
         feedback, feedback_color = self.get_gradient_feedback(accuracy)
         # Only increment score if accuracy >= 70
@@ -212,7 +211,6 @@ class StorySession(BaseDictationSession):
             if "accuracy_scores" not in self.session:
                 self.session["accuracy_scores"] = []
             self.session["accuracy_scores"].append(accuracy)
-            logging.debug(f"Added accuracy score {accuracy} to accuracy_scores. Current scores: {self.session['accuracy_scores']}")
         # Calculate running average accuracy for display
         accuracy_scores = self.session.get("accuracy_scores", [])
         average_accuracy = round(sum(accuracy_scores) / len(accuracy_scores), 1) if accuracy_scores else 0

@@ -78,7 +78,7 @@
                             Your browser does not support the audio element.
                         </audio>
                     {% elif not show_result and audio_file %}
-                        <h3>Listen to the audio and type what you hear:</h3>
+                        <label for="user_input">Listen to the audio:</label>
                         <audio controls autoplay>
                             <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -101,7 +101,6 @@
                 </div>
             </div>
         </div>
-        {% if story_mode and story_audio_files %}
         <div style="margin: 1em 0;">
           <button id="open-story-audio-modal" style="font-size:1.1em; font-weight:bold; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.5em 1.2em; cursor:pointer;">🎧 Listen to Full Story</button>
         </div>
@@ -177,7 +176,6 @@
             }
           });
         </script>
-        {% endif %}
     {% else %}
         <!-- Regular Session Layout -->
         <h1>Chinese Dictation</h1>

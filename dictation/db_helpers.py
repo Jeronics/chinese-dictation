@@ -36,7 +36,7 @@ def update_character_progress(user_id: str, hanzi: str, hsk_level: int, correct:
                 "last_seen": "now()"
             }).execute()
     except Exception as e:
-        print(f"Error updating character progress for user {user_id}, hanzi {hanzi}: {e}")
+        logging.error(f"Error updating character progress for user {user_id}, hanzi {hanzi}: {e}")
 
 def get_user_character_status(user_id: str) -> Dict[str, str]:
     """
@@ -86,7 +86,7 @@ def update_daily_work_registry(
                 "story_parts_completed": story_parts_completed
             }).execute()
     except Exception as e:
-        print(f"Error updating daily work registry for user {user_id}: {e}")
+        logging.error(f"Error updating daily work registry for user {user_id}: {e}")
 
 def get_daily_work_stats(user_id: str) -> Dict[str, Any]:
     """
@@ -142,7 +142,7 @@ def get_daily_work_stats(user_id: str) -> Dict[str, Any]:
             "last_7_days": last_7_days
         }
     except Exception as e:
-        print(f"Error getting daily work stats for user {user_id}: {e}")
+        logging.error(f"Error getting daily work stats for user {user_id}: {e}")
         return {
             "today_sentences_above_7": 0,
             "today_total_sentences": 0,
@@ -160,7 +160,7 @@ def get_daily_session_count(user_id: str) -> int:
         result = supabase.table("daily_work_registry").select("id").eq("user_id", user_id).eq("session_date", today).execute()
         return len(result.data) if result.data else 0
     except Exception as e:
-        print(f"Error getting daily session count for user {user_id}: {e}")
+        logging.error(f"Error getting daily session count for user {user_id}: {e}")
         return 0
 
 def batch_update_character_progress(user_id: str, hanzi_updates: list) -> None:
@@ -181,7 +181,6 @@ def batch_update_character_progress(user_id: str, hanzi_updates: list) -> None:
             prev = current.get(hanzi)
             if prev:
                 prev_grade = prev.get("grade", -1)
-                print(f"prev_grade: {prev_grade}")
                 if correct:
                     new_grade = min(prev_grade + 1, 3)
                 else:
@@ -198,4 +197,4 @@ def batch_update_character_progress(user_id: str, hanzi_updates: list) -> None:
         if upserts:
             supabase.table("character_progress").upsert(upserts, on_conflict="user_id,hanzi").execute()
     except Exception as e:
-        print(f"Error batch updating character progress for user {user_id}: {e}") 
+        logging.error(f"Error batch updating character progress for user {user_id}: {e}") 

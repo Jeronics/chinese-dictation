@@ -48,9 +48,7 @@ class DictationContext:
     def story_audio_path(self, story_id, part_number):
         """Get audio path for a story part using the new naming convention."""
         filename = f"story_{story_id}_{part_number}.mp3"
-        print("AUDIO FILE!!!!!!!!!", self.audio_dir, filename)
         path = os.path.join(self.audio_dir, filename)
-        print("PATH", path)
         return f"audio_files/{filename}" if os.path.exists(path) else None
 
     def story_all_audio_paths(self, story_id):
