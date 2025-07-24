@@ -84,7 +84,6 @@ class HSKSession(BaseDictationSession):
             "audio_file": self.ctx.audio_path(item["id"], hsk_level),
             "score": self.get_score(),
             "level": hsk_level,
-            "difficulty": f"HSK{hsk_level}",
             "show_result": False,
             "session_mode": True,
             "current": self.get_current_index() + 1,
@@ -121,24 +120,28 @@ class HSKSession(BaseDictationSession):
                     })
             if hanzi_updates:
                 batch_update_character_progress(user_id, hanzi_updates)
+    
         # Calculate running average accuracy for display
         return {
+            # Core answer/result info
             "correct_sentence": item["chinese"],
             "result": feedback,
             "result_color": feedback_color,
             "correction": correction,
             "accuracy": accuracy,
+            "translation": item["translation"],
+            "pinyin": item["pinyin"],
+            "user_input": user_input,
+            # Session/progress info
             "level": hsk_level,
             "show_result": True,
             "audio_file": self.ctx.audio_path(item["id"], hsk_level),
-            "translation": item["translation"],
-            "pinyin": item["pinyin"],
             "session_mode": True,
             "current": self.get_current_index() + 1,
             "total": len(self.get_ids()),
             "show_next_button": True,
-            "story_mode": False,
-            "user_input": user_input
+            # Story info (not used in HSK)
+            "story_mode": False
         }
 
 class StorySession(BaseDictationSession):
@@ -159,9 +162,7 @@ class StorySession(BaseDictationSession):
         return {
             "correct_sentence": part["chinese"],
             "audio_file": self.ctx.story_audio_path(story_id, part["id"]),
-            "score": self.get_score(),
             "level": hsk_level,
-            "difficulty": f"HSK{hsk_level}",
             "show_result": False,
             "session_mode": True,
             "current": self.get_current_index() + 1,
@@ -181,13 +182,15 @@ class StorySession(BaseDictationSession):
         correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, part["chinese"])
         accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
         feedback, feedback_color = self.get_gradient_feedback(accuracy)
-        # Only increment score if accuracy >= 70
-        if accuracy >= 70:
-            self.session[self.score_key] += 1
+        
+         # Append accuracy scores to session for later averaging
+        self.set_accuracy(accuracy)
+        
         # Store per-sentence correctness for group scoring
         idx = self.get_current_index()
         self.session[f"story_part_{idx}_correct"] = (accuracy >= 70)
         user_id = self.session.get("user_id")
+
         # Update character progress for logged-in users
         if user_id:
             hanzi_updates = []
@@ -207,36 +210,31 @@ class StorySession(BaseDictationSession):
                     })
             if hanzi_updates:
                 batch_update_character_progress(user_id, hanzi_updates)
-            # Store accuracy scores in session for later averaging
-            if "accuracy_scores" not in self.session:
-                self.session["accuracy_scores"] = []
-            self.session["accuracy_scores"].append(accuracy)
+            
         # Calculate running average accuracy for display
-        accuracy_scores = self.session.get("accuracy_scores", [])
-        average_accuracy = round(sum(accuracy_scores) / len(accuracy_scores), 1) if accuracy_scores else 0
         return {
+            # Core answer/result info
             "correct_sentence": part["chinese"],
             "result": feedback,
             "result_color": feedback_color,
             "correction": correction,
             "accuracy": accuracy,
-            "average_accuracy": average_accuracy,
-            "score": self.get_score(),
-            "level": hsk_level,
-            "difficulty": f"HSK{hsk_level}",
-            "show_result": True,
-            "audio_file": self.ctx.story_audio_path(story_id, part["id"]),
             "translation": part["translation"],
             "pinyin": part["pinyin"],
+            "user_input": user_input,
+            # Session/progress info
+            "level": hsk_level,
+            "show_result": True,
+            "audio_file": self.ctx.story_audio_path(story_id, part["id"]),
             "session_mode": True,
             "current": self.get_current_index() + 1,
             "total": len(self.get_ids()),
             "show_next_button": True,
+            # Story info
             "story_mode": True,
             "story_context": story["parts"][:self.get_current_index()],
             "story_title": story["title"],
             "story_audio_files": self.ctx.story_all_audio_paths(story_id),
-            "user_input": user_input,
             "story_id": story_id,
             "part_id": part["id"]
         } 
