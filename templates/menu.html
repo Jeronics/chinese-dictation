@@ -38,12 +38,12 @@
     <div class="menu-section">
         <h2>Common Phrases</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4 custom-grid">
-            {{ hsk_cell(1, hsk_totals.get('HSK1', 0), '/session?hsk=HSK1') }}
-            {{ hsk_cell(2, hsk_totals.get('HSK2', 0), '/session?hsk=HSK2') }}
-            {{ hsk_cell(3, hsk_totals.get('HSK3', 0), '/session?hsk=HSK3') }}
-            {{ hsk_cell(4, hsk_totals.get('HSK4', 0), '/session?hsk=HSK4') }}
-            {{ hsk_cell(5, hsk_totals.get('HSK5', 0), '/session?hsk=HSK5') }}
-            {{ hsk_cell(6, hsk_totals.get('HSK6', 0), '/session?hsk=HSK6') }}
+            {{ hsk_cell(1, hsk_totals.get(1, 0), '/session?hsk=HSK1') }}
+            {{ hsk_cell(2, hsk_totals.get(2, 0), '/session?hsk=HSK2') }}
+            {{ hsk_cell(3, hsk_totals.get(3, 0), '/session?hsk=HSK3') }}
+            {{ hsk_cell(4, hsk_totals.get(4, 0), '/session?hsk=HSK4') }}
+            {{ hsk_cell(5, hsk_totals.get(5, 0), '/session?hsk=HSK5') }}
+            {{ hsk_cell(6, hsk_totals.get(6, 0), '/session?hsk=HSK6') }}
             {{ mixed_practice_cell(hsk_totals.values() | sum) }}
         </div>
     </div>
