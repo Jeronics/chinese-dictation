@@ -35,15 +35,15 @@
                 </div>
                 
                 <div class="story-actions">
-                    <a href="/story/{{ story_id }}" class="view-button">👁️ View Story</a>
+                    <a href="/story/{{ story_id }}" class="btn-base view-button">👁️ View Story</a>
                     {% if story_id in saved_stories %}
-                        <a href="/story/{{ story_id }}/session" class="resume-button">🔄 Resume Story</a>
+                        <a href="/story/{{ story_id }}/session" class="btn-base resume-button">🔄 Resume Story</a>
                         <form method="POST" action="/story/{{ story_id }}/session" style="display: inline;">
                             <input type="hidden" name="restart" value="1">
-                            <button type="submit" class="restart-button">🔄 Restart Story</button>
+                            <button type="submit" class="btn-base restart-button">🔄 Restart Story</button>
                         </form>
                     {% else %}
-                        <a href="/story/{{ story_id }}/session" class="start-button">▶ Start Practice</a>
+                        <a href="/story/{{ story_id }}/session" class="btn-base start-button">▶ Start Practice</a>
                     {% endif %}
                 </div>
             </div>

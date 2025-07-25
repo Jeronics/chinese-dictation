@@ -5,9 +5,9 @@
         <input type="text" name="user_input" id="user_input" style="flex:1;" {% if user_input_disabled %}disabled{% endif %} autocomplete="off">
         {% if show_result %}
             <input type="hidden" name="next" value="1">
-            <button type="submit" class="dictation-btn">Next ▶</button>
+            <button type="submit" class="btn-base dictation-btn">Next ▶</button>
         {% else %}
-            <button type="submit" class="dictation-btn" id="submit-answer-btn">Submit</button>
+            <button type="submit" class="btn-base dictation-btn" id="submit-answer-btn">Submit</button>
         {% endif %}
     </div>
 </form>
@@ -32,7 +32,7 @@
             <input type="hidden" name="story_id" value="{{ story_id }}">
             <input type="hidden" name="part_id" value="{{ part_id }}">
         {% endif %}
-        <input type="submit" value="Report Wrong Correction" class="report-correction-link">
+        <input type="submit" value="Report Wrong Correction" class="btn-base report-correction-link">
     </form>
 </div>
 {% endmacro %} 

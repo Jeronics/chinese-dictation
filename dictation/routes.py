@@ -279,6 +279,7 @@ def hsk_level_detail(level):
     """
     user_id = session.get("user_id")
     try:
+        level = int(level)  # Ensure level is int for comparison
         # Get user progress for this level
         progress_rows = supabase.table("character_progress") \
             .select("hanzi, grade") \

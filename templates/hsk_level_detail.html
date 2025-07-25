@@ -14,42 +14,28 @@
 {% set learning_pct = (100 * learning // total) if total else 0 %}
 {% set failed_pct = (100 * failed // total) if total else 0 %}
 {% set unseen_pct = (100 * unseen // total) if total else 0 %}
-<div style="display: flex; justify-content: flex-start; align-items: center; font-size: 1em; margin-bottom: 1em; gap: 2em; white-space: nowrap;">
-  <span style="display: flex; align-items: center; gap: 4px;">
-    <span style="display:inline-block;width:18px;height:18px;background:#1976d2;border-radius:3px;"></span>
+<div class="progress-legend">
+  <span class="legend-item">
+    <span class="legend-color legend-color--known"></span>
     Known: <b>{{ known }}</b> ({{ known_pct }}%)
   </span>
-  <span style="display: flex; align-items: center; gap: 4px;">
-    <span style="display:inline-block;width:18px;height:18px;background:#fbc02d;border-radius:3px;"></span>
+  <span class="legend-item">
+    <span class="legend-color legend-color--learning"></span>
     Learning: <b>{{ learning }}</b> ({{ learning_pct }}%)
   </span>
-  <span style="display: flex; align-items: center; gap: 4px;">
-    <span style="display:inline-block;width:18px;height:18px;background:#f44336;border-radius:3px;"></span>
+  <span class="legend-item">
+    <span class="legend-color legend-color--failed"></span>
     Failed: <b>{{ failed }}</b> ({{ failed_pct }}%)
   </span>
-  <span style="display: flex; align-items: center; gap: 4px;">
-    <span style="display:inline-block;width:18px;height:18px;background:#bdbdbd;border-radius:3px;"></span>
+  <span class="legend-item">
+    <span class="legend-color legend-color--unseen"></span>
     Unseen: <b>{{ unseen }}</b> ({{ unseen_pct }}%)
   </span>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 600px;">
+<div class="hanzi-grid">
   {% for c in char_data %}
-    {% set color = '' %}
-    {% if c.status == 'known' %}
-      {# High-contrast blue #}
-      {% set color = '#1976d2' %}
-    {% elif c.status == 'learning' %}
-      {# High-contrast yellow #}
-      {% set color = '#fbc02d' %}
-    {% elif c.status == 'failed' %}
-      {# High-contrast red #}
-      {% set color = '#f44336' %}
-    {% else %}
-      {# Gray for unseen #}
-      {% set color = '#bdbdbd' %}
-    {% endif %}
     <div title="{{ c.hanzi }} ({{ c.status }}, grade: {{ c.grade }})"
-         style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; background: {{ color }}; color: #181825; border-radius: 6px; box-shadow: 0 1px 2px #0001; cursor:pointer;"
+         class="hanzi-character hanzi-character--{{ c.status }}"
          onclick="showStrokeOrder('{{ c.hanzi }}')">
       {{ c.hanzi }}
     </div>
@@ -57,15 +43,15 @@
 </div>
 
 <!-- Hanzi Writer Modal -->
-<div id="strokeModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
-  <div style="background:white; padding:24px; border-radius:8px; position:relative; min-width:220px; min-height:220px; box-shadow:0 4px 16px #0003;">
-    <span id="closeModal" style="position:absolute; top:8px; right:16px; cursor:pointer; font-size:1.5em;">&times;</span>
-    <div id="strokeContainer" style="width:200px; height:200px; margin:auto;"></div>
-    <div id="strokeChar" style="text-align:center; font-size:2em; margin-top:8px;"></div>
+<div id="strokeModal" class="stroke-modal">
+  <div class="stroke-modal-content">
+    <button id="closeModal" class="stroke-modal-close">&times;</button>
+    <div id="strokeContainer" class="stroke-container"></div>
+    <div id="strokeChar" class="stroke-char"></div>
   </div>
 </div>
 
-<p style="margin-top:2em;"><a href="/dashboard"><button>← Back to Dashboard</button></a></p>
+<p class="back-button-container"><a href="/dashboard"><button>← Back to Dashboard</button></a></p>
 
 <!-- Hanzi Writer Script -->
 <script src="https://unpkg.com/hanzi-writer@2.2.2/dist/hanzi-writer.min.js"></script>
