@@ -79,7 +79,7 @@ def menu():
             logging.error(f"Error loading saved stories: {e}")
             saved_stories = []
 
-    return render_template("menu.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
+    return render_template("index.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
@@ -132,9 +132,9 @@ def session_practice():
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_template("index.html", **hsk_session.update_score(user_input))
+        return render_template("dictation.html", **hsk_session.update_score(user_input))
 
-    return render_template("index.html", **hsk_session.get_context())
+    return render_template("dictation.html", **hsk_session.get_context())
 
 @dictation_bp.route("/dashboard")
 @login_required
@@ -457,12 +457,12 @@ def story_session(story_id):
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_template("index.html", **story_session_obj.update_score(user_input))
+        return render_template("dictation.html", **story_session_obj.update_score(user_input))
 
     # Get story context (previous parts only, not the current one)
     story_context = story["parts"][:story_session_obj.get_current_index()]
     
-    return render_template("index.html", **story_session_obj.get_context())
+    return render_template("dictation.html", **story_session_obj.get_context())
 
 @dictation_bp.route("/report-correction", methods=["POST"])
 def report_correction():
