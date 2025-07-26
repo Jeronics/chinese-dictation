@@ -28,7 +28,7 @@
         {{ dictation_form(true, request.path, true, show_next_button) }}
         {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id) }}
         {% if not show_next_button %}
-            <a href="/stories">Back to Stories</a>
+            <a href="/">Back to Menu</a>
         {% endif %}
     {% endif %}
 </div> 
