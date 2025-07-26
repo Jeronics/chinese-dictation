@@ -1062,6 +1062,89 @@ button:disabled {
 }
 
 /* =========================
+   INDEX PAGE STYLES
+   ========================= */
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-blue);
+}
+
+.menu-header-with-top-margin {
+    margin-top: 2rem;
+}
+
+.progress-button {
+    background-color: var(--accent-orange);
+    color: var(--text-primary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid var(--accent-orange);
+}
+
+.progress-button:hover {
+    background-color: var(--accent-orange-hover);
+    border-color: var(--accent-orange-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.menu-section {
+    margin-bottom: 3rem;
+}
+
+.menu-section h2 {
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.menu-section-with-top-margin {
+    margin-top: 2rem;
+}
+
+/* =========================
+   LOGIN NOTICE STYLES
+   ========================= */
+
+.login-required-notice {
+    background-color: var(--bg-tertiary);
+    border: 2px solid var(--accent-orange);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.login-required-notice h3 {
+    color: var(--accent-orange);
+    margin-bottom: 1rem;
+}
+
+.login-required-notice p {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.login-required-notice a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-required-notice a:hover {
+    color: var(--accent-blue-hover);
+    text-decoration: underline;
+}
+
+/* =========================
    BASE BUTTON STYLES
    ========================= */
 

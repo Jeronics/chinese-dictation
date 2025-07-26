@@ -12,7 +12,7 @@
         </div>
     {% endif %}
 
-    <div class="menu-header" style="margin-top: 2rem;">
+    <div class="menu-header menu-header-with-top-margin">
         {% if session.get("email") %}
             <a href="/dashboard" class="progress-button">Show Progress</a>
         {% endif %}
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="menu-section" style="margin-top: 2rem;">
+    <div class="menu-section menu-section-with-top-margin">
         <h2>Short Stories</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
@@ -40,47 +40,6 @@
         </div>
     </div>
 
-{% endblock %}
-
-{% block extra_css %}
-<style>
-    .menu-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid var(--accent-blue);
-    }
-
-    .progress-button {
-        background-color: var(--accent-orange);
-        color: var(--text-primary);
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.2s ease-in-out;
-        border: 2px solid var(--accent-orange);
-    }
-
-    .progress-button:hover {
-        background-color: var(--accent-orange-hover);
-        border-color: var(--accent-orange-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    }
-
-    .menu-section {
-        margin-bottom: 3rem;
-    }
-
-    .menu-section h2 {
-        color: var(--accent-blue);
-        margin-bottom: 1rem;
-        font-size: 1.8rem;
-    }
-</style>
 {% endblock %}
 
 {% from "_grid_cells.html" import hsk_cell, mixed_practice_cell, story_cell %}
