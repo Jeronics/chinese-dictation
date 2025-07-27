@@ -16,6 +16,7 @@
 {% macro dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode=None, story_id=None, part_id=None) %}
     <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
         <h3 class="result-title">{{ result }}</h3>
+        
         <p><strong>Correct sentence:</strong> {{ correct_sentence|clickable_hanzi }}</p>
         <p><strong>Your input:</strong> {{ user_input }}</p>
         <p><strong>Correction:</strong> {{ correction|safe }}</p>
