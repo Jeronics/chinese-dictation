@@ -30,6 +30,12 @@
     --status-failed: #ef4444;        /* Failed characters */
     --status-unseen: #6b7280;        /* Unseen characters */
     
+    /* Correction Colors - Colorblind-friendly */
+    --correction-wrong: #ef4444;     /* Wrong characters (red) */
+    --correction-missing: #f59e0b;   /* Missing characters (orange) */
+    --correction-extra: #8b5cf6;     /* Extra characters (purple) */
+    --correction-correct: #10b981;   /* Correct characters (green) */
+    
     /* Borders & Shadows */
     --border-primary: #404040;
     --border-secondary: #525252;
@@ -1853,5 +1859,24 @@ button:disabled {
         right: 8px !important;
         top: 8px !important;
     }
+}
+
+/* =========================
+   CORRECTION DIFF STYLES
+   ========================= */
+.diff-del {
+    color: var(--correction-wrong);
+}
+
+.diff-ins {
+    color: var(--correction-missing);
+}
+
+.diff-correct {
+    color: var(--text-primary);
+}
+
+.diff-extra {
+    color: var(--correction-extra);
 }
 

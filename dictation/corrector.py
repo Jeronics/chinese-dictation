@@ -82,7 +82,7 @@ class Corrector:
                     c_ptr += 1
                     continue
                 if op == 'equal':
-                    result += user_input[user_map[u_idx]]
+                    result += f"<span class='diff-correct'>{user_input[user_map[u_idx]]}</span>"
                     correct_segments.append(user_input[user_map[u_idx]])
                     u_ptr = user_map[u_idx] + 1
                     c_ptr += 1
@@ -95,7 +95,7 @@ class Corrector:
                     result += f"<span class='diff-ins'>{correct[c_ptr]}</span>"
                     c_ptr += 1
                 elif op == 'delete':
-                    result += f"<span class='diff-del'>{user_input[user_map[u_idx]]}</span>"
+                    result += f"<span class='diff-extra'>{user_input[user_map[u_idx]]}</span>"
                     u_ptr = user_map[u_idx] + 1
                 op_ptr += 1
             else:
