@@ -1451,6 +1451,32 @@ button:disabled {
 }
 
 /* =========================
+   DICTATION CORRECTION STYLES
+   ========================= */
+
+/* Correction display styles for hanzi characters */
+.diff-del {
+    color: var(--accent-red) !important;
+    text-decoration: line-through;
+    font-weight: bold;
+}
+
+.diff-ins {
+    color: var(--accent-blue) !important;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Ensure correct characters (unchanged) are white */
+.result p strong {
+    color: var(--text-primary) !important;
+}
+
+.result p {
+    color: var(--text-primary) !important;
+}
+
+/* =========================
    RESPONSIVE DESIGN
    ========================= */
 
