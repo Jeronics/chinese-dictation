@@ -205,6 +205,8 @@ class CylindricalHanziCarousel {
                 padding: 5,
                 strokeAnimationSpeed: 1,
                 delayBetweenStrokes: 200,
+                strokeColor: '#ffffff',
+                outlineColor: '#808080',
             }).animateCharacter();
         }
     }
