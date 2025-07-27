@@ -1,38 +1,39 @@
 {% macro dictation_form(show_result, request_path, user_input_disabled, show_next_button) %}
-<form method="POST" id="dictation-form" action="{{ request_path }}">
-    <label for="user_input">Type what you hear:</label>
-    <div class="input-and-button">
-        <input type="text" name="user_input" id="user_input" style="flex:1;" {% if user_input_disabled %}disabled{% endif %} autocomplete="off">
-        {% if show_result %}
-            <input type="hidden" name="next" value="1">
-            <button type="submit" class="btn-base dictation-btn">Next ▶</button>
-        {% else %}
-            <button type="submit" class="btn-base dictation-btn" id="submit-answer-btn">Submit</button>
-        {% endif %}
-    </div>
-</form>
+    <form method="POST" id="dictation-form" action="{{ request_path }}">
+        <label for="user_input">Type what you hear:</label>
+        <div class="input-and-button">
+            <input type="text" name="user_input" id="user_input" style="flex:1;" {% if user_input_disabled %}disabled{% endif %} autocomplete="off">
+            {% if show_result %}
+                <input type="hidden" name="next" value="1">
+                <button type="submit" class="btn-base dictation-btn">Next ▶</button>
+            {% else %}
+                <button type="submit" class="btn-base dictation-btn" id="submit-answer-btn">Submit</button>
+            {% endif %}
+        </div>
+    </form>
 {% endmacro %}
 
 {% macro dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode=None, story_id=None, part_id=None) %}
-<div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
-    <h3 class="result-title">{{ result }}</h3>
-    <p><strong>Correct sentence:</strong> {{ correct_sentence|clickable_hanzi }}</p>
-    <p><strong>Your input:</strong> {{ user_input }}</p>
-    <p><strong>Correction:</strong> {{ correction|safe }}</p>
-    <p><strong>Pinyin:</strong> {{ pinyin }}</p>
-    <p><strong>Translation:</strong> {{ translation }}</p>
-    <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
-    <form method="POST" action="/report-correction" style="margin-top: 0.5em; display: inline;">
-        <input type="hidden" name="correction" value="{{ correction|safe }}">
-        <input type="hidden" name="correct_sentence" value="{{ correct_sentence }}">
-        <input type="hidden" name="user_input" value="{{ user_input }}">
-        <input type="hidden" name="pinyin" value="{{ pinyin }}">
-        <input type="hidden" name="translation" value="{{ translation }}">
-        {% if story_mode and story_id and part_id %}
-            <input type="hidden" name="story_id" value="{{ story_id }}">
-            <input type="hidden" name="part_id" value="{{ part_id }}">
-        {% endif %}
-        <input type="submit" value="Report Wrong Correction" class="btn-base report-correction-link">
-    </form>
-</div>
+    <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
+        <h3 class="result-title">{{ result }}</h3>
+        <p><strong>Correct sentence:</strong> {{ correct_sentence|clickable_hanzi }}</p>
+        <p><strong>Your input:</strong> {{ user_input }}</p>
+        <p><strong>Correction:</strong> {{ correction|safe }}</p>
+        <p><strong>Pinyin:</strong> {{ pinyin }}</p>
+        <p><strong>Translation:</strong> {{ translation }}</p>
+        <p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+        
+        <form method="POST" action="/report-correction" style="margin-top: 0.5em; display: inline;">
+            <input type="hidden" name="correction" value="{{ correction|safe }}">
+            <input type="hidden" name="correct_sentence" value="{{ correct_sentence }}">
+            <input type="hidden" name="user_input" value="{{ user_input }}">
+            <input type="hidden" name="pinyin" value="{{ pinyin }}">
+            <input type="hidden" name="translation" value="{{ translation }}">
+            {% if story_mode and story_id and part_id %}
+                <input type="hidden" name="story_id" value="{{ story_id }}">
+                <input type="hidden" name="part_id" value="{{ part_id }}">
+            {% endif %}
+            <input type="submit" value="Report Wrong Correction" class="btn-base report-correction-link">
+        </form>
+    </div>
 {% endmacro %} 

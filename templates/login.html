@@ -4,29 +4,27 @@
 {% block page_title %}Login{% endblock %}
 
 {% block content %}
+    <div class="form-container">
+        <h2>🔐 Login</h2>
 
-<div class="form-container">
-    <h2>🔐 Login</h2>
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
 
-    {% if error %}
-    <div class="error-message">
-        {{ error }}
+        <form method="post" action="/login">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+
+        <p>
+            Don't have an account? <a href="/signup">Sign up here</a>
+        </p>
     </div>
-    {% endif %}
-
-    <form method="post" action="/login">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        
-        <button type="submit">Login</button>
-    </form>
-
-    <p>
-        Don't have an account? <a href="/signup">Sign up here</a>
-    </p>
-</div>
-
 {% endblock %}

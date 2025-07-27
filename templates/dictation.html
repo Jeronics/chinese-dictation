@@ -6,19 +6,23 @@
 {% block content %}
     {% if story_mode and story_audio_files %}
         {% include '_story_actions.html' %}
+        
         <div class="story-layout">
             <div class="dictation-header">
                 <h1>{{ story_title }}</h1>
                 <p class="hsk-level"><strong>Level:</strong> HSK{{ level }}</p>
             </div>
+            
             {% if current and total %}
                 {% include '_progress_bar.html' with context %}
             {% endif %}
+            
             <div class="story-panels-row">
                 {% include '_story_context_panel.html' %}
                 {% include '_dictation_frame.html' with context %}
             </div>
         </div>
+        
         {% include '_story_audio_modal.html' %}
         <script src="{{ url_for('static', filename='story_audio.js') }}"></script>
     {% else %}

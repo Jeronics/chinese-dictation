@@ -4,7 +4,6 @@
 {% block page_title %}Dashboard{% endblock %}
 
 {% block content %}
-
     <h1>Progress Dashboard</h1>
 
     {% if levels %}
@@ -18,6 +17,7 @@
                         {% set learning_pct = (100 * l.learning // total) if total else 0 %}
                         {% set failed_pct = (100 * l.failed // total) if total else 0 %}
                         {% set unseen_pct = 100 - known_pct - learning_pct - failed_pct %}
+                        
                         <!-- Progress Bar -->
                         <div class="progress-bar">
                             <div class="progress-segment progress-segment--known" style="width: {{ known_pct }}%;"></div>
@@ -25,6 +25,7 @@
                             <div class="progress-segment progress-segment--failed" style="width: {{ failed_pct }}%;"></div>
                             <div class="progress-segment progress-segment--unseen" style="width: {{ unseen_pct }}%;"></div>
                         </div>
+                        
                         <!-- Legend: Only color and name -->
                         <div class="progress-legend">
                             <div class="legend-item">
@@ -44,6 +45,7 @@
                                 <span class="legend-text">Unseen</span>
                             </div>
                         </div>
+                        
                         <div class="progress-total">Total: {{ l.total }}</div>
                     </div>
                 </a>
@@ -54,6 +56,4 @@
     {% endif %}
 
     <p><a href="/"><button>🏠 Back to Menu</button></a></p>
-
-
 {% endblock %}

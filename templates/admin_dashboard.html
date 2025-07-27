@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="admin-actions">
+        <div class="admin-card">
+            <h3>Developer Tools</h3>
+            <div class="admin-buttons">
+                <a href="{{ url_for('admin_dashboard.run_color_palette') }}" class="btn-base accent-blue">
+                    🎨 Generate Color Palette
+                </a>
+                <p class="admin-description">
+                    Runs the color palette generator and opens the HTML file in your browser.
+                </p>
+            </div>
+        </div>
+        
+        <div class="admin-card">
+            <h3>Data Export</h3>
+            <div class="admin-buttons">
+                <a href="{{ url_for('admin_dashboard.export_corrections') }}" class="btn-base accent-orange">
+                    📊 Export Reported Corrections
+                </a>
+                <p class="admin-description">
+                    Exports all reported corrections to a CSV file.
+                </p>
+            </div>
+        </div>
+        
+        <div class="admin-card">
+            <h3>Data Management</h3>
+            <div class="admin-buttons">
+                <a href="{{ url_for('admin_dashboard.reported_corrections_dashboard') }}" class="btn-base accent-green">
+                    📋 View Reported Corrections
+                </a>
+                <p class="admin-description">
+                    View and manage reported corrections in the database.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.admin-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.admin-card {
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-primary);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.2s ease;
+}
+
+.admin-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.admin-card h3 {
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-buttons .btn-base {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.admin-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .admin-actions {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .admin-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %} 

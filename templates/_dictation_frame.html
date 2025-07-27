@@ -1,10 +1,11 @@
 {#
-  Usage:
-  {% include '_dictation_frame.html' with context %}
-  Requires: show_result, audio_file, dictation_form, dictation_result_panel, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id
+    Usage:
+    {% include '_dictation_frame.html' with context %}
+    Requires: show_result, audio_file, dictation_form, dictation_result_panel, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id
 #}
 <div class="dictation-frame">
     <h3>Dictation</h3>
+    
     {% if show_result and audio_file %}
         <audio controls autoplay>
             <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
@@ -27,6 +28,7 @@
     {% else %}
         {{ dictation_form(true, request.path, true, show_next_button) }}
         {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id) }}
+        
         {% if not show_next_button %}
             <a href="/">Back to Menu</a>
         {% endif %}

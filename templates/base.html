@@ -13,220 +13,223 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Chinese Dictation">
 </head>
+
 <body>
-
-<!-- Sidebar -->
-<nav class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <div class="brand">
-            <a href="/">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
-                <span>Chinese Dictation</span>
-            </a>
-        </div>
-        <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">
-            <span>&times;</span>
-        </button>
-    </div>
-    
-    <div class="sidebar-content">
-        <div class="sidebar-nav">
-            <a href="/" class="sidebar-link">
-                <span class="sidebar-icon">🏠</span>
-                <span class="sidebar-text">Home</span>
-            </a>
-            {% if session.get("email") %}
-                <a href="/dashboard" class="sidebar-link">
-                    <span class="sidebar-icon">📊</span>
-                    <span class="sidebar-text">Dashboard</span>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                    <span>Chinese Dictation</span>
                 </a>
-                <a href="/session" class="sidebar-link">
-                    <span class="sidebar-icon">✍️</span>
-                    <span class="sidebar-text">Practice</span>
-                </a>
-            {% endif %}
+            </div>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">
+                <span>&times;</span>
+            </button>
         </div>
         
-        <div class="sidebar-footer">
-            {% if session.get("email") %}
-                <div class="user-info">
-                    <span class="user-email">{{ session["email"] }}</span>
-                </div>
-                <a href="/logout" class="sidebar-link sidebar-link-logout">
-                    <span class="sidebar-icon">🚪</span>
-                    <span class="sidebar-text">Logout</span>
+        <div class="sidebar-content">
+            <div class="sidebar-nav">
+                <a href="/" class="sidebar-link">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Home</span>
                 </a>
-            {% else %}
-                <a href="/login" class="sidebar-link">
-                    <span class="sidebar-icon">🔑</span>
-                    <span class="sidebar-text">Login</span>
-                </a>
-                <a href="/signup" class="sidebar-link">
-                    <span class="sidebar-icon">📝</span>
-                    <span class="sidebar-text">Sign up</span>
-                </a>
-            {% endif %}
+                {% if session.get("email") %}
+                    <a href="/dashboard" class="sidebar-link">
+                        <span class="sidebar-icon">📊</span>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                    <a href="/session" class="sidebar-link">
+                        <span class="sidebar-icon">✍️</span>
+                        <span class="sidebar-text">Practice</span>
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="sidebar-footer">
+                {% if session.get("email") %}
+                    <div class="user-info">
+                        <span class="user-email">{{ session["email"] }}</span>
+                    </div>
+                    <a href="/logout" class="sidebar-link sidebar-link-logout">
+                        <span class="sidebar-icon">🚪</span>
+                        <span class="sidebar-text">Logout</span>
+                    </a>
+                {% else %}
+                    <a href="/login" class="sidebar-link">
+                        <span class="sidebar-icon">🔑</span>
+                        <span class="sidebar-text">Login</span>
+                    </a>
+                    <a href="/signup" class="sidebar-link">
+                        <span class="sidebar-icon">📝</span>
+                        <span class="sidebar-text">Sign up</span>
+                    </a>
+                {% endif %}
+            </div>
         </div>
+    </nav>
+
+    <!-- Main content wrapper -->
+    <div class="main-wrapper">
+        <!-- Top bar with hamburger menu -->
+        <header class="topbar">
+            <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="page-title">
+                {% block page_title %}Chinese Dictation{% endblock %}
+            </div>
+            <div class="topbar-right">
+                {% if session.get('email') and daily_session_count is defined %}
+                    <span id="daily-session-counter" class="daily-session-counter">{{ daily_session_count }}</span>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+            <div class="spacer-50"></div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Chinese Dictation. Learn Chinese efficiently.</p>
+        </footer>
     </div>
-</nav>
 
-<!-- Main content wrapper -->
-<div class="main-wrapper">
-    <!-- Top bar with hamburger menu -->
-    <header class="topbar">
-        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <div class="page-title">
-            {% block page_title %}Chinese Dictation{% endblock %}
-        </div>
-        <div class="topbar-right">
-            {% if session.get('email') and daily_session_count is defined %}
-                <span id="daily-session-counter" class="daily-session-counter">{{ daily_session_count }}</span>
-            {% endif %}
-        </div>
-    </header>
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-    <!-- Main content -->
-    <main class="content">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message flash-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-        
-        {% block content %}{% endblock %}
-        <div class="spacer-50"></div>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; 2025 Chinese Dictation. Learn Chinese efficiently.</p>
-    </footer>
-</div>
-
-<!-- Overlay for mobile -->
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<script>
-// Auto-hide flash messages after 5 seconds
-document.addEventListener('DOMContentLoaded', function() {
-    const flashMessages = document.querySelectorAll('.flash-message');
-    flashMessages.forEach(function(message) {
-        setTimeout(function() {
-            message.style.opacity = '0';
-            message.style.transform = 'translateX(100%)';
-            setTimeout(function() {
-                message.remove();
-            }, 300);
-        }, 5000);
-    });
-    
-    // Sidebar toggle functionality
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    
-    function openSidebar() {
-        sidebar.classList.add('sidebar-open');
-        sidebarOverlay.classList.add('overlay-active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeSidebar() {
-        sidebar.classList.remove('sidebar-open');
-        sidebarOverlay.classList.remove('overlay-active');
-        document.body.style.overflow = '';
-    }
-    
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-    
-    // Close sidebar on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar.classList.contains('sidebar-open')) {
-            closeSidebar();
-        }
-    });
-    
-    // Close sidebar when clicking on a link (mobile/desktop)
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            closeSidebar();
+    <script>
+        // Auto-hide flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateX(100%)';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 300);
+                }, 5000);
+            });
+            
+            // Sidebar toggle functionality
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            
+            function openSidebar() {
+                sidebar.classList.add('sidebar-open');
+                sidebarOverlay.classList.add('overlay-active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeSidebar() {
+                sidebar.classList.remove('sidebar-open');
+                sidebarOverlay.classList.remove('overlay-active');
+                document.body.style.overflow = '';
+            }
+            
+            sidebarToggle.addEventListener('click', openSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            // Close sidebar on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebar.classList.contains('sidebar-open')) {
+                    closeSidebar();
+                }
+            });
+            
+            // Close sidebar when clicking on a link (mobile/desktop)
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    closeSidebar();
+                });
+            });
         });
-    });
-});
 
-// Animate the counter when updated
-function animateDailySessionCounter() {
-    const counter = document.getElementById('daily-session-counter');
-    if (counter) {
-        counter.classList.remove('counter-animate');
-        void counter.offsetWidth; // trigger reflow
-        counter.classList.add('counter-animate');
-    }
-}
-// Optionally, you can call animateDailySessionCounter() after updating the counter via JS
-</script>
+        // Animate the counter when updated
+        function animateDailySessionCounter() {
+            const counter = document.getElementById('daily-session-counter');
+            if (counter) {
+                counter.classList.remove('counter-animate');
+                void counter.offsetWidth; // trigger reflow
+                counter.classList.add('counter-animate');
+            }
+        }
+        // Optionally, you can call animateDailySessionCounter() after updating the counter via JS
+    </script>
+    
     <script src="{{ url_for('static', filename='story_audio.js') }}"></script>
 </body>
 </html>
 
 <!-- Hanzi Writer Modal -->
 <div id="strokeModal">
-  <div>
-    <span id="closeModal">&times;</span>
-    <div id="strokeContainer"></div>
-    <div id="strokeChar"></div>
-  </div>
+    <div>
+        <span id="closeModal">&times;</span>
+        <div id="strokeContainer"></div>
+        <div id="strokeChar"></div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/hanzi-writer@2.2.2/dist/hanzi-writer.min.js"></script>
+
 <script>
-// Sidebar toggle logic
-const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebar-toggle');
-sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('minimized');
-});
+    // Sidebar toggle logic
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('minimized');
+    });
 
-function showStrokeOrder(hanzi) {
-  var modal = document.getElementById('strokeModal');
-  modal.style.display = 'flex';
-  document.getElementById('strokeChar').innerText = hanzi;
-  var strokeContainer = document.getElementById('strokeContainer');
-  strokeContainer.innerHTML = '';
-  HanziWriter.create(strokeContainer, hanzi, {
-    width: 200,
-    height: 200,
-    showOutline: true,
-    showCharacter: false,
-    padding: 5,
-    strokeAnimationSpeed: 1,
-    delayBetweenStrokes: 300,
-  }).animateCharacter();
-}
+    function showStrokeOrder(hanzi) {
+        var modal = document.getElementById('strokeModal');
+        modal.style.display = 'flex';
+        document.getElementById('strokeChar').innerText = hanzi;
+        var strokeContainer = document.getElementById('strokeContainer');
+        strokeContainer.innerHTML = '';
+        HanziWriter.create(strokeContainer, hanzi, {
+            width: 200,
+            height: 200,
+            showOutline: true,
+            showCharacter: false,
+            padding: 5,
+            strokeAnimationSpeed: 1,
+            delayBetweenStrokes: 300,
+        }).animateCharacter();
+    }
 
-// Attach event listeners for the modal
-var strokeOrderModal = document.getElementById('strokeModal');
-if (strokeOrderModal) {
-    document.getElementById('closeModal').onclick = function() {
-      strokeOrderModal.style.display = 'none';
-    };
-    strokeOrderModal.onclick = function(e) {
-      if (e.target === strokeOrderModal) strokeOrderModal.style.display = 'none';
-    };
-}
+    // Attach event listeners for the modal
+    var strokeOrderModal = document.getElementById('strokeModal');
+    if (strokeOrderModal) {
+        document.getElementById('closeModal').onclick = function() {
+            strokeOrderModal.style.display = 'none';
+        };
+        strokeOrderModal.onclick = function(e) {
+            if (e.target === strokeOrderModal) strokeOrderModal.style.display = 'none';
+        };
+    }
 </script>
 </body>
 </html>

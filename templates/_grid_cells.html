@@ -1,45 +1,45 @@
 {% macro hsk_cell(level, total, url) %}
-<div class="col">
-    <div class="grid-container-base">
-        <h3>HSK Level {{ level }}</h3>
-        <p>Level: HSK{{ level }} • Characters: {{ total }}</p>
-        <form action="{{ url }}" method="get" class="inline-form">
-            <button type="submit" class="btn-base start-button">Start</button>
-        </form>
+    <div class="col">
+        <div class="grid-container-base">
+            <h3>HSK Level {{ level }}</h3>
+            <p>Level: HSK{{ level }} • Characters: {{ total }}</p>
+            <form action="{{ url }}" method="get" class="inline-form">
+                <button type="submit" class="btn-base start-button">Start</button>
+            </form>
+        </div>
     </div>
-</div>
 {% endmacro %}
 
 {% macro mixed_practice_cell(total) %}
-<div class="col">
-    <div class="grid-container-base">
-        <h3>Mixed Practice</h3>
-        <p>Level: Mixed • Characters: {{ total }}</p>
-        <form action="/session" method="get" class="inline-form">
-            <button type="submit" class="btn-base start-button">Start</button>
-        </form>
+    <div class="col">
+        <div class="grid-container-base">
+            <h3>Mixed Practice</h3>
+            <p>Level: Mixed • Characters: {{ total }}</p>
+            <form action="/session" method="get" class="inline-form">
+                <button type="submit" class="btn-base start-button">Start</button>
+            </form>
+        </div>
     </div>
-</div>
 {% endmacro %}
 
 {% macro story_cell(story_id, story, saved, stories) %}
-<div class="col">
-    <div class="grid-container-base">
-        <h3>{{ story.title }}</h3>
-        <p>{{ story.title_chinese }}</p>
-        {% if story.description %}
-        <p style="font-size: 0.8rem; margin-top: 0.5rem;">{{ story.description[:80] }}{% if story.description|length > 80 %}...{% endif %}</p>
-        {% endif %}
-        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Level: HSK{{ story.hsk_level }} • Parts: {{ story.parts|length }}</p>
-        {% if saved %}
-            <form action="/story/{{ story_id }}/session" method="get" class="inline-form">
-                <button type="submit" class="btn-base resume-button">Resume</button>
-            </form>
-        {% else %}
-            <form action="/story/{{ story_id }}/session" method="get" class="inline-form">
-                <button type="submit" class="btn-base start-button">Start</button>
-            </form>
-        {% endif %}
+    <div class="col">
+        <div class="grid-container-base">
+            <h3>{{ story.title }}</h3>
+            <p>{{ story.title_chinese }}</p>
+            {% if story.description %}
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">{{ story.description[:80] }}{% if story.description|length > 80 %}...{% endif %}</p>
+            {% endif %}
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Level: HSK{{ story.hsk_level }} • Parts: {{ story.parts|length }}</p>
+            {% if saved %}
+                <form action="/story/{{ story_id }}/session" method="get" class="inline-form">
+                    <button type="submit" class="btn-base resume-button">Resume</button>
+                </form>
+            {% else %}
+                <form action="/story/{{ story_id }}/session" method="get" class="inline-form">
+                    <button type="submit" class="btn-base start-button">Start</button>
+                </form>
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endmacro %} 
