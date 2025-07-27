@@ -1477,6 +1477,209 @@ button:disabled {
 }
 
 /* =========================
+   CYLINDRICAL HANZI CAROUSEL STYLES
+   ========================= */
+
+/* Carousel Container */
+.hanzi-carousel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hanzi-carousel.carousel-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Cylindrical Carousel */
+.carousel-cylinder {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    perspective: 1200px;
+    overflow: visible;
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hanzi Cards */
+.hanzi-card {
+    position: absolute;
+    width: 160px;
+    height: 200px;
+    background: var(--bg-secondary);
+    border: 3px solid var(--accent-blue);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.hanzi-card:hover {
+    border-color: var(--accent-orange);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+}
+
+.hanzi-character {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    font-weight: bold;
+    text-align: center;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stroke-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-primary);
+}
+
+/* Carousel Controls */
+.carousel-controls {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.carousel-nav {
+    background: rgba(59, 130, 246, 0.8);
+    color: var(--text-primary);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+}
+
+.carousel-nav:hover {
+    background: rgba(59, 130, 246, 1);
+    transform: scale(1.1);
+}
+
+.carousel-nav:active {
+    transform: scale(0.95);
+}
+
+.carousel-nav svg {
+    transition: transform 0.2s ease;
+}
+
+.carousel-nav:hover svg {
+    transform: scale(1.1);
+}
+
+/* Close Button */
+.carousel-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(239, 68, 68, 0.8);
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.carousel-close:hover {
+    background: rgba(239, 68, 68, 1);
+    transform: scale(1.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .carousel-cylinder {
+        height: 250px;
+    }
+    
+    .hanzi-card {
+        width: 140px;
+        height: 180px;
+        padding: 1rem;
+    }
+    
+    .hanzi-character {
+        font-size: 2rem;
+        min-height: 2.5rem;
+    }
+    
+    .stroke-container {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .carousel-nav {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .carousel-controls {
+        bottom: 1.5rem;
+        gap: 1rem;
+    }
+    
+    .carousel-close {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+    }
+}
+
+/* =========================
    RESPONSIVE DESIGN
    ========================= */
 
