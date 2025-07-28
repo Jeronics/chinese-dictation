@@ -1688,6 +1688,47 @@ button:disabled {
     }
 }
 
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .carousel-cylinder {
+        height: 220px;
+    }
+    
+    .hanzi-card {
+        width: 120px;
+        height: 160px;
+        padding: 0.8rem;
+    }
+    
+    .hanzi-character {
+        font-size: 1.8rem;
+        min-height: 2rem;
+    }
+    
+    .stroke-container {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .carousel-nav {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .carousel-controls {
+        bottom: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .carousel-close {
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+}
+
 /* =========================
    RESPONSIVE DESIGN
    ========================= */
