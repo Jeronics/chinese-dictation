@@ -197,9 +197,16 @@ class CylindricalHanziCarousel {
         strokeContainer.innerHTML = '';
         
         if (typeof HanziWriter !== 'undefined') {
+            // Get the actual container dimensions
+            const containerRect = strokeContainer.getBoundingClientRect();
+            const containerSize = Math.min(containerRect.width, containerRect.height);
+            
+            // Use container size with some padding
+            const writerSize = Math.max(60, containerSize - 10); // Minimum 60px, with 10px padding
+            
             HanziWriter.create(strokeContainer, hanzi, {
-                width: 120,
-                height: 120,
+                width: writerSize,
+                height: writerSize,
                 showOutline: true,
                 showCharacter: false,
                 padding: 5,

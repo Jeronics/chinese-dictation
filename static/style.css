@@ -1571,6 +1571,8 @@ button:disabled {
     background: var(--bg-secondary);
     border-radius: 8px;
     border: 1px solid var(--border-primary);
+    position: relative;
+    overflow: hidden;
 }
 
 /* Carousel Controls */
@@ -1664,6 +1666,8 @@ button:disabled {
     .stroke-container {
         width: 80px;
         height: 80px;
+        overflow: hidden;
+        position: relative;
     }
     
     .carousel-nav {
@@ -1682,6 +1686,47 @@ button:disabled {
         width: 36px;
         height: 36px;
         font-size: 1.3rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .carousel-cylinder {
+        height: 220px;
+    }
+    
+    .hanzi-card {
+        width: 120px;
+        height: 160px;
+        padding: 0.8rem;
+    }
+    
+    .hanzi-character {
+        font-size: 1.8rem;
+        min-height: 2rem;
+    }
+    
+    .stroke-container {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .carousel-nav {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .carousel-controls {
+        bottom: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .carousel-close {
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
     }
 }
 
