@@ -197,12 +197,16 @@ class CylindricalHanziCarousel {
         strokeContainer.innerHTML = '';
         
         if (typeof HanziWriter !== 'undefined') {
+            // Detect screen size to adjust HanziWriter size
+            const isMobile = window.innerWidth <= 768;
+            const writerSize = isMobile ? 110 : 130; // Slightly smaller than container for padding
+            
             HanziWriter.create(strokeContainer, hanzi, {
-                width: 120,
-                height: 120,
+                width: writerSize,
+                height: writerSize,
                 showOutline: true,
                 showCharacter: false,
-                padding: 5,
+                padding: 0, // Remove padding to allow better centering
                 strokeAnimationSpeed: 1,
                 delayBetweenStrokes: 200,
                 strokeColor: '#ffffff',
