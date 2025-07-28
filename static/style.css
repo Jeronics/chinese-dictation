@@ -1653,23 +1653,23 @@ button:disabled {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .carousel-cylinder {
-        height: 250px;
+        height: 200px;
     }
     
     .hanzi-card {
-        width: 140px;
-        height: 180px;
-        padding: 1rem;
+        width: 100px;
+        height: 140px;
+        padding: 0.5rem;
     }
     
     .hanzi-character {
-        font-size: 2rem;
-        min-height: 2.5rem;
+        font-size: 1.5rem;
+        min-height: 2rem;
     }
     
     .stroke-container {
-        width: 120px;
-        height: 120px;
+        width: 90px;
+        height: 90px;
     }
     
     .carousel-nav {
@@ -1694,23 +1694,23 @@ button:disabled {
 /* Extra small mobile devices */
 @media (max-width: 480px) {
     .carousel-cylinder {
-        height: 220px;
+        height: 160px;
     }
     
     .hanzi-card {
-        width: 120px;
-        height: 160px;
-        padding: 0.8rem;
+        width: 80px;
+        height: 120px;
+        padding: 0.3rem;
     }
     
     .hanzi-character {
-        font-size: 1.8rem;
-        min-height: 2rem;
+        font-size: 1.2rem;
+        min-height: 1.5rem;
     }
     
     .stroke-container {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
     }
     
     .carousel-nav {

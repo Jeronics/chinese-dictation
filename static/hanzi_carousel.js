@@ -217,7 +217,16 @@ class CylindricalHanziCarousel {
         if (typeof HanziWriter === 'undefined') return;
         
         const isMobile = window.innerWidth <= 768;
-        const writerSize = isMobile ? 110 : 130;
+        const isSmallMobile = window.innerWidth <= 480;
+        
+        let writerSize;
+        if (isSmallMobile) {
+            writerSize = 50; // Smaller for small mobile
+        } else if (isMobile) {
+            writerSize = 80; // Medium for mobile
+        } else {
+            writerSize = 130; // Desktop size
+        }
         
         this.hanziList.forEach((hanzi, index) => {
             const strokeContainer = document.getElementById(`stroke-${index}`);
@@ -258,16 +267,35 @@ class CylindricalHanziCarousel {
         
         console.log('Updating card positions for', totalCards, 'cards');
         
-        // Free-flowing horizontal layout
+        // Free-flowing horizontal layout with responsive spacing
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+        
         cards.forEach((card, index) => {
             const offset = index - this.currentIndex;
-            const cardWidth = 140; // Reduced spacing between cards
+            let cardWidth;
+            
+            if (isSmallMobile) {
+                cardWidth = 60; // Even tighter spacing for small mobile
+            } else if (isMobile) {
+                cardWidth = 80; // Tighter spacing for mobile
+            } else {
+                cardWidth = 140; // Desktop spacing
+            }
+            
             const x = offset * cardWidth;
             
             // Visibility logic - show all cards with varying opacity
             let opacity = Math.max(0.8, 1 - Math.abs(offset) * 0.1); // Much higher minimum opacity
-            let scale = Math.max(0.8, 1 - Math.abs(offset) * 0.05); // Higher minimum scale
             let isFocused = Math.abs(offset) === 0;
+            let scale;
+            
+            if (isFocused) {
+                // Make focused card bigger
+                scale = isSmallMobile ? 1.2 : 1.15; // Bigger scale for focused card
+            } else {
+                scale = Math.max(0.8, 1 - Math.abs(offset) * 0.05); // Higher minimum scale
+            }
             
             console.log(`Card ${index}: x=${x}, scale=${scale}, opacity=${opacity}, focused=${isFocused}`);
             
@@ -323,7 +351,16 @@ class CylindricalHanziCarousel {
         
         const hanzi = this.hanziList[cardIndex];
         const isMobile = window.innerWidth <= 768;
-        const writerSize = isMobile ? 110 : 130;
+        const isSmallMobile = window.innerWidth <= 480;
+        
+        let writerSize;
+        if (isSmallMobile) {
+            writerSize = 50; // Smaller for small mobile
+        } else if (isMobile) {
+            writerSize = 80; // Medium for mobile
+        } else {
+            writerSize = 130; // Desktop size
+        }
         
         // Recreate static HanziWriter instance
         const writer = HanziWriter.create(strokeContainer, hanzi, {
@@ -358,7 +395,16 @@ class CylindricalHanziCarousel {
         if (typeof HanziWriter !== 'undefined') {
             // Detect screen size to adjust HanziWriter size
             const isMobile = window.innerWidth <= 768;
-            const writerSize = isMobile ? 110 : 130;
+            const isSmallMobile = window.innerWidth <= 480;
+            
+            let writerSize;
+            if (isSmallMobile) {
+                writerSize = 50; // Smaller for small mobile
+            } else if (isMobile) {
+                writerSize = 80; // Medium for mobile
+            } else {
+                writerSize = 130; // Desktop size
+            }
             
             // Create animated writer for the focused card
             const writer = HanziWriter.create(strokeContainer, hanzi, {
