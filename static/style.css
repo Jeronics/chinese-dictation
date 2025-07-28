@@ -1531,19 +1531,16 @@ button:disabled {
     position: absolute;
     width: 160px;
     height: 200px;
-    background: var(--bg-secondary);
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
     transition: all 0.15s ease;
     cursor: pointer;
 }
 
-.hanzi-card:hover {
-    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
-}
+
 
 .hanzi-character {
     font-size: 2rem;

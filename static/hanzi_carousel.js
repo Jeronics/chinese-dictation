@@ -211,6 +211,9 @@ class CylindricalHanziCarousel {
         
         // Create static HanziWriter instances for all cards
         this.createStaticHanziWriters();
+        
+        // Add hover effects for red shadow
+        this.addHoverEffects();
     }
 
     createStaticHanziWriters() {
@@ -250,6 +253,30 @@ class CylindricalHanziCarousel {
             this.writers[index] = writer;
         });
     }
+
+    addHoverEffects() {
+        const cards = document.querySelectorAll('.hanzi-card');
+        
+        cards.forEach((card, index) => {
+            // Mouse enter - show red shadow
+            card.addEventListener('mouseenter', () => {
+                const strokeContainer = card.querySelector('.stroke-container');
+                if (strokeContainer) {
+                    strokeContainer.style.filter = 'drop-shadow(0 0 8px #ef4444)';
+                }
+            });
+            
+            // Mouse leave - remove red shadow
+            card.addEventListener('mouseleave', () => {
+                const strokeContainer = card.querySelector('.stroke-container');
+                if (strokeContainer) {
+                    strokeContainer.style.filter = 'none';
+                }
+            });
+        });
+    }
+
+
 
     updateDisplay() {
         if (this.hanziList.length === 0) return;
@@ -303,12 +330,10 @@ class CylindricalHanziCarousel {
             card.style.opacity = opacity;
             card.style.zIndex = 1000 - Math.abs(offset);
             
-            // Remove background for cleaner reading effect
+            // Apply filters for visual hierarchy without backgrounds
             if (isFocused) {
-                card.style.background = 'transparent';
                 card.style.filter = 'none';
             } else {
-                card.style.background = 'transparent';
                 card.style.filter = 'grayscale(0.3) brightness(0.9)'; // Much less gray and brighter
             }
             
@@ -319,6 +344,8 @@ class CylindricalHanziCarousel {
                 // Restore static gray outline for unfocused cards
                 this.restoreStaticWriter(index);
             }
+            
+
         });
     }
 
