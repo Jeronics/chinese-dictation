@@ -275,12 +275,12 @@ class CylindricalHanziCarousel {
             card.style.opacity = opacity;
             card.style.zIndex = 1000 - Math.abs(offset);
             
-            // Always show background, but with different styling for focused vs unfocused
+            // Remove background for cleaner reading effect
             if (isFocused) {
-                card.style.background = 'var(--bg-secondary)';
+                card.style.background = 'transparent';
                 card.style.filter = 'none';
             } else {
-                card.style.background = 'var(--bg-secondary)';
+                card.style.background = 'transparent';
                 card.style.filter = 'grayscale(0.3) brightness(0.9)'; // Much less gray and brighter
             }
             

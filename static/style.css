@@ -1566,7 +1566,7 @@ button:disabled {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-secondary);
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
