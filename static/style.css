@@ -1508,8 +1508,8 @@ button:disabled {
     visibility: visible;
 }
 
-/* Simple Horizontal Carousel */
-.carousel-cylinder {
+/* Horizontal Carousel */
+.carousel-container {
     position: relative;
     height: 300px;
     width: 100%;
@@ -1649,7 +1649,7 @@ button:disabled {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .carousel-cylinder {
+    .carousel-container {
         height: 200px;
     }
     
@@ -1690,7 +1690,7 @@ button:disabled {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
-    .carousel-cylinder {
+    .carousel-container {
         height: 160px;
     }
     

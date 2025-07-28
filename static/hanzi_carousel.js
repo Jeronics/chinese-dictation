@@ -1,5 +1,5 @@
-// Minimalist Cylindrical Hanzi Carousel
-class CylindricalHanziCarousel {
+// Horizontal Hanzi Carousel
+class HanziCarousel {
     constructor() {
         this.currentIndex = 0;
         this.hanziList = [];
@@ -13,9 +13,9 @@ class CylindricalHanziCarousel {
         this.carousel.id = 'hanzi-carousel';
         this.carousel.className = 'hanzi-carousel';
         
-        // Create carousel content - minimal version
+        // Create carousel content
         this.carousel.innerHTML = `
-            <div class="carousel-cylinder">
+            <div class="carousel-container">
                 <div class="carousel-track" id="carousel-track">
                     <!-- Hanzi cards will be inserted here -->
                 </div>
@@ -281,7 +281,7 @@ class CylindricalHanziCarousel {
     updateDisplay() {
         if (this.hanziList.length === 0) return;
 
-        // Update card positions for cylindrical effect
+        // Update card positions for horizontal layout
         this.updateCardPositions();
         
         // Update navigation buttons
@@ -480,13 +480,13 @@ class CylindricalHanziCarousel {
 let hanziCarousel;
 
 document.addEventListener('DOMContentLoaded', function() {
-    hanziCarousel = new CylindricalHanziCarousel();
+    hanziCarousel = new HanziCarousel();
 });
 
 // Function to show carousel with multiple hanzi
 function showHanziCarousel(hanziList, startIndex = 0) {
     if (!hanziCarousel) {
-        hanziCarousel = new CylindricalHanziCarousel();
+        hanziCarousel = new HanziCarousel();
     }
     hanziCarousel.show(hanziList, startIndex);
 }
