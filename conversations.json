@@ -1,0 +1,277 @@
+[
+  {
+    "conversation_id": 1,
+    "topic": "Greetings and Introductions",
+    "hsk_level": 1,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你好",
+        "pinyin": "nǐ hǎo",
+        "english": "Hello",
+        "speaker": "A",
+        "audio_file": "conv_1_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "你好，很高兴认识你",
+        "pinyin": "nǐ hǎo, hěn gāo xìng rèn shí nǐ",
+        "english": "Hello, nice to meet you",
+        "speaker": "B",
+        "audio_file": "conv_1_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我叫小明",
+        "pinyin": "wǒ jiào xiǎo míng",
+        "english": "My name is Xiaoming",
+        "speaker": "A",
+        "audio_file": "conv_1_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我叫小红",
+        "pinyin": "wǒ jiào xiǎo hóng",
+        "english": "My name is Xiaohong",
+        "speaker": "B",
+        "audio_file": "conv_1_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你是学生吗？",
+        "pinyin": "nǐ shì xué shēng ma?",
+        "english": "Are you a student?",
+        "speaker": "A",
+        "audio_file": "conv_1_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是的，我是学生",
+        "pinyin": "shì de, wǒ shì xué shēng",
+        "english": "Yes, I am a student",
+        "speaker": "B",
+        "audio_file": "conv_1_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "topic": "Ordering Food",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你想吃什么？",
+        "pinyin": "nǐ xiǎng chī shén me?",
+        "english": "What would you like to eat?",
+        "speaker": "A",
+        "audio_file": "conv_2_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我想吃面条",
+        "pinyin": "wǒ xiǎng chī miàn tiáo",
+        "english": "I want to eat noodles",
+        "speaker": "B",
+        "audio_file": "conv_2_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "面条很好吃",
+        "pinyin": "miàn tiáo hěn hǎo chī",
+        "english": "The noodles are very delicious",
+        "speaker": "A",
+        "audio_file": "conv_2_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "你还要什么？",
+        "pinyin": "nǐ hái yào shén me?",
+        "english": "What else do you want?",
+        "speaker": "B",
+        "audio_file": "conv_2_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "我要一杯茶",
+        "pinyin": "wǒ yào yī bēi chá",
+        "english": "I want a cup of tea",
+        "speaker": "A",
+        "audio_file": "conv_2_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "好的，请等一下",
+        "pinyin": "hǎo de, qǐng děng yī xià",
+        "english": "Okay, please wait a moment",
+        "speaker": "B",
+        "audio_file": "conv_2_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 3,
+    "topic": "Shopping",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这件衣服多少钱？",
+        "pinyin": "zhè jiàn yī fu duō shao qián?",
+        "english": "How much is this piece of clothing?",
+        "speaker": "A",
+        "audio_file": "conv_3_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "一百元",
+        "pinyin": "yī bǎi yuán",
+        "english": "One hundred yuan",
+        "speaker": "B",
+        "audio_file": "conv_3_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "太贵了",
+        "pinyin": "tài guì le",
+        "english": "Too expensive",
+        "speaker": "A",
+        "audio_file": "conv_3_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "可以便宜一点吗？",
+        "pinyin": "kě yǐ pián yi yī diǎn ma?",
+        "english": "Can it be a bit cheaper?",
+        "speaker": "A",
+        "audio_file": "conv_3_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "八十元怎么样？",
+        "pinyin": "bā shí yuán zěn me yàng?",
+        "english": "How about eighty yuan?",
+        "speaker": "B",
+        "audio_file": "conv_3_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "好的，我买了",
+        "pinyin": "hǎo de, wǒ mǎi le",
+        "english": "Okay, I'll buy it",
+        "speaker": "A",
+        "audio_file": "conv_3_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 4,
+    "topic": "Making Plans",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "明天你有时间吗？",
+        "pinyin": "míng tiān nǐ yǒu shí jiān ma?",
+        "english": "Do you have time tomorrow?",
+        "speaker": "A",
+        "audio_file": "conv_4_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "有，明天我很空闲",
+        "pinyin": "yǒu, míng tiān wǒ hěn kòng xián",
+        "english": "Yes, I'm very free tomorrow",
+        "speaker": "B",
+        "audio_file": "conv_4_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我们去看电影吧",
+        "pinyin": "wǒ men qù kàn diàn yǐng ba",
+        "english": "Let's go watch a movie",
+        "speaker": "A",
+        "audio_file": "conv_4_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "好主意，几点？",
+        "pinyin": "hǎo zhǔ yì, jǐ diǎn?",
+        "english": "Good idea, what time?",
+        "speaker": "B",
+        "audio_file": "conv_4_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "下午三点怎么样？",
+        "pinyin": "xià wǔ sān diǎn zěn me yàng?",
+        "english": "How about 3 PM?",
+        "speaker": "A",
+        "audio_file": "conv_4_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "没问题，电影院见",
+        "pinyin": "méi wèn tí, diàn yǐng yuàn jiàn",
+        "english": "No problem, see you at the cinema",
+        "speaker": "B",
+        "audio_file": "conv_4_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 5,
+    "topic": "Weather and Activities",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "今天天气怎么样？",
+        "pinyin": "jīn tiān tiān qì zěn me yàng?",
+        "english": "How's the weather today?",
+        "speaker": "A",
+        "audio_file": "conv_5_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "天气很好，阳光明媚",
+        "pinyin": "tiān qì hěn hǎo, yáng guāng míng mèi",
+        "english": "The weather is very good, sunny and bright",
+        "speaker": "B",
+        "audio_file": "conv_5_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我们去公园散步吧",
+        "pinyin": "wǒ men qù gōng yuán sàn bù ba",
+        "english": "Let's go for a walk in the park",
+        "speaker": "A",
+        "audio_file": "conv_5_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "好主意，公园里有很多花",
+        "pinyin": "hǎo zhǔ yì, gōng yuán lǐ yǒu hěn duō huā",
+        "english": "Good idea, there are many flowers in the park",
+        "speaker": "B",
+        "audio_file": "conv_5_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "我们可以拍照",
+        "pinyin": "wǒ men kě yǐ pāi zhào",
+        "english": "We can take photos",
+        "speaker": "A",
+        "audio_file": "conv_5_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "太好了，我们走吧",
+        "pinyin": "tài hǎo le, wǒ men zǒu ba",
+        "english": "Great, let's go",
+        "speaker": "B",
+        "audio_file": "conv_5_6.mp3"
+      }
+    ]
+  }
+] 

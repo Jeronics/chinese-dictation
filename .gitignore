@@ -38,3 +38,4 @@ xvenv/
 !sentences.json
 !short_chinese_stories.json
 !stories.json
+!conversations.json
