@@ -1538,7 +1538,18 @@ button:disabled {
     justify-content: center;
     transition: all 0.15s ease;
     cursor: pointer;
+    border-radius: 8px;
 }
+
+.hanzi-card:hover {
+    transform: scale(1.02);
+}
+
+.hanzi-card:active {
+    transform: scale(0.98);
+}
+
+
 
 
 
@@ -1659,6 +1670,10 @@ button:disabled {
         padding: 0.5rem;
     }
     
+    .hanzi-card:hover {
+        transform: scale(1.03);
+    }
+    
     .hanzi-character {
         font-size: 1.5rem;
         min-height: 2rem;
@@ -1698,6 +1713,10 @@ button:disabled {
         width: 80px;
         height: 120px;
         padding: 0.3rem;
+    }
+    
+    .hanzi-card:hover {
+        transform: scale(1.04);
     }
     
     .hanzi-character {

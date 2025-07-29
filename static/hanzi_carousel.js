@@ -7,6 +7,19 @@ class HanziCarousel {
         this.createCarousel();
     }
 
+    getCharacterWidth() {
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+        
+        if (isSmallMobile) {
+            return 50; // Small mobile character size
+        } else if (isMobile) {
+            return 80; // Mobile character size
+        } else {
+            return 130; // Desktop character size
+        }
+    }
+
     createCarousel() {
         // Create carousel container
         this.carousel = document.createElement('div');
@@ -219,17 +232,7 @@ class HanziCarousel {
     createStaticHanziWriters() {
         if (typeof HanziWriter === 'undefined') return;
         
-        const isMobile = window.innerWidth <= 768;
-        const isSmallMobile = window.innerWidth <= 480;
-        
-        let writerSize;
-        if (isSmallMobile) {
-            writerSize = 50; // Smaller for small mobile
-        } else if (isMobile) {
-            writerSize = 80; // Medium for mobile
-        } else {
-            writerSize = 130; // Desktop size
-        }
+        const characterWidth = this.getCharacterWidth();
         
         this.hanziList.forEach((hanzi, index) => {
             const strokeContainer = document.getElementById(`stroke-${index}`);
@@ -237,8 +240,8 @@ class HanziCarousel {
             
             // Create static HanziWriter instance (gray outline, no animation)
             const writer = HanziWriter.create(strokeContainer, hanzi, {
-                width: writerSize,
-                height: writerSize,
+                width: characterWidth,
+                height: characterWidth,
                 showOutline: true,
                 showCharacter: false,
                 padding: 0,
@@ -258,21 +261,36 @@ class HanziCarousel {
         const cards = document.querySelectorAll('.hanzi-card');
         
         cards.forEach((card, index) => {
-            // Mouse enter - show red shadow
-            card.addEventListener('mouseenter', () => {
-                const strokeContainer = card.querySelector('.stroke-container');
-                if (strokeContainer) {
-                    strokeContainer.style.filter = 'drop-shadow(0 0 8px #ef4444)';
-                }
-            });
-            
-            // Mouse leave - remove red shadow
-            card.addEventListener('mouseleave', () => {
-                const strokeContainer = card.querySelector('.stroke-container');
-                if (strokeContainer) {
-                    strokeContainer.style.filter = 'none';
-                }
-            });
+            // Check if click event already exists to prevent duplicates
+            if (!card.hasAttribute('data-click-bound')) {
+                card.setAttribute('data-click-bound', 'true');
+                
+                // Mouse enter - show red shadow
+                card.addEventListener('mouseenter', () => {
+                    const strokeContainer = card.querySelector('.stroke-container');
+                    if (strokeContainer) {
+                        strokeContainer.style.filter = 'drop-shadow(0 0 8px #ef4444)';
+                    }
+                });
+                
+                // Mouse leave - remove red shadow
+                card.addEventListener('mouseleave', () => {
+                    const strokeContainer = card.querySelector('.stroke-container');
+                    if (strokeContainer) {
+                        strokeContainer.style.filter = 'none';
+                    }
+                });
+                
+                // Click to select this character
+                card.addEventListener('click', () => {
+                    // Clear any lingering red shadow immediately
+                    const strokeContainer = card.querySelector('.stroke-container');
+                    if (strokeContainer) {
+                        strokeContainer.style.filter = 'none';
+                    }
+                    this.goTo(index);
+                });
+            }
         });
     }
 
@@ -294,21 +312,22 @@ class HanziCarousel {
         
         console.log('Updating card positions for', totalCards, 'cards');
         
+        // Clear any lingering red shadows first
+        cards.forEach((card) => {
+            const strokeContainer = card.querySelector('.stroke-container');
+            if (strokeContainer) {
+                strokeContainer.style.filter = 'none';
+            }
+        });
+        
         // Free-flowing horizontal layout with responsive spacing
-        const isMobile = window.innerWidth <= 768;
-        const isSmallMobile = window.innerWidth <= 480;
+        
+        // Card width is a function of character width (with some padding)
+        const characterWidth = this.getCharacterWidth();
+        const cardWidth = characterWidth + 10; // 10px padding around character
         
         cards.forEach((card, index) => {
             const offset = index - this.currentIndex;
-            let cardWidth;
-            
-            if (isSmallMobile) {
-                cardWidth = 60; // Even tighter spacing for small mobile
-            } else if (isMobile) {
-                cardWidth = 80; // Tighter spacing for mobile
-            } else {
-                cardWidth = 140; // Desktop spacing
-            }
             
             const x = offset * cardWidth;
             
@@ -319,7 +338,7 @@ class HanziCarousel {
             
             if (isFocused) {
                 // Make focused card bigger
-                scale = isSmallMobile ? 1.2 : 1.15; // Bigger scale for focused card
+                scale = window.innerWidth <= 480 ? 1.2 : 1.15; // Bigger scale for focused card
             } else {
                 scale = Math.max(0.8, 1 - Math.abs(offset) * 0.05); // Higher minimum scale
             }
@@ -377,22 +396,12 @@ class HanziCarousel {
         strokeContainer.innerHTML = '';
         
         const hanzi = this.hanziList[cardIndex];
-        const isMobile = window.innerWidth <= 768;
-        const isSmallMobile = window.innerWidth <= 480;
-        
-        let writerSize;
-        if (isSmallMobile) {
-            writerSize = 50; // Smaller for small mobile
-        } else if (isMobile) {
-            writerSize = 80; // Medium for mobile
-        } else {
-            writerSize = 130; // Desktop size
-        }
+        const characterWidth = this.getCharacterWidth();
         
         // Recreate static HanziWriter instance
         const writer = HanziWriter.create(strokeContainer, hanzi, {
-            width: writerSize,
-            height: writerSize,
+            width: characterWidth,
+            height: characterWidth,
             showOutline: true,
             showCharacter: false,
             padding: 0,
@@ -420,23 +429,12 @@ class HanziCarousel {
         strokeContainer.innerHTML = '';
         
         if (typeof HanziWriter !== 'undefined') {
-            // Detect screen size to adjust HanziWriter size
-            const isMobile = window.innerWidth <= 768;
-            const isSmallMobile = window.innerWidth <= 480;
-            
-            let writerSize;
-            if (isSmallMobile) {
-                writerSize = 50; // Smaller for small mobile
-            } else if (isMobile) {
-                writerSize = 80; // Medium for mobile
-            } else {
-                writerSize = 130; // Desktop size
-            }
+            const characterWidth = this.getCharacterWidth();
             
             // Create animated writer for the focused card
             const writer = HanziWriter.create(strokeContainer, hanzi, {
-                width: writerSize,
-                height: writerSize,
+                width: characterWidth,
+                height: characterWidth,
                 showOutline: true,
                 showCharacter: false,
                 padding: 0,
