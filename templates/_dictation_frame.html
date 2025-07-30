@@ -1,7 +1,7 @@
 {#
     Usage:
     {% include '_dictation_frame.html' with context %}
-    Requires: show_result, audio_file, dictation_form, dictation_result_panel, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id
+    Requires: show_result, audio_file, dictation_form, dictation_result_panel, show_next_button, result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id, conversation_mode, conversation_id, sentence_id, speaker
 #}
 <div class="dictation-frame">
     <h3>Dictation</h3>
@@ -19,7 +19,11 @@
         </audio>
     {% elif not show_result %}
         <div class="no-audio-notice">
-            <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
+            {% if conversation_mode %}
+                <p><strong>Conversation Mode:</strong> Listen to Speaker {{ speaker }} and type what you hear.</p>
+            {% else %}
+                <p><strong>Story Mode:</strong> Read the text below and type what you see.</p>
+            {% endif %}
         </div>
     {% endif %}
 
@@ -27,7 +31,7 @@
         {{ dictation_form(false, request.path, false, show_next_button) }}
     {% else %}
         {{ dictation_form(true, request.path, true, show_next_button) }}
-        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id) }}
+        {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode, story_id, part_id, conversation_mode, speaker) }}
         
         {% if not show_next_button %}
             <a href="/">Back to Menu</a>

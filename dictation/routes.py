@@ -22,7 +22,7 @@ from supabase import create_client
 import logging
 import smtplib
 from email.mime.text import MIMEText
-from .session import HSKSession, StorySession
+from .session import HSKSession, StorySession, ConversationSession
 
 logging.basicConfig(level=logging.INFO)
 
@@ -70,6 +70,7 @@ def menu():
 
     # Get saved stories for logged-in users
     saved_stories = []
+    saved_conversations = []
     user_id = session.get("user_id")
     if user_id:
         try:
@@ -78,8 +79,17 @@ def menu():
         except Exception as e:
             logging.error(f"Error loading saved stories: {e}")
             saved_stories = []
+        
+        try:
+            result = supabase.table("conversation_progress").select("conversation_id").eq("user_id", user_id).execute()
+            saved_conversations = [str(row["conversation_id"]) for row in result.data] if result.data else []
+        except Exception as e:
+            logging.error(f"Error loading saved conversations: {e}")
+            saved_conversations = []
 
-    return render_template("index.html", stories=ctx.stories, saved_stories=saved_stories, hsk_totals=ctx.hsk_totals)
+    return render_template("index.html", stories=ctx.stories, saved_stories=saved_stories, 
+                         conversations=ctx.conversations, saved_conversations=saved_conversations,
+                         hsk_totals=ctx.hsk_totals)
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
 def session_practice():
@@ -465,6 +475,117 @@ def story_session(story_id):
     
     return render_template("dictation.html", **story_session_obj.get_context())
 
+@dictation_bp.route("/conversation/<conversation_id>/session", methods=["GET", "POST"])
+def conversation_session(conversation_id):
+    """
+    Conversation dictation session route. Handles conversation progress, user answers, and session summary.
+    """
+    conversation = ctx.get_conversation(conversation_id)
+    if not conversation:
+        flash("Conversation not found.", "error")
+        return redirect(url_for("dictation.menu"))
+
+    user_id = session.get("user_id")
+    
+    # Handle conversation actions
+    if request.method == "POST":
+        if "resume_later" in request.form:
+            # Save current progress to database
+            if user_id:
+                try:
+                    current_index = conversation_session_obj.get_current_index() if 'conversation_session_obj' in locals() else 0
+                    supabase.table("conversation_progress").upsert({
+                        "user_id": user_id,
+                        "conversation_id": conversation_id,
+                        "current_index": current_index,
+                        "score": conversation_session_obj.get_score() if 'conversation_session_obj' in locals() else 0,
+                        "last_updated": datetime.now().isoformat()
+                    }).execute()
+                    flash(f"Progress saved for '{conversation['topic']}'", "success")
+                except Exception as e:
+                    logging.error(f"Error saving conversation progress: {e}")
+                    flash("Failed to save progress.", "error")
+            return redirect(url_for("dictation.menu"))
+        
+        elif "restart" in request.form:
+            # Clear saved progress and start fresh
+            if user_id:
+                try:
+                    supabase.table("conversation_progress").delete().eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
+                except Exception as e:
+                    logging.error(f"Error clearing conversation progress: {e}")
+            # Clear session data
+            for key in ["conversation_session_ids", "conversation_session_index", "conversation_session_score", "conversation_id", "accuracy_scores"]:
+                session.pop(key, None)
+            flash(f"Restarted '{conversation['topic']}'", "info")
+
+    # Initialize or resume conversation session
+    if "conversation_session_ids" not in session or session.get("conversation_id") != conversation_id:
+        # Check for existing progress
+        existing_progress = None
+        if user_id:
+            try:
+                result = supabase.table("conversation_progress").select("*").eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
+                if result.data:
+                    existing_progress = result.data[0]
+            except Exception as e:
+                logging.error(f"Error loading conversation progress: {e}")
+        
+        if existing_progress:
+            # Resume from saved progress
+            session.update(
+                conversation_id=conversation_id,
+                conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
+                conversation_session_index=existing_progress["current_index"],
+                conversation_session_score=existing_progress["score"]
+            )
+            flash(f"Resuming '{conversation['topic']}' from sentence {existing_progress['current_index'] + 1} of {len(conversation['sentences'])}", "info")
+        else:
+            # Initialize new conversation session
+            session.update(
+                conversation_id=conversation_id,
+                conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
+                conversation_session_index=0,
+                conversation_session_score=0
+            )
+
+    conversation_session_obj = ConversationSession(ctx)
+
+    if request.method == "POST" and "next" in request.form:
+        conversation_session_obj.advance()
+        if conversation_session_obj.get_current_index() >= len(conversation["sentences"]):
+            score = conversation_session_obj.get_score()
+            total = len(conversation["sentences"])
+            
+            # Calculate average accuracy for the conversation session
+            average_accuracy = 0
+            accuracy_scores = session.get("accuracy_scores", [])
+            if accuracy_scores:
+                average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
+            if user_id and accuracy_scores:
+                update_daily_work_registry(user_id, "conversation", average_accuracy, total, conversation_id, total)
+            
+            # Clear conversation progress from database when completed
+            if user_id:
+                try:
+                    supabase.table("conversation_progress").delete().eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
+                    logging.info(f"Cleared completed conversation progress for user {user_id}, conversation {conversation_id}")
+                except Exception as e:
+                    logging.error(f"Error clearing completed conversation progress: {e}")
+            
+            # Get daily work stats for summary
+            daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
+            
+            for key in ["conversation_session_ids", "conversation_session_index", "conversation_session_score", "conversation_id", "accuracy_scores"]:
+                session.pop(key, None)
+            return render_template("conversation_summary.html", score=score, total=total, conversation=conversation, conversation_id=conversation_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
+
+    if request.method == "POST" and "user_input" in request.form:
+        user_input = request.form["user_input"].strip()
+        return render_template("dictation.html", **conversation_session_obj.update_score(user_input))
+    
+    return render_template("dictation.html", **conversation_session_obj.get_context())
+
 @dictation_bp.route("/report-correction", methods=["POST"])
 def report_correction():
     """
@@ -486,6 +607,10 @@ def report_correction():
     story_id = request.form.get("story_id")
     part_id = request.form.get("part_id")
     
+    # Try to get conversation_id and sentence_id if this was from a conversation
+    conversation_id = request.form.get("conversation_id")
+    sentence_id = request.form.get("sentence_id")
+    
     try:
         # Insert the reported correction into the database
         supabase.table("reported_corrections").insert({
@@ -501,6 +626,7 @@ def report_correction():
             "sentence_id": sentence_id,
             "story_id": story_id,
             "part_id": part_id,
+            "conversation_id": conversation_id,
             "reported_at": datetime.now().isoformat()
         }).execute()
         
@@ -517,8 +643,8 @@ def reported_corrections_dashboard():
     # Optionally, add admin check here
     try:
         result = supabase.table("reported_corrections").select("*").order("reported_at", desc=True).execute()
-        corrections = result.data or []
-        return render_template("reported_corrections_dashboard.html", corrections=corrections)
+        reports = result.data or []
+        return render_template("reported_corrections_dashboard.html", reports=reports)
     except Exception as e:
         logging.error(f"Error loading reported corrections: {e}")
         flash("Error loading reported corrections.", "error")

@@ -1943,3 +1943,139 @@ button:disabled {
     color: var(--correction-extra);
 }
 
+/* =========================
+   CONVERSATION CHAT LAYOUT
+   ========================= */
+
+.conversation-chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+.chat-message {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chat-message-left {
+    justify-content: flex-start;
+}
+
+.chat-message-right {
+    justify-content: flex-end;
+}
+
+.speaker-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.speaker-circle:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.speaker-circle-active {
+    animation: pulse 1s infinite;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.speaker-A {
+    background: var(--accent-blue);
+    color: white;
+}
+
+.speaker-B {
+    background: var(--accent-orange);
+    color: white;
+}
+
+.chat-input-bubble {
+    flex: 1;
+    max-width: 60%;
+    padding: 0.5rem;
+    border: 2px solid var(--border-primary);
+    border-radius: 20px;
+    background: white;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.chat-input-bubble:focus {
+    border-color: var(--accent-blue);
+    transform: scale(1.02);
+}
+
+.chat-input-bubble::placeholder {
+    color: var(--text-muted);
+}
+
+.chat-input-active {
+    border-color: var(--accent-green);
+    background: rgba(76, 175, 80, 0.1);
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.conversation-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.play-conversation-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--accent-green);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.play-conversation-btn:hover {
+    background: var(--accent-green-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.play-conversation-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+

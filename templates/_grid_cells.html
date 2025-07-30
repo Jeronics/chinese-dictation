@@ -42,4 +42,22 @@
             {% endif %}
         </div>
     </div>
+{% endmacro %}
+
+{% macro conversation_cell(conversation_id, conversation, saved, conversations) %}
+    <div class="col">
+        <div class="grid-container-base">
+            <h3>{{ conversation.topic }}</h3>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Level: HSK{{ conversation.hsk_level }} • Sentences: {{ conversation.sentences|length }}</p>
+            {% if saved %}
+                <form action="/conversation/{{ conversation_id }}/session" method="get" class="inline-form">
+                    <button type="submit" class="btn-base resume-button">Resume</button>
+                </form>
+            {% else %}
+                <form action="/conversation/{{ conversation_id }}/session" method="get" class="inline-form">
+                    <button type="submit" class="btn-base start-button">Start</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
 {% endmacro %} 

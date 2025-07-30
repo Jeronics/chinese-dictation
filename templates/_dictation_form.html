@@ -13,9 +13,13 @@
     </form>
 {% endmacro %}
 
-{% macro dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode=None, story_id=None, part_id=None) %}
+{% macro dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, story_mode=None, story_id=None, part_id=None, conversation_mode=None, speaker=None) %}
     <div class="result" style="--result-color: {{ result_color }}; padding-left: 1em;">
         <h3 class="result-title">{{ result }}</h3>
+        
+        {% if conversation_mode and speaker %}
+            <p><strong>Speaker:</strong> {{ speaker }}</p>
+        {% endif %}
         
         <p><strong>Correct sentence:</strong> {{ correct_sentence|clickable_hanzi }}</p>
         <p><strong>Your input:</strong> {{ user_input }}</p>
@@ -33,6 +37,10 @@
             {% if story_mode and story_id and part_id %}
                 <input type="hidden" name="story_id" value="{{ story_id }}">
                 <input type="hidden" name="part_id" value="{{ part_id }}">
+            {% endif %}
+            {% if conversation_mode and conversation_id and sentence_id %}
+                <input type="hidden" name="conversation_id" value="{{ conversation_id }}">
+                <input type="hidden" name="sentence_id" value="{{ sentence_id }}">
             {% endif %}
             <input type="submit" value="Report Wrong Correction" class="btn-base report-correction-link">
         </form>

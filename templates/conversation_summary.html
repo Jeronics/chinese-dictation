@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Conversation Completed{% endblock %}
+
+{% block content %}
+    <h1>Conversation Complete!</h1>
+
+    <div class="conversation-summary">
+        <h2>{{ conversation.topic }}</h2>
+        <p><strong>HSK Level:</strong> {{ conversation.hsk_level }}</p>
+        <p><strong>Sentences Completed:</strong> {{ score }} / {{ total }}</p>
+        <p><strong>Average Accuracy:</strong> {{ average_accuracy }}%</p>
+
+        {% if average_accuracy == 100 %}
+            <p>Perfect! Great job with the conversation!</p>
+        {% elif average_accuracy >= 80 %}
+            <p>Excellent! You handled the conversation very well!</p>
+        {% elif average_accuracy >= 60 %}
+            <p>Good work! You're getting better at conversations!</p>
+        {% else %}
+            <p>Keep practicing! Conversations get easier with time!</p>
+        {% endif %}
+    </div>
+
+    {% if daily_stats %}
+        <div class="daily-stats">
+            <h3>Today's Progress</h3>
+            <p>Sentences above 70%: {{ daily_stats.today_sentences_above_7 }}</p>
+            <p>Total sentences: {{ daily_stats.today_total_sentences }}</p>
+            <p>Current streak: {{ daily_stats.current_streak }} days</p>
+        </div>
+    {% endif %}
+
+    <div class="action-buttons">
+        <a href="/conversation/{{ conversation_id }}/session"><button class="btn-base start-button">Practice Again</button></a>
+        <a href="/"><button class="btn-base">Back to Menu</button></a>
+    </div>
+{% endblock %} 

@@ -32,6 +32,15 @@
     </div>
 
     <div class="menu-section menu-section-with-top-margin">
+        <h2>Conversations</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for conversation_id, conversation in conversations.items() %}
+                {{ conversation_cell(conversation_id, conversation, session.get('email') and conversation_id in saved_conversations, conversations) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="menu-section menu-section-with-top-margin">
         <h2>Short Stories</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for story_id, story in stories.items() %}
@@ -41,5 +50,5 @@
     </div>
 {% endblock %}
 
-{% from "_grid_cells.html" import hsk_cell, mixed_practice_cell, story_cell %}
+{% from "_grid_cells.html" import hsk_cell, mixed_practice_cell, story_cell, conversation_cell %}
 

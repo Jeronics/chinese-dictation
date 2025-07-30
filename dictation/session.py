@@ -144,6 +144,107 @@ class HSKSession(BaseDictationSession):
             "story_mode": False
         }
 
+class ConversationSession(BaseDictationSession):
+    ids_key = "conversation_session_ids"
+    index_key = "conversation_session_index"
+    score_key = "conversation_session_score"
+
+    def get_current_item(self):
+        conversation_id = self.session.get("conversation_id")
+        sentence_id = self.get_current_id()
+        return self.ctx.get_conversation_sentence(conversation_id, sentence_id)
+
+    def get_context(self):
+        sentence = self.get_current_item()
+        conversation_id = self.session.get("conversation_id")
+        conversation = self.ctx.get_conversation(conversation_id)
+        hsk_level = conversation["hsk_level"]
+        
+        # Add audio file path to each sentence
+        conversation_sentences = []
+        for sent in conversation["sentences"]:
+            sent_copy = sent.copy()
+            sent_copy["audio_file"] = self.ctx.conversation_audio_path(conversation_id, sent["id"])
+            conversation_sentences.append(sent_copy)
+        
+        return {
+            "correct_sentence": sentence["chinese"],
+            "audio_file": self.ctx.conversation_audio_path(conversation_id, sentence["id"]),
+            "level": hsk_level,
+            "show_result": False,
+            "session_mode": True,
+            "current": self.get_current_index() + 1,
+            "total": len(self.get_ids()),
+            "conversation_mode": True,
+            "conversation_topic": conversation["topic"],
+            "conversation_audio_files": self.ctx.conversation_all_audio_paths(conversation_id),
+            "conversation_sentences": conversation_sentences,
+            "current_sentence_id": sentence["id"],
+            "speaker": sentence["speaker"]
+        }
+
+    def update_score(self, user_input):
+        sentence = self.get_current_item()
+        conversation_id = self.session.get("conversation_id")
+        conversation = self.ctx.get_conversation(conversation_id)
+        hsk_level = conversation["hsk_level"]
+        correction, stripped_user, stripped_correct, correct_segments = self.corrector.compare(user_input, sentence["chinese"])
+        accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
+        feedback, feedback_color = self.get_gradient_feedback(accuracy)
+        
+        # Append accuracy scores to session for later averaging
+        self.set_accuracy(accuracy)
+        
+        user_id = self.session.get("user_id")
+
+        # Update character progress for logged-in users
+        if user_id:
+            hanzi_updates = []
+            for hanzi in set(sentence["chinese"]):
+                match = next((entry for entry in self.ctx.hsk_data if entry["hanzi"] == hanzi), None)
+                if match:
+                    hsk_level = match["hsk_level"]
+                    if isinstance(hsk_level, str) and hsk_level.startswith("HSK"):
+                        hsk_level_int = int(hsk_level.replace("HSK", ""))
+                    else:
+                        hsk_level_int = int(hsk_level)
+                    correct = hanzi in correct_segments
+                    hanzi_updates.append({
+                        "hanzi": hanzi,
+                        "hsk_level": hsk_level_int,
+                        "correct": correct
+                    })
+            if hanzi_updates:
+                batch_update_character_progress(user_id, hanzi_updates)
+            
+        # Calculate running average accuracy for display
+        return {
+            # Core answer/result info
+            "correct_sentence": sentence["chinese"],
+            "result": feedback,
+            "result_color": feedback_color,
+            "correction": correction,
+            "accuracy": accuracy,
+            "translation": sentence["english"],
+            "pinyin": sentence["pinyin"],
+            "user_input": user_input,
+            # Session/progress info
+            "level": hsk_level,
+            "show_result": True,
+            "audio_file": self.ctx.conversation_audio_path(conversation_id, sentence["id"]),
+            "session_mode": True,
+            "current": self.get_current_index() + 1,
+            "total": len(self.get_ids()),
+            "show_next_button": True,
+            # Conversation info
+            "conversation_mode": True,
+            "conversation_topic": conversation["topic"],
+            "conversation_audio_files": self.ctx.conversation_all_audio_paths(conversation_id),
+            "conversation_id": conversation_id,
+            "sentence_id": sentence["id"],
+            "speaker": sentence["speaker"]
+        }
+
 class StorySession(BaseDictationSession):
     ids_key = "story_session_ids"
     index_key = "story_session_index"

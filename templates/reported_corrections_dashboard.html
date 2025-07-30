@@ -63,18 +63,28 @@
     <thead>
         <tr>
             <th>Created At</th>
+            <th>Source</th>
             <th>Correct Sentence</th>
-            <th>Input Sentence</th>
-            <th>Corrected Sentence</th>
+            <th>User Input</th>
+            <th>Correction</th>
         </tr>
     </thead>
     <tbody>
     {% for r in reports %}
         <tr>
-            <td>{{ r.created_at[:19].replace('T', ' ') }}</td>
+            <td>{{ r.reported_at[:19].replace('T', ' ') }}</td>
+            <td>
+                {% if r.story_id %}
+                    Story {{ r.story_id }}{% if r.part_id %} - Part {{ r.part_id }}{% endif %}
+                {% elif r.conversation_id %}
+                    Conversation {{ r.conversation_id }}{% if r.sentence_id %} - Sentence {{ r.sentence_id }}{% endif %}
+                {% else %}
+                    HSK Practice
+                {% endif %}
+            </td>
             <td>{{ r.correct_sentence }}</td>
-            <td>{{ r.input_sentence }}</td>
-            <td>{{ r.corrected_sentence|safe }}</td>
+            <td>{{ r.user_input }}</td>
+            <td>{{ r.correction_html|safe }}</td>
         </tr>
     {% endfor %}
     </tbody>
