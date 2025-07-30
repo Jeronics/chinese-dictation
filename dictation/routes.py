@@ -580,6 +580,97 @@ def conversation_session(conversation_id):
                 session.pop(key, None)
             return render_template("conversation_summary.html", score=score, total=total, conversation=conversation, conversation_id=conversation_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
+    # Handle "Submit All Answers" from conversation form
+    if request.method == "POST":
+        form_keys = list(request.form.keys())
+        user_input_keys = [k for k in form_keys if k.startswith("user_input_")]
+        
+        if user_input_keys:
+            # This is the "Submit All Answers" form
+            print(f"DEBUG: Submit All Answers detected! Processing {len(user_input_keys)} inputs")
+            
+            conversation_session_obj = ConversationSession(ctx)
+        
+        # Collect all user inputs from the form
+        all_inputs = {}
+        for key in user_input_keys:
+            sentence_id = key.replace("user_input_", "")
+            value = request.form[key].strip()
+            all_inputs[sentence_id] = value
+            print(f"DEBUG: Input {sentence_id} = '{value}'")
+        
+        print(f"DEBUG: All inputs collected: {all_inputs}")
+        
+        # Process all inputs and calculate overall results
+        total_accuracy = 0
+        total_sentences = len(conversation["sentences"])
+        all_corrections = []
+        
+        for sentence in conversation["sentences"]:
+            sentence_id = str(sentence["id"])
+            user_input = all_inputs.get(sentence_id, "")
+            
+            # Always process every sentence, even if user_input is blank
+            if user_input:
+                correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence["chinese"])
+                accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
+            else:
+                correction = ""
+                accuracy = 0
+            total_accuracy += accuracy
+            all_corrections.append({
+                "sentence_id": sentence_id,
+                "chinese": sentence["chinese"],
+                "user_input": user_input,
+                "correction": correction,
+                "pinyin": sentence["pinyin"],
+                "translation": sentence["english"],
+                "accuracy": accuracy,
+                "speaker": sentence["speaker"]
+            })
+
+        print(f"DEBUG: Total corrections: {len(all_corrections)}")
+        
+        # Calculate average accuracy
+        average_accuracy = total_accuracy / total_sentences if total_sentences > 0 else 0
+        
+        # Update session with accuracy scores
+        session["accuracy_scores"] = [corr["accuracy"] for corr in all_corrections]
+        
+        # Update character progress for logged-in users
+        if user_id:
+            hanzi_updates = []
+            for correction in all_corrections:
+                sentence = next((s for s in conversation["sentences"] if str(s["id"]) == correction["sentence_id"]), None)
+                if sentence:
+                    for hanzi in set(sentence["chinese"]):
+                        match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
+                        if match:
+                            hsk_level = match["hsk_level"]
+                            if isinstance(hsk_level, str) and hsk_level.startswith("HSK"):
+                                hsk_level_int = int(hsk_level.replace("HSK", ""))
+                            else:
+                                hsk_level_int = int(hsk_level)
+                            # Determine if character was correct based on accuracy
+                            correct = correction["accuracy"] >= 70  # Threshold for "correct"
+                            hanzi_updates.append({
+                                "hanzi": hanzi,
+                                "hsk_level": hsk_level_int,
+                                "correct": correct
+                            })
+            if hanzi_updates:
+                from .db_helpers import batch_update_character_progress
+                batch_update_character_progress(user_id, hanzi_updates)
+        
+        # Return results for display
+        return render_template("conversation_correction.html", 
+                             conversation_topic=conversation["topic"],
+                             level=conversation["hsk_level"],
+                             all_corrections=all_corrections,
+                             average_accuracy=round(average_accuracy, 1),
+                             total_sentences=total_sentences,
+                             conversation_id=conversation_id)
+
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
         return render_template("dictation.html", **conversation_session_obj.update_score(user_input))

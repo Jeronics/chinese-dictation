@@ -9,6 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def clickable_hanzi(text):
+    # Handle non-string inputs
+    if not isinstance(text, str):
+        return Markup(str(text) if text is not None else "")
+    
     # This regex will find Chinese characters
     hanzi_re = re.compile(r'[\u4e00-\u9fff]')
     

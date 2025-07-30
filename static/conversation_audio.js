@@ -36,16 +36,12 @@ function playSentenceAudio(audioFile) {
 // Play conversation audio - all sentences in sequence
 function playConversationAudio() {
     // Get all audio files from the conversation
-    const audioInputs = document.querySelectorAll('.chat-input-bubble');
+    const speakerCircles = document.querySelectorAll('.speaker-circle');
     const audioFiles = [];
     
-    audioInputs.forEach(input => {
-        const sentenceId = input.getAttribute('data-sentence-id');
-        // Find the corresponding speaker circle to get the audio file
-        const speakerCircle = input.parentElement.querySelector('.speaker-circle');
-        if (speakerCircle && speakerCircle.onclick) {
-            // Extract audio file from onclick attribute
-            const onclickAttr = speakerCircle.getAttribute('onclick');
+    speakerCircles.forEach(circle => {
+        const onclickAttr = circle.getAttribute('onclick');
+        if (onclickAttr) {
             const match = onclickAttr.match(/playSentenceAudio\('([^']+)'\)/);
             if (match) {
                 audioFiles.push(match[1]);
@@ -58,6 +54,8 @@ function playConversationAudio() {
         return;
     }
     
+    console.log('Found audio files:', audioFiles); // Debug
+    
     // Stop any currently playing audio
     if (window.currentAudio) {
         window.currentAudio.pause();
@@ -67,6 +65,19 @@ function playConversationAudio() {
     // Play all audio files in sequence
     playAudioSequence(audioFiles, 0);
 }
+
+// Auto-play conversation audio when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on a conversation page
+    const conversationChatContainer = document.querySelector('.conversation-chat-container');
+    if (conversationChatContainer) {
+        console.log('Conversation page detected, auto-playing audio...'); // Debug
+        // Small delay to ensure everything is loaded
+        setTimeout(() => {
+            playConversationAudio();
+        }, 500);
+    }
+});
 
 // Helper function to play audio files in sequence
 function playAudioSequence(audioFiles, index) {
