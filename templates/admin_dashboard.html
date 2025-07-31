@@ -34,17 +34,7 @@
             </div>
         </div>
         
-        <div class="admin-card">
-            <h3>Data Export</h3>
-            <div class="admin-buttons">
-                <a href="{{ url_for('admin_dashboard.export_corrections') }}" class="btn-base accent-orange">
-                    📊 Export Reported Corrections
-                </a>
-                <p class="admin-description">
-                    Exports all reported corrections to a CSV file.
-                </p>
-            </div>
-        </div>
+
         
         <div class="admin-card">
             <h3>Data Management</h3>
@@ -53,7 +43,7 @@
                     📋 View Reported Corrections
                 </a>
                 <p class="admin-description">
-                    View and manage reported corrections in the database.
+                    View reported corrections and automatically export to CSV if there are new ones.
                 </p>
             </div>
         </div>

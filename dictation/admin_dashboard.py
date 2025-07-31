@@ -22,8 +22,53 @@ def admin_dashboard():
 
 @admin_bp.route("/admin/reported-corrections")
 def reported_corrections_dashboard():
+    """View reported corrections and automatically export if there are new ones"""
+    import os
+    import csv
+    from datetime import datetime
+    
+    # Get all reported corrections
     rows = supabase.table("reported_corrections").select("*").order("created_at", desc=True).execute().data
-    return render_template("reported_corrections_dashboard.html", reports=rows)
+    
+    if not rows:
+        return render_template("reported_corrections_dashboard.html", reports=rows, export_status="No corrections to export")
+    
+    # Check if CSV file exists and get its last modification time
+    csv_file_path = "reported_corrections.csv"
+    csv_exists = os.path.exists(csv_file_path)
+    
+    if csv_exists:
+        # Get the latest correction timestamp from database
+        latest_correction_time = max(row.get('created_at', '') for row in rows if row.get('created_at'))
+        
+        # Get CSV file modification time
+        csv_mod_time = datetime.fromtimestamp(os.path.getmtime(csv_file_path))
+        
+        # Parse the latest correction time
+        try:
+            latest_correction_datetime = datetime.fromisoformat(latest_correction_time.replace('Z', '+00:00'))
+            # If CSV is newer than latest correction, no need to export
+            if csv_mod_time > latest_correction_datetime:
+                return render_template("reported_corrections_dashboard.html", reports=rows, export_status="CSV is up to date")
+        except (ValueError, TypeError):
+            pass  # If parsing fails, proceed with export
+    
+    # Export to CSV (either file doesn't exist or there are new corrections)
+    try:
+        # Get all fieldnames from the first row
+        fieldnames = list(rows[0].keys())
+        
+        with open(csv_file_path, "w", newline='', encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            for row in rows:
+                writer.writerow(row)
+        
+        export_status = f"✅ Exported {len(rows)} corrections to CSV (updated)"
+    except Exception as e:
+        export_status = f"❌ Export failed: {str(e)}"
+    
+    return render_template("reported_corrections_dashboard.html", reports=rows, export_status=export_status)
 
 @admin_bp.route("/admin/run-color-palette")
 def run_color_palette():
@@ -58,16 +103,4 @@ def view_color_palette():
     else:
         return "Color palette not found. Please generate it first using the 'Generate Color Palette' button.", 404
 
-@admin_bp.route("/admin/export-corrections")
-def export_corrections():
-    """Export reported corrections to CSV"""
-    import subprocess
-    import os
-    
-    try:
-        # Run the export script
-        script_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'developer_tools', 'export_reported_corrections_to_csv.py')
-        subprocess.run(['python3', script_path], check=True)
-        return "Corrections exported successfully! Check the generated CSV file."
-    except subprocess.CalledProcessError as e:
-        return f"Error exporting corrections: {e}", 500 
+ 

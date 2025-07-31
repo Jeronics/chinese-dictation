@@ -2,6 +2,21 @@
 {% block title %}Reported Corrections Dashboard{% endblock %}
 {% block content %}
 <h1>Reported Corrections Dashboard</h1>
+
+{% if export_status %}
+<div class="export-status" style="
+    background: #1e1e2e;
+    border: 1px solid #313244;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #cdd6f4;
+    font-family: monospace;
+    font-size: 0.9rem;
+">
+    📊 {{ export_status }}
+</div>
+{% endif %}
 <style>
     .dashboard-frame {
         background: #232136;
