@@ -34,6 +34,6 @@ def create_app():
     app.jinja_env.filters["clickable_hanzi"] = clickable_hanzi
     app.register_blueprint(dictation_bp)
     # Register the admin dashboard blueprint
-    from admin_dashboard import admin_bp as admin_dashboard_bp
+    from .admin_dashboard import admin_bp as admin_dashboard_bp
     app.register_blueprint(admin_dashboard_bp)
     return app
