@@ -19,41 +19,41 @@
 
     <div class="conversation-chat-container">
         {% for correction in all_corrections %}
-            <div class="chat-message {% if correction.speaker == 'A' %}chat-message-left{% else %}chat-message-right{% endif %}">
-                {% if correction.speaker == 'A' %}
+            {% set is_speaker_a = correction.speaker == 'A' %}
+            {% set is_speaker_b = correction.speaker == 'B' %}
+            {% set accuracy_class = 'accuracy-good' if correction.accuracy >= 70 else 'accuracy-poor' %}
+            
+            <div class="chat-message {% if is_speaker_a %}chat-message-left{% else %}chat-message-right{% endif %}">
+                {% if is_speaker_a %}
                     <div class="speaker-circle speaker-A" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
                 {% endif %}
+                
                 <div class="conversation-input-wrapper">
-                    {% if correction.speaker == 'B' %}
+                    {% if is_speaker_b %}
                         <div class="correction-accuracy">
-                            <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
-                                {{ correction.accuracy }}%
-                            </span>
+                            <span class="accuracy-badge {{ accuracy_class }}">{{ correction.accuracy }}%</span>
                         </div>
                     {% endif %}
+                    
                     <div class="chat-correction-bubble">
                         {% if correction.accuracy < 100 %}
-                            <div class="correction-user-input">
-                                {{ correction.correction|safe }}
-                            </div>
+                            <div class="correction-user-input">{{ correction.correction|safe }}</div>
                         {% endif %}
-                        <div class="correction-correct-answer">
-                            {{ correction.chinese }}
-                        </div>
+                        <div class="correction-correct-answer">{{ correction.chinese }}</div>
                         <div class="correction-details">
                             <div class="pinyin">{{ correction.pinyin }}</div>
                             <div class="translation">{{ correction.translation }}</div>
                         </div>
                     </div>
-                    {% if correction.speaker == 'A' %}
+                    
+                    {% if is_speaker_a %}
                         <div class="correction-accuracy">
-                            <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
-                                {{ correction.accuracy }}%
-                            </span>
+                            <span class="accuracy-badge {{ accuracy_class }}">{{ correction.accuracy }}%</span>
                         </div>
                     {% endif %}
                 </div>
-                {% if correction.speaker == 'B' %}
+                
+                {% if is_speaker_b %}
                     <div class="speaker-circle speaker-B" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
                 {% endif %}
             </div>
