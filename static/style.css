@@ -2467,15 +2467,18 @@ button:disabled {
 
 .conversation-submit-container {
     display: flex;
-    justify-content: center;
+    justify-content: right;
     margin-top: 2rem;
-    padding-top: 1rem;
+    padding: 1rem;
     border-top: 1px solid var(--border-primary);
+    width: 100%;
 }
 
 .conversation-submit-form {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .submit-all-btn {
@@ -2489,6 +2492,10 @@ button:disabled {
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: auto;
+    flex-shrink: 0;
+    align-self: center;
 }
 
 .submit-all-btn:hover {
