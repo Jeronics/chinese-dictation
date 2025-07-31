@@ -78,7 +78,7 @@ CREATE TABLE story_progress (
 ## Database Setup
 Run the following SQL script to create the required table:
 ```sql
--- See create_story_progress_table.sql for the complete schema
+-- See developer_tools/create_story_progress_table.sql for the complete schema
 ```
 
 ## Notes

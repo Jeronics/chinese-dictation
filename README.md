@@ -173,18 +173,18 @@ To add new stories:
 2. Follow the existing format with proper HSK level assignment
 3. Break stories into manageable parts (1-3 sentences per part)
 4. Include Chinese text, pinyin, and English translations
-5. Generate audio files using `generate_short_stories_google.py`
+5. Generate audio files using `developer_tools/generate_short_stories_google.py`
 
 To add new phrases:
 1. Add sentence data to `sentences.json`
 2. Assign appropriate HSK level
-3. Generate corresponding audio files using `generate_audios_google.py`
+3. Generate corresponding audio files using `developer_tools/generate_audios_google.py`
 
 ## Audio Generation
 
 ### For Short Stories
 ```bash
-python generate_short_stories_google.py
+python developer_tools/generate_short_stories_google.py
 ```
 - Generates audio for all story parts in `stories.json`
 - Each story uses a consistent random voice throughout all parts
@@ -192,7 +192,7 @@ python generate_short_stories_google.py
 
 ### For Phrases/Sentences
 ```bash
-python generate_audios_google.py
+python developer_tools/generate_audios_google.py
 ```
 - Generates audio for all sentences in `sentences.json`
 - Each sentence uses a random voice
