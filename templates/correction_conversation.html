@@ -24,6 +24,13 @@
                     <div class="speaker-circle speaker-A" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
                 {% endif %}
                 <div class="conversation-input-wrapper">
+                    {% if correction.speaker == 'B' %}
+                        <div class="correction-accuracy">
+                            <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
+                                {{ correction.accuracy }}%
+                            </span>
+                        </div>
+                    {% endif %}
                     <div class="chat-correction-bubble">
                         <div class="correction-user-input">
                             <strong>Your answer:</strong> {{ correction.user_input }}
@@ -36,11 +43,13 @@
                             <div class="translation">{{ correction.translation }}</div>
                         </div>
                     </div>
-                    <div class="correction-accuracy">
-                        <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
-                            {{ correction.accuracy }}%
-                        </span>
-                    </div>
+                    {% if correction.speaker == 'A' %}
+                        <div class="correction-accuracy">
+                            <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
+                                {{ correction.accuracy }}%
+                            </span>
+                        </div>
+                    {% endif %}
                 </div>
                 {% if correction.speaker == 'B' %}
                     <div class="speaker-circle speaker-B" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
