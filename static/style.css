@@ -2176,6 +2176,9 @@ button:disabled {
     background: var(--bg-primary);
     border-radius: 6px;
     border-left: 3px solid var(--accent-orange);
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
 }
 
 .correction-correct-answer {

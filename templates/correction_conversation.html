@@ -32,11 +32,13 @@
                         </div>
                     {% endif %}
                     <div class="chat-correction-bubble">
-                        <div class="correction-user-input">
-                            <strong>Your answer:</strong> {{ correction.user_input }}
-                        </div>
+                        {% if correction.accuracy < 100 %}
+                            <div class="correction-user-input">
+                                {{ correction.correction|safe }}
+                            </div>
+                        {% endif %}
                         <div class="correction-correct-answer">
-                            <strong>Correct:</strong> {{ correction.chinese }}
+                            {{ correction.chinese }}
                         </div>
                         <div class="correction-details">
                             <div class="pinyin">{{ correction.pinyin }}</div>
