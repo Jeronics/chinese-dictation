@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Session Results{% endblock %}
+
+{% block content %}
+    <div class="correction-container">
+        <div class="correction-header">
+            <h1>Session Results</h1>
+            <p><strong>HSK Level:</strong> {{ level }}</p>
+            <div class="accuracy-display">
+                <h2>Accuracy: {{ accuracy }}%</h2>
+            </div>
+        </div>
+
+        <div class="correction-content">
+            <div class="correction-item">
+                <div class="correction-user-input">
+                    <strong>Your answer:</strong> {{ user_input }}
+                </div>
+                <div class="correction-correct-answer">
+                    <strong>Correct:</strong> {{ correct_sentence }}
+                </div>
+                <div class="correction-details">
+                    <div class="pinyin">{{ pinyin }}</div>
+                    <div class="translation">{{ translation }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="correction-actions">
+            <a href="/session" class="btn-base">Try Again</a>
+            <a href="/" class="btn-base">Back to Menu</a>
+        </div>
+    </div>
+{% endblock %} 

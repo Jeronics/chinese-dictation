@@ -132,7 +132,7 @@ def session_practice():
             daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
             for key in ["session_ids", "session_index", "session_score", "hsk_level", "accuracy_scores"]:
                 session.pop(key, None)
-            return render_template("session_summary.html", total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
+            return render_template("result_regular.html", total=5, level=level, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     sid = hsk_session.get_current_id()
     s = ctx.get_sentence(sid)
@@ -450,7 +450,7 @@ def story_session(story_id):
                 session.pop(f"story_part_{i}_correct", None)
             for key in ["story_session_ids", "story_session_index", "story_session_score", "story_id", "accuracy_scores", "story_group_scores"]:
                 session.pop(key, None)
-            return render_template("story_summary.html", score=score, total=total, story=story, story_id=story_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
+            return render_template("result_story.html", score=score, total=total, story=story, story_id=story_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     part_id = story_session_obj.get_current_id()
     part = ctx.get_story_part(story_id, part_id)
@@ -578,7 +578,7 @@ def conversation_session(conversation_id):
             
             for key in ["conversation_session_ids", "conversation_session_index", "conversation_session_score", "conversation_id", "accuracy_scores"]:
                 session.pop(key, None)
-            return render_template("conversation_summary.html", score=score, total=total, conversation=conversation, conversation_id=conversation_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
+            return render_template("result_conversation.html", score=score, total=total, conversation=conversation, conversation_id=conversation_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
 
     # Handle "Submit All Answers" from conversation form
     if request.method == "POST":
@@ -664,7 +664,7 @@ def conversation_session(conversation_id):
                 batch_update_character_progress(user_id, hanzi_updates)
         
         # Return results for display
-        return render_template("conversation_correction.html", 
+        return render_template("result_conversation_detailed.html", 
                              conversation_topic=conversation["topic"],
                              level=conversation["hsk_level"],
                              all_corrections=all_corrections,
