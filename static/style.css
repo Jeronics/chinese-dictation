@@ -1951,7 +1951,8 @@ button:disabled {
    ========================= */
 
 .conversation-chat-container {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -2061,7 +2062,8 @@ button:disabled {
 
 /* Conversation correction styles */
 .conversation-correction-page {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -2101,7 +2103,8 @@ button:disabled {
 }
 
 .conversation-correction-container {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
     background: var(--bg-secondary);
