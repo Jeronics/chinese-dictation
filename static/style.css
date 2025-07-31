@@ -800,6 +800,7 @@ button:disabled {
     align-items: center;
     justify-content: center;
     font-size: 1.5em;
+    font-weight: normal;
     border-radius: 6px;
     box-shadow: var(--shadow-light);
     cursor: pointer;
@@ -1556,7 +1557,7 @@ button:disabled {
 .hanzi-character {
     font-size: 2rem;
     color: var(--text-primary);
-    font-weight: bold;
+    font-weight: normal;
     text-align: center;
     min-height: 2.5rem;
     display: flex;
