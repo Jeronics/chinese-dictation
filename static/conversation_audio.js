@@ -1,6 +1,14 @@
+// Global state for conversation audio
+let conversationAudioState = {
+    isPlaying: false,
+    currentSequence: [],
+    currentIndex: 0,
+    audioElement: null
+};
+
 // Play individual sentence audio
 function playSentenceAudio(audioFile) {
-    if (!audioFile) {
+    if (!audioFile || audioFile === 'None') {
         console.error('No audio file provided');
         return;
     }
@@ -43,7 +51,7 @@ function playConversationAudio() {
         const onclickAttr = circle.getAttribute('onclick');
         if (onclickAttr) {
             const match = onclickAttr.match(/playSentenceAudio\('([^']+)'\)/);
-            if (match) {
+            if (match && match[1] !== 'None') {
                 audioFiles.push(match[1]);
             }
         }
@@ -62,8 +70,51 @@ function playConversationAudio() {
         clearActiveStates();
     }
     
+    // Initialize conversation audio state
+    conversationAudioState.isPlaying = true;
+    conversationAudioState.currentSequence = audioFiles;
+    conversationAudioState.currentIndex = 0;
+    
+    // Update button text
+    updateConversationButtonText();
+    
     // Play all audio files in sequence
     playAudioSequence(audioFiles, 0);
+}
+
+// Stop conversation audio
+function stopConversationAudio() {
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+        conversationAudioState.isPlaying = false;
+        updateConversationButtonText();
+    }
+}
+
+
+
+// Toggle play/stop conversation audio
+function toggleConversationAudio() {
+    if (conversationAudioState.isPlaying) {
+        stopConversationAudio();
+    } else {
+        // Always start from the beginning when playing
+        playConversationAudio();
+    }
+}
+
+// Update conversation button text based on state
+function updateConversationButtonText() {
+    const playButton = document.querySelector('.play-conversation-btn');
+    if (playButton) {
+        if (conversationAudioState.isPlaying) {
+            playButton.innerHTML = '⏹️ Stop Conversation Audio';
+            playButton.onclick = stopConversationAudio;
+        } else {
+            playButton.innerHTML = '▶️ Play Conversation Audio';
+            playButton.onclick = toggleConversationAudio;
+        }
+    }
 }
 
 // Auto-play conversation audio when page loads
@@ -83,11 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
 function playAudioSequence(audioFiles, index) {
     if (index >= audioFiles.length) {
         clearActiveStates();
+        conversationAudioState.isPlaying = false;
+        conversationAudioState.currentIndex = 0;
+        updateConversationButtonText();
         return; // Finished playing all audio
     }
     
     const audioFile = audioFiles[index];
     window.currentAudio = new Audio(`/static/${audioFile}`);
+    conversationAudioState.currentIndex = index;
     
     // Find and highlight the corresponding input and play button
     const speakerCircles = document.querySelectorAll('.speaker-circle');
@@ -101,21 +156,27 @@ function playAudioSequence(audioFiles, index) {
     window.currentAudio.addEventListener('ended', () => {
         clearActiveStates();
         // Play next audio file after current one ends
-        playAudioSequence(audioFiles, index + 1);
+        if (conversationAudioState.isPlaying) {
+            playAudioSequence(audioFiles, index + 1);
+        }
     });
     
     window.currentAudio.addEventListener('error', () => {
         console.error('Error playing audio:', audioFile);
         clearActiveStates();
         // Continue with next audio file even if current one fails
-        playAudioSequence(audioFiles, index + 1);
+        if (conversationAudioState.isPlaying) {
+            playAudioSequence(audioFiles, index + 1);
+        }
     });
     
     window.currentAudio.play().catch(error => {
         console.error('Error playing conversation audio:', error);
         clearActiveStates();
         // Continue with next audio file even if current one fails
-        playAudioSequence(audioFiles, index + 1);
+        if (conversationAudioState.isPlaying) {
+            playAudioSequence(audioFiles, index + 1);
+        }
     });
 }
 

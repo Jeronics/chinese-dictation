@@ -468,12 +468,12 @@ def story_session(story_id):
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_template("dictation.html", **story_session_obj.update_score(user_input))
+        return render_template("story_session.html", **story_session_obj.update_score(user_input))
 
     # Get story context (previous parts only, not the current one)
     story_context = story["parts"][:story_session_obj.get_current_index()]
     
-    return render_template("dictation.html", **story_session_obj.get_context())
+    return render_template("story_session.html", **story_session_obj.get_context())
 
 @dictation_bp.route("/conversation/<conversation_id>/session", methods=["GET", "POST"])
 def conversation_session(conversation_id):
@@ -626,7 +626,8 @@ def conversation_session(conversation_id):
                 "pinyin": sentence["pinyin"],
                 "translation": sentence["english"],
                 "accuracy": accuracy,
-                "speaker": sentence["speaker"]
+                "speaker": sentence["speaker"],
+                "audio_file": ctx.conversation_audio_path(conversation_id, sentence["id"])
             })
 
         print(f"DEBUG: Total corrections: {len(all_corrections)}")
@@ -673,9 +674,9 @@ def conversation_session(conversation_id):
 
     if request.method == "POST" and "user_input" in request.form:
         user_input = request.form["user_input"].strip()
-        return render_template("dictation.html", **conversation_session_obj.update_score(user_input))
+        return render_template("conversation_session.html", **conversation_session_obj.update_score(user_input))
     
-    return render_template("dictation.html", **conversation_session_obj.get_context())
+    return render_template("conversation_session.html", **conversation_session_obj.get_context())
 
 @dictation_bp.route("/report-correction", methods=["POST"])
 def report_correction():

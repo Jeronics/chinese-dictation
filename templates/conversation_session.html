@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% from "_dictation_form.html" import dictation_form, dictation_result_panel %}
+
+{% block title %}{{ conversation_topic }} - Chinese Dictation{% endblock %}
+
+{% block content %}
+    <div class="conversation-layout">
+        <div class="dictation-header">
+            <h1>{{ conversation_topic }}</h1>
+            <p class="hsk-level"><strong>Level:</strong> HSK{{ level }}</p>
+        </div>
+        
+        <div class="conversation-controls">
+            <button class="play-conversation-btn" onclick="toggleConversationAudio()">▶️ Play Conversation Audio</button>
+        </div>
+        
+        {% if current and total %}
+            {% include '_progress_bar.html' with context %}
+        {% endif %}
+        
+        {% if show_result %}
+            <!-- Single correction display -->
+            {{ dictation_result_panel(result, result_color, correct_sentence, correction, pinyin, translation, accuracy, user_input, conversation_mode=conversation_mode, conversation_id=conversation_id, sentence_id=sentence_id, speaker=speaker) }}
+            
+            {% if show_next_button %}
+                <form method="post" class="conversation-next-form">
+                    <input type="hidden" name="next" value="1">
+                    <button type="submit" class="btn-base next-btn">Next Sentence ▶</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <!-- Chat interface with input fields for all sentences -->
+            <form method="post" class="conversation-submit-form" onsubmit="return validateAndSubmitForm(this)">
+                <div class="conversation-chat-container">
+                    {% for sentence in conversation_sentences %}
+                        <div class="chat-message {% if sentence.speaker == 'A' %}chat-message-left{% else %}chat-message-right{% endif %}">
+                            {% if sentence.speaker == 'A' %}
+                                <div class="speaker-circle speaker-A" onclick="playSentenceAudio('{{ sentence.audio_file }}')">▶️</div>
+                            {% endif %}
+                            <div class="conversation-input-wrapper">
+                                <input type="text" 
+                                       name="user_input_{{ sentence.id }}"
+                                       class="chat-input-bubble" 
+                                       data-sentence-id="{{ sentence.id }}"
+                                       placeholder="Type what you hear..."
+                                       {% if sentence.id == current_sentence_id %}autofocus{% endif %}>
+                            </div>
+                            {% if sentence.speaker == 'B' %}
+                                <div class="speaker-circle speaker-B" onclick="playSentenceAudio('{{ sentence.audio_file }}')">▶️</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Single submit button for all answers -->
+                <div class="conversation-submit-container">
+                    <button type="submit" class="btn-base submit-all-btn">Submit All Answers</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    
+    <script src="{{ url_for('static', filename='conversation_audio.js') }}"></script>
+    <script>
+    function validateAndSubmitForm(form) {
+        console.log('Form submission started');
+        
+        // Get all input fields
+        const inputs = form.querySelectorAll('input[name^="user_input_"]');
+        console.log('Found inputs:', inputs.length);
+        
+        // Log all form data
+        const formData = new FormData(form);
+        for (let [key, value] of formData.entries()) {
+            console.log('Form data:', key, '=', value);
+        }
+        
+        // Check if any inputs have values
+        let hasValues = false;
+        inputs.forEach(input => {
+            if (input.value.trim()) {
+                hasValues = true;
+                console.log('Input with value:', input.name, '=', input.value);
+            }
+        });
+        
+        if (!hasValues) {
+            alert('Please fill in at least one answer before submitting.');
+            return false;
+        }
+        
+        console.log('Form is valid, submitting...');
+        return true;
+    }
+    </script>
+{% endblock %} 

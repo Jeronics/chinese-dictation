@@ -13,11 +13,15 @@
         </div>
     </div>
 
+    <div class="conversation-controls">
+        <button class="play-conversation-btn" onclick="toggleConversationAudio()">▶️ Play Conversation Audio</button>
+    </div>
+
     <div class="conversation-chat-container">
         {% for correction in all_corrections %}
             <div class="chat-message {% if correction.speaker == 'A' %}chat-message-left{% else %}chat-message-right{% endif %}">
                 {% if correction.speaker == 'A' %}
-                    <div class="speaker-circle speaker-A">A</div>
+                    <div class="speaker-circle speaker-A" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
                 {% endif %}
                 <div class="conversation-input-wrapper">
                     <div class="chat-correction-bubble">
@@ -39,7 +43,7 @@
                     </div>
                 </div>
                 {% if correction.speaker == 'B' %}
-                    <div class="speaker-circle speaker-B">B</div>
+                    <div class="speaker-circle speaker-B" onclick="playSentenceAudio('{{ correction.audio_file }}')">▶️</div>
                 {% endif %}
             </div>
         {% endfor %}
@@ -51,196 +55,5 @@
     </div>
 </div>
 
-<style>
-.conversation-correction-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.conversation-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--border-primary);
-}
-
-.conversation-header h1 {
-    margin: 0 0 0.5rem 0;
-    color: var(--text-primary);
-}
-
-.hsk-level {
-    margin: 0 0 1rem 0;
-    color: var(--text-secondary);
-}
-
-.overall-accuracy-display {
-    background: var(--bg-secondary);
-    border-radius: 8px;
-    padding: 1rem;
-    border: 1px solid var(--border-primary);
-}
-
-.overall-accuracy-display h2 {
-    margin: 0 0 0.5rem 0;
-    color: var(--accent-blue);
-}
-
-.overall-accuracy-display p {
-    margin: 0;
-    color: var(--text-secondary);
-}
-
-.conversation-chat-container {
-    margin: 2rem 0;
-}
-
-.chat-message {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    gap: 0.5rem;
-}
-
-.chat-message-left {
-    justify-content: flex-start;
-}
-
-.chat-message-right {
-    justify-content: flex-end;
-}
-
-.speaker-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: white;
-    flex-shrink: 0;
-}
-
-.speaker-A {
-    background: var(--accent-blue);
-}
-
-.speaker-B {
-    background: var(--accent-green);
-}
-
-.conversation-input-wrapper {
-    flex: 1;
-    max-width: 70%;
-}
-
-.chat-message-left .conversation-input-wrapper {
-    margin-left: 0.5rem;
-}
-
-.chat-message-right .conversation-input-wrapper {
-    margin-right: 0.5rem;
-}
-
-.chat-correction-bubble {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-primary);
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.correction-user-input {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    background: var(--bg-primary);
-    border-radius: 6px;
-    border-left: 3px solid var(--accent-orange);
-}
-
-.correction-correct-answer {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    background: var(--bg-primary);
-    border-radius: 6px;
-    border-left: 3px solid var(--accent-green);
-}
-
-.correction-accuracy {
-    margin-bottom: 0.5rem;
-    text-align: right;
-}
-
-.accuracy-badge {
-    padding: 0.25rem 0.5rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-}
-
-.accuracy-good {
-    background: var(--accent-green);
-}
-
-.accuracy-poor {
-    background: var(--accent-red);
-}
-
-.correction-details {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-primary);
-    padding-top: 0.5rem;
-}
-
-.correction-details .pinyin {
-    font-style: italic;
-    margin-bottom: 0.25rem;
-}
-
-.correction-details .translation {
-    color: var(--text-secondary);
-}
-
-.conversation-completion-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-primary);
-}
-
-.btn-base {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.menu-button {
-    background: var(--accent-blue);
-    color: white;
-}
-
-.menu-button:hover {
-    background: var(--accent-blue-dark);
-}
-
-.retry-button {
-    background: var(--accent-green);
-    color: white;
-}
-
-.retry-button:hover {
-    background: var(--accent-green-dark);
-}
-</style>
+<script src="{{ url_for('static', filename='conversation_audio.js') }}"></script>
 {% endblock %} 
