@@ -2187,8 +2187,17 @@ button:disabled {
 }
 
 .correction-accuracy {
-    margin-bottom: 0.5rem;
-    text-align: right;
+    position: absolute;
+    top: 0;
+    font-size: 0.8rem;
+}
+
+.chat-message-left .correction-accuracy {
+    left: -60px;
+}
+
+.chat-message-right .correction-accuracy {
+    right: -60px;
 }
 
 .accuracy-badge {
@@ -2447,16 +2456,18 @@ button:disabled {
     flex: 1;
     max-width: 70%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
 }
 
 .chat-message-right .conversation-input-wrapper {
-    justify-content: flex-end;
+    align-items: flex-end;
     margin-right: 0.5rem;
 }
 
 .chat-message-left .conversation-input-wrapper {
-    justify-content: flex-start;
+    align-items: flex-start;
     margin-left: 0.5rem;
 }
 

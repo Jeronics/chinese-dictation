@@ -31,15 +31,15 @@
                         <div class="correction-correct-answer">
                             <strong>Correct:</strong> {{ correction.chinese }}
                         </div>
-                        <div class="correction-accuracy">
-                            <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
-                                {{ correction.accuracy }}%
-                            </span>
-                        </div>
                         <div class="correction-details">
                             <div class="pinyin">{{ correction.pinyin }}</div>
                             <div class="translation">{{ correction.translation }}</div>
                         </div>
+                    </div>
+                    <div class="correction-accuracy">
+                        <span class="accuracy-badge {% if correction.accuracy >= 70 %}accuracy-good{% else %}accuracy-poor{% endif %}">
+                            {{ correction.accuracy }}%
+                        </span>
                     </div>
                 </div>
                 {% if correction.speaker == 'B' %}
