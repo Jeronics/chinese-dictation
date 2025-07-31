@@ -709,17 +709,16 @@ def report_correction():
             "user_id": user_id,
             "user_email": user_email,
             "correct_sentence": correct_sentence,
-            "user_input": input_sentence,
+            "input_sentence": input_sentence,
             "correction_html": correction_html,
             "corrected_sentence": corrected_sentence,
             "pinyin": pinyin,
             "translation": translation,
-            "audio_file": audio_file,
             "sentence_id": sentence_id,
             "story_id": story_id,
             "part_id": part_id,
             "conversation_id": conversation_id,
-            "reported_at": datetime.now().isoformat()
+            "created_at": datetime.now().isoformat()
         }).execute()
         
         flash("Thank you for reporting this correction! We'll review it.", "success")

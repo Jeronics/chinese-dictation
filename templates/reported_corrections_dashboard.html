@@ -72,7 +72,15 @@
     <tbody>
     {% for r in reports %}
         <tr>
-            <td>{{ r.reported_at[:19].replace('T', ' ') }}</td>
+            <td>
+                {% if r.reported_at %}
+                    {{ r.reported_at[:19].replace('T', ' ') }}
+                {% elif r.created_at %}
+                    {{ r.created_at[:19].replace('T', ' ') }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
             <td>
                 {% if r.story_id %}
                     Story {{ r.story_id }}{% if r.part_id %} - Part {{ r.part_id }}{% endif %}
@@ -82,9 +90,9 @@
                     HSK Practice
                 {% endif %}
             </td>
-            <td>{{ r.correct_sentence }}</td>
-            <td>{{ r.user_input }}</td>
-            <td>{{ r.correction_html|safe }}</td>
+            <td>{{ r.correct_sentence or r.corrected_sentence or 'N/A' }}</td>
+            <td>{{ r.user_input or r.input_sentence or 'N/A' }}</td>
+            <td>{{ r.correction_html|safe or 'N/A' }}</td>
         </tr>
     {% endfor %}
     </tbody>
