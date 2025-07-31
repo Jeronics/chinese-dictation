@@ -70,37 +70,53 @@ def reported_corrections_dashboard():
     
     return render_template("reported_corrections_dashboard.html", reports=rows, export_status=export_status)
 
-@admin_bp.route("/admin/run-color-palette")
-def run_color_palette():
-    """Run the color palette generator and serve the result"""
+@admin_bp.route("/admin/color-palette")
+def view_color_palette():
+    """View the color palette, automatically generating it if needed"""
     import subprocess
     import os
     from flask import send_file
+    from datetime import datetime
     
-    try:
-        # Run the color palette generator
-        script_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'developer_tools', 'show_color_palette_simple.py')
-        subprocess.run(['python3', script_path], check=True)
-        
-        # Serve the generated HTML file
-        html_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'developer_tools', 'simple_color_palette.html')
-        if os.path.exists(html_file_path):
-            return send_file(html_file_path, mimetype='text/html')
-        else:
-            return "Color palette generated but file not found.", 404
-    except subprocess.CalledProcessError as e:
-        return f"Error generating color palette: {e}", 500
-
-@admin_bp.route("/admin/color-palette")
-def view_color_palette():
-    """View the generated color palette"""
-    import os
-    from flask import send_file
-    
+    # File paths
+    script_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'developer_tools', 'show_color_palette_simple.py')
     html_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'developer_tools', 'simple_color_palette.html')
-    if os.path.exists(html_file_path):
-        return send_file(html_file_path, mimetype='text/html')
-    else:
-        return "Color palette not found. Please generate it first using the 'Generate Color Palette' button.", 404
+    css_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'style.css')
+    
+    # Check if HTML file exists
+    html_exists = os.path.exists(html_file_path)
+    css_exists = os.path.exists(css_file_path)
+    
+    if not css_exists:
+        return "CSS file not found. Cannot generate color palette.", 404
+    
+    # If HTML doesn't exist, generate it
+    if not html_exists:
+        try:
+            subprocess.run(['python3', script_path], check=True)
+            if os.path.exists(html_file_path):
+                return send_file(html_file_path, mimetype='text/html')
+            else:
+                return "Color palette generation failed.", 500
+        except subprocess.CalledProcessError as e:
+            return f"Error generating color palette: {e}", 500
+    
+    # Check if CSS file is newer than HTML file
+    css_mod_time = datetime.fromtimestamp(os.path.getmtime(css_file_path))
+    html_mod_time = datetime.fromtimestamp(os.path.getmtime(html_file_path))
+    
+    # If CSS is newer than HTML, regenerate the palette
+    if css_mod_time > html_mod_time:
+        try:
+            subprocess.run(['python3', script_path], check=True)
+            if os.path.exists(html_file_path):
+                return send_file(html_file_path, mimetype='text/html')
+            else:
+                return "Color palette regeneration failed.", 500
+        except subprocess.CalledProcessError as e:
+            return f"Error regenerating color palette: {e}", 500
+    
+    # HTML exists and is up to date, serve it
+    return send_file(html_file_path, mimetype='text/html')
 
  
