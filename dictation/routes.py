@@ -730,14 +730,4 @@ def report_correction():
     # Redirect back to the previous page or menu
     return redirect(request.referrer or url_for("dictation.menu"))
 
-@dictation_bp.route("/admin/reported-corrections")
-def reported_corrections_dashboard():
-    # Optionally, add admin check here
-    try:
-        result = supabase.table("reported_corrections").select("*").order("reported_at", desc=True).execute()
-        reports = result.data or []
-        return render_template("reported_corrections_dashboard.html", reports=reports)
-    except Exception as e:
-        logging.error(f"Error loading reported corrections: {e}")
-        flash("Error loading reported corrections.", "error")
-        return redirect(url_for("dictation.menu")) 
+ 

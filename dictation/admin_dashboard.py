@@ -15,6 +15,11 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 admin_bp = Blueprint("admin_dashboard", __name__)
 
+@admin_bp.route("/admin")
+def admin_dashboard():
+    """Main admin dashboard page"""
+    return render_template("admin_dashboard.html")
+
 @admin_bp.route("/admin/reported-corrections")
 def reported_corrections_dashboard():
     rows = supabase.table("reported_corrections").select("*").order("created_at", desc=True).execute().data
