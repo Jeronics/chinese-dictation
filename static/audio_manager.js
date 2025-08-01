@@ -184,10 +184,6 @@ window.playSentenceAudio = async function(audioFile) {
     return await window.audioManager.playAudio(category, audioFile);
 };
 
-window.playConversationAudio = async function(audioFile) {
-    return await window.audioManager.playAudio('conversations', audioFile);
-};
 
-window.playStoryAudio = async function(audioFile) {
-    return await window.audioManager.playAudio('stories', audioFile);
-}; 
+
+ 

@@ -1,9 +1,7 @@
 // Global state for conversation audio
 let conversationAudioState = {
     isPlaying: false,
-    currentSequence: [],
-    currentIndex: 0,
-    audioElement: null
+    currentIndex: 0
 };
 
 // Play individual sentence audio
@@ -119,7 +117,7 @@ function playFullConversationAudio() {
         return;
     }
     
-    console.log('Found audio files:', audioFiles);
+
     
     // Stop any currently playing audio
     if (window.currentAudio) {
@@ -129,7 +127,6 @@ function playFullConversationAudio() {
     
     // Initialize conversation audio state
     conversationAudioState.isPlaying = true;
-    conversationAudioState.currentSequence = audioFiles;
     conversationAudioState.currentIndex = 0;
     
     // Update button text
@@ -179,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on a conversation page
     const conversationChatContainer = document.querySelector('.conversation-chat-container');
     if (conversationChatContainer) {
-        console.log('Conversation page detected, ready for audio playback');
         // Initialize the conversation button
         updateConversationButtonText();
     }
