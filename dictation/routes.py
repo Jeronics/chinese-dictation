@@ -69,12 +69,7 @@ def menu():
             logging.error(f"Error loading saved stories: {e}")
             saved_stories = []
         
-        try:
-            result = supabase.table("conversation_progress").select("conversation_id").eq("user_id", user_id).execute()
-            saved_conversations = [str(row["conversation_id"]) for row in result.data] if result.data else []
-        except Exception as e:
-            logging.error(f"Error loading saved conversations: {e}")
-            saved_conversations = []
+        saved_conversations = []
 
     return render_template("index.html", stories=ctx.stories, saved_stories=saved_stories, 
                          conversations=ctx.conversations, saved_conversations=saved_conversations,

@@ -42,14 +42,7 @@ def _handle_resume_later(session_type: str, identifier: str, user_id: Optional[s
             else:
                 flash("Failed to save progress.", "error")
         elif session_type == "conversation":
-            current_index = session.get("conversation_session_index", 0)
-            score = session.get("conversation_session_score", 0)
-            success = session_manager.save_conversation_progress(user_id, identifier, current_index, score)
-            if success:
-                conversation = session_manager.ctx.get_conversation(identifier)
-                flash(f"Progress saved for '{conversation['topic']}'", "success")
-            else:
-                flash("Failed to save progress.", "error")
+            flash("Conversation progress saving is disabled.", "info")
     except Exception as e:
         logging.error(f"Error saving {session_type} progress: {e}")
         flash("Failed to save progress.", "error")
@@ -63,8 +56,7 @@ def _handle_restart(session_type: str, identifier: str, user_id: Optional[str], 
         try:
             if session_type == "story":
                 session_manager.clear_story_progress(user_id, identifier)
-            elif session_type == "conversation":
-                session_manager.clear_conversation_progress(user_id, identifier)
+
         except Exception as e:
             logging.error(f"Error clearing {session_type} progress: {e}")
     
@@ -128,9 +120,7 @@ def handle_session_completion(session_type: str, identifier: str, user_id: Optio
     if user_id:
         update_daily_work_registry(user_id, session_type, average_accuracy, total_items, identifier, total_items)
         
-        # Clear completed progress from database
-        if session_type == "conversation":
-            session_manager.clear_conversation_progress(user_id, identifier)
+
     
     # Get daily work stats for summary
     daily_stats = get_daily_work_stats(user_id) if user_id else {

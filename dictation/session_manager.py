@@ -113,35 +113,22 @@ class SessionManager:
         return {"resumed": False, "index": session.get("story_session_index", 0), "total": len(story["parts"])}
     
     def initialize_conversation_session(self, conversation_id: str, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Initialize or resume conversation session."""
+        """Initialize conversation session."""
         from flask import session
         
         conversation = self.ctx.get_conversation(conversation_id)
         if not conversation:
             return {"error": "Conversation not found"}
         
-        # Check if we need to initialize or resume
+        # Always initialize new conversation session (no progress saving)
         if "conversation_session_ids" not in session or session.get("conversation_id") != conversation_id:
-            existing_progress = self._load_conversation_progress(user_id, conversation_id) if user_id else None
-            
-            if existing_progress:
-                # Resume from saved progress
-                session.update(
-                    conversation_id=conversation_id,
-                    conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
-                    conversation_session_index=existing_progress["current_index"],
-                    conversation_session_score=existing_progress["score"]
-                )
-                return {"resumed": True, "index": existing_progress["current_index"], "total": len(conversation["sentences"])}
-            else:
-                # Initialize new conversation session
-                session.update(
-                    conversation_id=conversation_id,
-                    conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
-                    conversation_session_index=0,
-                    conversation_session_score=0
-                )
-                return {"resumed": False, "index": 0, "total": len(conversation["sentences"])}
+            session.update(
+                conversation_id=conversation_id,
+                conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
+                conversation_session_index=0,
+                conversation_session_score=0
+            )
+            return {"resumed": False, "index": 0, "total": len(conversation["sentences"])}
         
         return {"resumed": False, "index": session.get("conversation_session_index", 0), "total": len(conversation["sentences"])}
     
@@ -160,20 +147,7 @@ class SessionManager:
             logging.error(f"Error saving story progress: {e}")
             return False
     
-    def save_conversation_progress(self, user_id: str, conversation_id: str, current_index: int, score: int) -> bool:
-        """Save conversation progress to database."""
-        try:
-            self.supabase.table("conversation_progress").upsert({
-                "user_id": user_id,
-                "conversation_id": conversation_id,
-                "current_index": current_index,
-                "score": score,
-                "last_updated": datetime.now().isoformat()
-            }).execute()
-            return True
-        except Exception as e:
-            logging.error(f"Error saving conversation progress: {e}")
-            return False
+
     
     def clear_story_progress(self, user_id: str, story_id: str) -> bool:
         """Clear saved story progress."""
@@ -184,14 +158,7 @@ class SessionManager:
             logging.error(f"Error clearing story progress: {e}")
             return False
     
-    def clear_conversation_progress(self, user_id: str, conversation_id: str) -> bool:
-        """Clear saved conversation progress."""
-        try:
-            self.supabase.table("conversation_progress").delete().eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
-            return True
-        except Exception as e:
-            logging.error(f"Error clearing conversation progress: {e}")
-            return False
+
     
     def _load_story_progress(self, user_id: str, story_id: str) -> Optional[Dict[str, Any]]:
         """Load story progress from database."""
@@ -202,11 +169,4 @@ class SessionManager:
             logging.error(f"Error loading story progress: {e}")
             return None
     
-    def _load_conversation_progress(self, user_id: str, conversation_id: str) -> Optional[Dict[str, Any]]:
-        """Load conversation progress from database."""
-        try:
-            result = self.supabase.table("conversation_progress").select("*").eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
-            return result.data[0] if result.data else None
-        except Exception as e:
-            logging.error(f"Error loading conversation progress: {e}")
-            return None 
+ 
