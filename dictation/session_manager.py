@@ -33,22 +33,37 @@ class SessionManager:
         """Initialize HSK session with given level or random level."""
         from flask import session
         
+        # Convert level parameter to int if provided
         if level and isinstance(level, str) and level.startswith("HSK"):
             level = int(level.replace("HSK", ""))
         elif level:
             level = int(level)
         
-        # If no level provided or session_ids not in session, initialize with random level
-        if not level or "session_ids" not in session:
-            level = level or None
+        # If session_ids not in session, initialize new session
+        if "session_ids" not in session:
+            # Use provided level or None for random
+            session_level = level or None
             session.update(
-                hsk_level=level,
-                session_ids=self.ctx.get_random_ids(level=level),
+                hsk_level=session_level,
+                session_ids=self.ctx.get_random_ids(level=session_level),
                 session_index=0,
                 session_score=0
             )
+            return session_level
         
-        return level
+        # If session exists and no new level provided, return the existing level
+        if level is None:
+            return session.get("hsk_level")
+        
+        # If session exists but a new level is provided, reinitialize with new level
+        session_level = level
+        session.update(
+            hsk_level=session_level,
+            session_ids=self.ctx.get_random_ids(level=session_level),
+            session_index=0,
+            session_score=0
+        )
+        return session_level
     
     def initialize_story_session(self, story_id: str, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Initialize or resume story session."""

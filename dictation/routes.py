@@ -102,7 +102,14 @@ def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
     """
-    level = session_manager.initialize_hsk_session(request.args.get("hsk"))
+    # Only initialize session if a level parameter is provided (new session request)
+    hsk_level_param = request.args.get("hsk")
+    if hsk_level_param:
+        level = session_manager.initialize_hsk_session(hsk_level_param)
+    else:
+        # Use existing session level
+        level = session.get("hsk_level")
+    
     hsk_session = HSKSession(ctx)
 
     if request.method == "POST" and "next" in request.form:
