@@ -19,8 +19,8 @@ from azure.cognitiveservices.speech import SpeechConfig, SpeechSynthesizer, Audi
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
 
 # Configuration
-JSON_PATH = "sentences.json"
-OUTPUT_DIR = "static/audio_files"
+JSON_PATH = "../sentences.json"
+OUTPUT_DIR = "../static/audio_files/hsk_characters"
 
 # Azure Speech Service configuration
 AZURE_SPEECH_KEY = os.environ.get("AZURE_SPEECH_KEY")

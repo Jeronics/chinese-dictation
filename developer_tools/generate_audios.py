@@ -12,8 +12,8 @@ import json
 from gtts import gTTS
 
 # Configuration
-JSON_PATH = "sentences.json"
-OUTPUT_DIR = "static/audio_files"
+JSON_PATH = "../sentences.json"
+OUTPUT_DIR = "../static/audio_files/hsk_characters"
 
 # Ensure the output directory exists
 os.makedirs(OUTPUT_DIR, exist_ok=True)

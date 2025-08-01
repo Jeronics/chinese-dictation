@@ -21,8 +21,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-JSON_PATH = "stories.json"
-OUTPUT_DIR = "static/audio_files"
+JSON_PATH = "../stories.json"
+OUTPUT_DIR = "../static/audio_files/stories"
 
 # Chinese voice options - using more realistic neural voices
 CHINESE_VOICES = {

@@ -21,8 +21,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-JSON_PATH = "sentences.json"
-OUTPUT_DIR = "static/audio_files"
+JSON_PATH = "../sentences.json"
+OUTPUT_DIR = "../static/audio_files/hsk_characters"
 
 # Chinese voice options
 CHINESE_VOICES = {

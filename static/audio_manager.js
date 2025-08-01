@@ -15,7 +15,7 @@ class AudioManager {
      */
     async initialize() {
         try {
-            const response = await fetch('/audio/manifest.json');
+            const response = await fetch('/static/audio_files/manifest.json');
             this.manifest = await response.json();
             console.log('🎵 Audio manifest loaded:', this.manifest);
         } catch (error) {
@@ -58,9 +58,9 @@ class AudioManager {
      * Load audio file from server
      */
     async loadAudioFile(category, filename) {
-        // Try new path first, fallback to legacy path
-        const newUrl = `${this.baseUrl}/${category}/${filename}`;
-        const legacyUrl = `/static/audio_files/${filename}`;
+        // Try static path first, fallback to route path
+        const staticUrl = `/static/audio_files/${category}/${filename}`;
+        const routeUrl = `${this.baseUrl}/${category}/${filename}`;
         
         return new Promise((resolve, reject) => {
             const audio = new Audio();
@@ -70,17 +70,17 @@ class AudioManager {
             }, { once: true });
             
             audio.addEventListener('error', (error) => {
-                // Try legacy path if new path fails
-                if (audio.src === newUrl) {
-                    console.log(`🔄 Retrying with legacy path: ${legacyUrl}`);
-                    audio.src = legacyUrl;
+                // Try route path if static path fails
+                if (audio.src === staticUrl) {
+                    console.log(`🔄 Retrying with route path: ${routeUrl}`);
+                    audio.src = routeUrl;
                     audio.load();
                 } else {
-                    reject(new Error(`Failed to load audio: ${newUrl} and ${legacyUrl}`));
+                    reject(new Error(`Failed to load audio: ${staticUrl} and ${routeUrl}`));
                 }
             }, { once: true });
             
-            audio.src = newUrl;
+            audio.src = staticUrl;
             audio.load();
         });
     }

@@ -63,8 +63,14 @@ class DictationContext:
 
     def story_audio_path(self, story_id, part_id):
         filename = f"story_{story_id}_{part_id}.mp3"
-        path = os.path.join(self.audio_dir, filename)
-        return f"audio_files/{filename}" if os.path.exists(path) else None
+        # Check new organized structure first
+        new_path = os.path.join(self.audio_dir, "stories", filename)
+        if os.path.exists(new_path):
+            return f"audio_files/stories/{filename}"
+        
+        # Fallback to old structure for backward compatibility
+        old_path = os.path.join(self.audio_dir, filename)
+        return f"audio_files/{filename}" if os.path.exists(old_path) else None
 
     def story_all_audio_paths(self, story_id):
         story = self.get_story(story_id)
@@ -73,15 +79,27 @@ class DictationContext:
         audio_paths = []
         for part in story["parts"]:
             filename = f"story_{story_id}_{part['id']}.mp3"
-            path = os.path.join(self.audio_dir, filename)
-            if os.path.exists(path):
-                audio_paths.append(f"audio_files/{filename}")
+            # Check new organized structure first
+            new_path = os.path.join(self.audio_dir, "stories", filename)
+            if os.path.exists(new_path):
+                audio_paths.append(f"audio_files/stories/{filename}")
+            # Fallback to old structure
+            else:
+                old_path = os.path.join(self.audio_dir, filename)
+                if os.path.exists(old_path):
+                    audio_paths.append(f"audio_files/{filename}")
         return audio_paths
 
     def conversation_audio_path(self, conversation_id, sentence_id):
         filename = f"conv_{conversation_id}_{sentence_id}.mp3"
-        path = os.path.join(self.audio_dir, filename)
-        return f"audio_files/{filename}" if os.path.exists(path) else None
+        # Check new organized structure first
+        new_path = os.path.join(self.audio_dir, "conversations", filename)
+        if os.path.exists(new_path):
+            return filename
+        
+        # Fallback to old structure for backward compatibility
+        old_path = os.path.join(self.audio_dir, filename)
+        return filename if os.path.exists(old_path) else None
 
     def conversation_all_audio_paths(self, conversation_id):
         conversation = self.get_conversation(conversation_id)
@@ -90,15 +108,27 @@ class DictationContext:
         audio_paths = []
         for sentence in conversation["sentences"]:
             filename = f"conv_{conversation_id}_{sentence['id']}.mp3"
-            path = os.path.join(self.audio_dir, filename)
-            if os.path.exists(path):
-                audio_paths.append(f"audio_files/{filename}")
+            # Check new organized structure first
+            new_path = os.path.join(self.audio_dir, "conversations", filename)
+            if os.path.exists(new_path):
+                audio_paths.append(filename)
+            # Fallback to old structure
+            else:
+                old_path = os.path.join(self.audio_dir, filename)
+                if os.path.exists(old_path):
+                    audio_paths.append(filename)
         return audio_paths
 
     def audio_path(self, sid, hsk_level):
         filename = f"{sid}_HSK{hsk_level}.mp3"
-        path = os.path.join(self.audio_dir, filename)
-        return f"audio_files/{filename}" if os.path.exists(path) else None
+        # Check new organized structure first
+        new_path = os.path.join(self.audio_dir, "hsk_characters", filename)
+        if os.path.exists(new_path):
+            return f"audio_files/hsk_characters/{filename}"
+        
+        # Fallback to old structure for backward compatibility
+        old_path = os.path.join(self.audio_dir, filename)
+        return f"audio_files/{filename}" if os.path.exists(old_path) else None
 
     def get_random_ids(self, count=5, level=None):
         sents = [sid for sid, s in self.sentences.items() if s["hsk_level"] == level] if level else list(self.sentences)

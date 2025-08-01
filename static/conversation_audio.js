@@ -44,8 +44,10 @@ function playSentenceAudio(audioFile) {
     } else {
         // Fallback to direct audio loading with multiple path attempts
         const audioPaths = [
+            `/static/audio_files/conversations/${audioFile}`,
+            `/static/audio_files/hsk_characters/${audioFile}`,
+            `/static/audio_files/stories/${audioFile}`,
             `/audio/conversations/${audioFile}`,
-            `/static/audio_files/${audioFile}`,
             `/audio/hsk_characters/${audioFile}`,
             `/audio/stories/${audioFile}`
         ];
@@ -95,15 +97,17 @@ function playSentenceAudio(audioFile) {
 }
 
 // Play conversation audio - all sentences in sequence
-function playConversationAudio() {
+function playFullConversationAudio() {
     // Get all audio files from the conversation
     const speakerCircles = document.querySelectorAll('.speaker-circle');
     const audioFiles = [];
     
     speakerCircles.forEach(circle => {
         const onclickAttr = circle.getAttribute('onclick');
+        
         if (onclickAttr) {
             const match = onclickAttr.match(/playSentenceAudio\('([^']+)'\)/);
+            
             if (match && match[1] !== 'None') {
                 audioFiles.push(match[1]);
             }
@@ -115,7 +119,7 @@ function playConversationAudio() {
         return;
     }
     
-    console.log('Found audio files:', audioFiles); // Debug
+    console.log('Found audio files:', audioFiles);
     
     // Stop any currently playing audio
     if (window.currentAudio) {
@@ -152,7 +156,7 @@ function toggleConversationAudio() {
         stopConversationAudio();
     } else {
         // Always start from the beginning when playing
-        playConversationAudio();
+        playFullConversationAudio();
     }
 }
 
@@ -170,16 +174,14 @@ function updateConversationButtonText() {
     }
 }
 
-// Auto-play conversation audio when page loads
+// Initialize conversation page when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on a conversation page
     const conversationChatContainer = document.querySelector('.conversation-chat-container');
     if (conversationChatContainer) {
-        console.log('Conversation page detected, auto-playing audio...'); // Debug
-        // Small delay to ensure everything is loaded
-        setTimeout(() => {
-            playConversationAudio();
-        }, 500);
+        console.log('Conversation page detected, ready for audio playback');
+        // Initialize the conversation button
+        updateConversationButtonText();
     }
 });
 
@@ -195,8 +197,10 @@ function playAudioSequence(audioFiles, index) {
     
     const audioFile = audioFiles[index];
     const audioPaths = [
+        `/static/audio_files/conversations/${audioFile}`,
+        `/static/audio_files/hsk_characters/${audioFile}`,
+        `/static/audio_files/stories/${audioFile}`,
         `/audio/conversations/${audioFile}`,
-        `/static/audio_files/${audioFile}`,
         `/audio/hsk_characters/${audioFile}`,
         `/audio/stories/${audioFile}`
     ];

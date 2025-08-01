@@ -14,8 +14,8 @@ import random
 from gtts import gTTS
 
 # Configuration
-JSON_PATH = "conversations.json"
-OUTPUT_DIR = "static/audio_files"
+JSON_PATH = "../conversations.json"
+OUTPUT_DIR = "../static/audio_files/conversations"
 
 # Ensure the output directory exists
 os.makedirs(OUTPUT_DIR, exist_ok=True)
