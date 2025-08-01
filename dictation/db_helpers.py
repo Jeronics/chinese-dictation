@@ -198,4 +198,53 @@ def batch_update_character_progress(user_id: str, hanzi_updates: list) -> None:
         if upserts:
             supabase.table("character_progress").upsert(upserts, on_conflict="user_id,hanzi").execute()
     except Exception as e:
-        logging.error(f"Error batch updating character progress for user {user_id}: {e}") 
+        logging.error(f"Error batch updating character progress for user {user_id}: {e}")
+
+
+def get_user_progress_summary(user_id: str, ctx) -> List[Dict[str, Any]]:
+    """
+    Get user progress summary for dashboard showing HSK level progress.
+    Returns list of level dictionaries with progress counts.
+    """
+    try:
+        # Get all user progress for all hanzi
+        progress_rows = supabase.table("character_progress") \
+            .select("hanzi, hsk_level, grade") \
+            .eq("user_id", user_id).execute().data or []
+        
+        # Map hanzi to grade for quick lookup
+        hanzi_to_grade = {row["hanzi"]: row["grade"] for row in progress_rows}
+        
+        # For each HSK level, count known, learning, failed, unseen
+        levels = []
+        for hsk_level, total in ctx.hsk_totals.items():
+            # Get all hanzi for this level
+            hanzi_list = [item["hanzi"] for item in ctx.hsk_data if item["hsk_level"] == hsk_level]
+            known = learning = failed = unseen = 0
+            
+            for hanzi in hanzi_list:
+                grade = hanzi_to_grade.get(hanzi, None)
+                if grade is None:
+                    unseen += 1
+                elif grade == -1:
+                    failed += 1
+                elif grade in [0, 1]:
+                    learning += 1
+                elif grade in [2, 3]:
+                    known += 1
+            
+            known_pct = int(100 * known / total) if total else 0
+            levels.append({
+                "level": hsk_level,
+                "known": known,
+                "failed": failed,
+                "learning": learning,
+                "unseen": unseen,
+                "total": total,
+                "percent": known_pct
+            })
+        
+        return levels
+    except Exception as e:
+        logging.error("Error loading progress from Supabase:", e)
+        return [] 

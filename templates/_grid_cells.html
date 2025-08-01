@@ -1,9 +1,10 @@
-{% macro hsk_cell(level, total, url) %}
+{% macro hsk_cell(level, total) %}
     <div class="col">
         <div class="grid-container-base">
             <h3>HSK Level {{ level }}</h3>
             <p>Level: HSK{{ level }} • Characters: {{ total }}</p>
-            <form action="{{ url }}" method="get" class="inline-form">
+            <form action="/session" method="get" class="inline-form">
+                <input type="hidden" name="hsk" value="HSK{{ level }}">
                 <button type="submit" class="btn-base start-button">Start</button>
             </form>
         </div>
