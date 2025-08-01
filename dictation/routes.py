@@ -177,8 +177,6 @@ def dashboard():
                 elif grade in [2, 3]:
                     known += 1
             known_pct = int(100 * known / total) if total else 0
-            failed_pct = int(100 * failed / total) if total else 0
-            unseen_pct = int(100 * unseen / total) if total else 0
             levels.append({
                 "level": hsk_level,
                 "known": known,
