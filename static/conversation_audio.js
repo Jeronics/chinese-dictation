@@ -19,26 +19,50 @@ function playSentenceAudio(audioFile) {
         clearActiveStates();
     }
     
-    // Create and play new audio
-    window.currentAudio = new Audio(`/static/${audioFile}`);
-    
-    // Find and highlight the corresponding input and play button
-    const speakerCircles = document.querySelectorAll('.speaker-circle');
-    speakerCircles.forEach(circle => {
-        const onclickAttr = circle.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes(audioFile)) {
-            highlightActiveElements(circle);
+    // Use audio manager for lazy loading
+    if (window.audioManager) {
+        // Determine category from filename
+        let category = 'conversations';
+        if (audioFile.includes('_HSK')) {
+            category = 'hsk_characters';
+        } else if (audioFile.startsWith('story_')) {
+            category = 'stories';
         }
-    });
-    
-    window.currentAudio.addEventListener('ended', () => {
-        clearActiveStates();
-    });
-    
-    window.currentAudio.play().catch(error => {
-        console.error('Error playing sentence audio:', error);
-        clearActiveStates();
-    });
+        
+        window.audioManager.playAudio(category, audioFile).then(success => {
+            if (success) {
+                // Find and highlight the corresponding input and play button
+                const speakerCircles = document.querySelectorAll('.speaker-circle');
+                speakerCircles.forEach(circle => {
+                    const onclickAttr = circle.getAttribute('onclick');
+                    if (onclickAttr && onclickAttr.includes(audioFile)) {
+                        highlightActiveElements(circle);
+                    }
+                });
+            }
+        });
+    } else {
+        // Fallback to direct audio loading
+        window.currentAudio = new Audio(`/audio/conversations/${audioFile}`);
+        
+        // Find and highlight the corresponding input and play button
+        const speakerCircles = document.querySelectorAll('.speaker-circle');
+        speakerCircles.forEach(circle => {
+            const onclickAttr = circle.getAttribute('onclick');
+            if (onclickAttr && onclickAttr.includes(audioFile)) {
+                highlightActiveElements(circle);
+            }
+        });
+        
+        window.currentAudio.addEventListener('ended', () => {
+            clearActiveStates();
+        });
+        
+        window.currentAudio.play().catch(error => {
+            console.error('Error playing sentence audio:', error);
+            clearActiveStates();
+        });
+    }
 }
 
 // Play conversation audio - all sentences in sequence

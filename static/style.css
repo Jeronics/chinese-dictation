@@ -1899,6 +1899,104 @@ button:disabled {
         padding: 12px 20px;
         font-size: 14px;
     }
+    
+    /* Mobile styles for conversation layout */
+    .conversation-layout {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .conversation-layout main {
+        padding: 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .conversation-layout .content {
+        padding: 0.5rem;
+        margin: 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .conversation-layout .form-container {
+        margin: 0;
+        padding: 0.5rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* Mobile styles for conversation elements */
+    .conversation-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    .conversation-controls {
+        margin-bottom: 0.5rem;
+        gap: 0.5rem;
+    }
+    
+    .play-conversation-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .conversation-chat-container {
+        padding: 1rem;
+    }
+    
+    .conversation-chat-container .chat-message {
+        margin-bottom: 0.75rem;
+    }
+    
+    .conversation-chat-container .chat-input-bubble {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .conversation-layout .chat-correction-bubble {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .conversation-layout .correction-details {
+        margin-top: 0.5rem;
+    }
+    
+    .conversation-correction-container {
+        padding: 0.5rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .correction-item {
+        padding: 0.5rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* Fix for old conversation-correction-page class */
+    .conversation-correction-page {
+        width: 100%;
+        max-width: 100vw;
+        margin: 0;
+        padding: 0.5rem;
+        overflow-x: hidden;
+    }
+    
+    .conversation-correction-page .conversation-correction-container {
+        width: 100%;
+        max-width: 100vw;
+        margin: 0;
+        padding: 0.5rem;
+        overflow-x: hidden;
+    }
 }
 
 /* Mobile responsive styles for story audio modal */
@@ -1958,14 +2056,12 @@ button:disabled {
     flex-direction: column;
     background: var(--bg-secondary);
     border-radius: 5px;
-    padding: 1.5rem;
+    padding: 0.5rem;
 }
 
 .chat-message {
     display: flex;
-    margin-bottom: 1rem;
     align-items: center;
-    gap: 0.5rem;
 }
 
 .chat-message-left {
@@ -2041,7 +2137,7 @@ button:disabled {
 .chat-input-bubble {
     flex: 1;
     max-width: 75%;
-    padding: 0.75rem;
+    padding: 0.4rem 0.6rem;
     border: 2px solid var(--border-primary);
     border-radius: 20px;
     background: white;
@@ -2065,7 +2161,6 @@ button:disabled {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
 }
 
 .conversation-header {
@@ -2448,10 +2543,8 @@ button:disabled {
 
 .conversation-input-wrapper {
     flex: 1;
-    max-width: 70%;
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
     align-items: flex-start;
 }
 

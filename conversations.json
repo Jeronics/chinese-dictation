@@ -2,6 +2,7 @@
   {
     "conversation_id": 1,
     "topic": "Greetings and Introductions",
+    "category": "Social Interactions",
     "hsk_level": 1,
     "sentences": [
       {
@@ -57,6 +58,7 @@
   {
     "conversation_id": 2,
     "topic": "Ordering Food",
+    "category": "Food and Drinks",
     "hsk_level": 2,
     "sentences": [
       {
@@ -112,6 +114,7 @@
   {
     "conversation_id": 3,
     "topic": "Shopping",
+    "category": "Daily Activities",
     "hsk_level": 2,
     "sentences": [
       {
@@ -167,6 +170,7 @@
   {
     "conversation_id": 4,
     "topic": "Making Plans",
+    "category": "Social Interactions",
     "hsk_level": 3,
     "sentences": [
       {
@@ -222,6 +226,7 @@
   {
     "conversation_id": 5,
     "topic": "Weather and Activities",
+    "category": "Daily Activities",
     "hsk_level": 3,
     "sentences": [
       {
@@ -271,6 +276,622 @@
         "english": "Great, let's go",
         "speaker": "B",
         "audio_file": "conv_5_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 6,
+    "topic": "Street Food Ordering",
+    "category": "Food and Drinks",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个煎饼果子多少钱？",
+        "pinyin": "zhè ge jiān bǐng guǒ zi duō shao qián?",
+        "english": "How much is this jianbing guozi?",
+        "speaker": "A",
+        "audio_file": "conv_6_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "五块钱一个",
+        "pinyin": "wǔ kuài qián yī ge",
+        "english": "Five yuan each",
+        "speaker": "B",
+        "audio_file": "conv_6_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我要两个，加鸡蛋",
+        "pinyin": "wǒ yào liǎng ge, jiā jī dàn",
+        "english": "I want two, with eggs",
+        "speaker": "A",
+        "audio_file": "conv_6_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "好的，请等一下",
+        "pinyin": "hǎo de, qǐng děng yī xià",
+        "english": "Okay, please wait a moment",
+        "speaker": "B",
+        "audio_file": "conv_6_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "还要什么吗？",
+        "pinyin": "hái yào shén me ma?",
+        "english": "Do you want anything else?",
+        "speaker": "B",
+        "audio_file": "conv_6_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "再来一杯豆浆",
+        "pinyin": "zài lái yī bēi dòu jiāng",
+        "english": "And a cup of soy milk",
+        "speaker": "A",
+        "audio_file": "conv_6_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 7,
+    "topic": "Hot Pot Restaurant",
+    "category": "Food and Drinks",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "我们吃火锅吧",
+        "pinyin": "wǒ men chī huǒ guō ba",
+        "english": "Let's eat hot pot",
+        "speaker": "A",
+        "audio_file": "conv_7_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "好主意，我喜欢麻辣锅底",
+        "pinyin": "hǎo zhǔ yì, wǒ xǐ huan má là guō dǐ",
+        "english": "Good idea, I like spicy soup base",
+        "speaker": "B",
+        "audio_file": "conv_7_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我们要牛肉片和虾",
+        "pinyin": "wǒ men yào niú ròu piàn hé xiā",
+        "english": "We want beef slices and shrimp",
+        "speaker": "A",
+        "audio_file": "conv_7_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "还要蔬菜吗？",
+        "pinyin": "hái yào shū cài ma?",
+        "english": "Do you want vegetables too?",
+        "speaker": "B",
+        "audio_file": "conv_7_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "要白菜和蘑菇",
+        "pinyin": "yào bái cài hé mó gu",
+        "english": "Yes, Chinese cabbage and mushrooms",
+        "speaker": "A",
+        "audio_file": "conv_7_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "完美，我们开始吧",
+        "pinyin": "wán měi, wǒ men kāi shǐ ba",
+        "english": "Perfect, let's start",
+        "speaker": "B",
+        "audio_file": "conv_7_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 8,
+    "topic": "Dim Sum Restaurant",
+    "category": "Food and Drinks",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "欢迎光临，几位？",
+        "pinyin": "huān yíng guāng lín, jǐ wèi?",
+        "english": "Welcome, how many people?",
+        "speaker": "A",
+        "audio_file": "conv_8_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "两位，谢谢",
+        "pinyin": "liǎng wèi, xiè xie",
+        "english": "Two people, thank you",
+        "speaker": "B",
+        "audio_file": "conv_8_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "请坐这里，这是菜单",
+        "pinyin": "qǐng zuò zhè lǐ, zhè shì cài dān",
+        "english": "Please sit here, this is the menu",
+        "speaker": "A",
+        "audio_file": "conv_8_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我们要虾饺和叉烧包",
+        "pinyin": "wǒ men yào xiā jiǎo hé chā shāo bāo",
+        "english": "We want shrimp dumplings and char siu bao",
+        "speaker": "B",
+        "audio_file": "conv_8_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "还要什么点心？",
+        "pinyin": "hái yào shén me diǎn xin?",
+        "english": "What other dim sum do you want?",
+        "speaker": "A",
+        "audio_file": "conv_8_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "再来一份蛋挞和茶",
+        "pinyin": "zài lái yī fèn dàn tà hé chá",
+        "english": "And an egg tart and tea",
+        "speaker": "B",
+        "audio_file": "conv_8_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 9,
+    "topic": "Bubble Tea Shop",
+    "category": "Food and Drinks",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你想喝什么？",
+        "pinyin": "nǐ xiǎng hē shén me?",
+        "english": "What would you like to drink?",
+        "speaker": "A",
+        "audio_file": "conv_9_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我要珍珠奶茶",
+        "pinyin": "wǒ yào zhēn zhū nǎi chá",
+        "english": "I want bubble tea",
+        "speaker": "B",
+        "audio_file": "conv_9_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "什么甜度？",
+        "pinyin": "shén me tián dù?",
+        "english": "What sweetness level?",
+        "speaker": "A",
+        "audio_file": "conv_9_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "半糖，少冰",
+        "pinyin": "bàn táng, shǎo bīng",
+        "english": "Half sugar, less ice",
+        "speaker": "B",
+        "audio_file": "conv_9_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "好的，一共十五元",
+        "pinyin": "hǎo de, yī gòng shí wǔ yuán",
+        "english": "Okay, total fifteen yuan",
+        "speaker": "A",
+        "audio_file": "conv_9_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "谢谢，请给我吸管",
+        "pinyin": "xiè xie, qǐng gěi wǒ xī guǎn",
+        "english": "Thank you, please give me a straw",
+        "speaker": "B",
+        "audio_file": "conv_9_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 10,
+    "topic": "Noodle Shop",
+    "category": "Food and Drinks",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这家面馆很有名",
+        "pinyin": "zhè jiā miàn guǎn hěn yǒu míng",
+        "english": "This noodle shop is very famous",
+        "speaker": "A",
+        "audio_file": "conv_10_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我要牛肉面",
+        "pinyin": "wǒ yào niú ròu miàn",
+        "english": "I want beef noodles",
+        "speaker": "B",
+        "audio_file": "conv_10_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我要担担面，很辣",
+        "pinyin": "wǒ yào dàn dàn miàn, hěn là",
+        "english": "I want dan dan noodles, very spicy",
+        "speaker": "A",
+        "audio_file": "conv_10_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "你要小碗还是大碗？",
+        "pinyin": "nǐ yào xiǎo wǎn hái shì dà wǎn?",
+        "english": "Do you want small bowl or large bowl?",
+        "speaker": "B",
+        "audio_file": "conv_10_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "大碗，谢谢",
+        "pinyin": "dà wǎn, xiè xie",
+        "english": "Large bowl, thank you",
+        "speaker": "A",
+        "audio_file": "conv_10_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "还要小菜吗？",
+        "pinyin": "hái yào xiǎo cài ma?",
+        "english": "Do you want side dishes?",
+        "speaker": "B",
+        "audio_file": "conv_10_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 11,
+    "topic": "Asking for Local Food Recommendations",
+    "category": "Food and Drinks",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "我想尝尝当地的美食",
+        "pinyin": "wǒ xiǎng cháng chang dāng dì de měi shí",
+        "english": "I want to try the local delicacies",
+        "speaker": "A",
+        "audio_file": "conv_11_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "你有什么推荐吗？",
+        "pinyin": "nǐ yǒu shén me tuī jiàn ma?",
+        "english": "What do you recommend?",
+        "speaker": "A",
+        "audio_file": "conv_11_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我推荐你试试小笼包",
+        "pinyin": "wǒ tuī jiàn nǐ shì shi xiǎo lóng bāo",
+        "english": "I recommend you try xiaolongbao",
+        "speaker": "B",
+        "audio_file": "conv_11_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "小笼包是什么？",
+        "pinyin": "xiǎo lóng bāo shì shén me?",
+        "english": "What is xiaolongbao?",
+        "speaker": "A",
+        "audio_file": "conv_11_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "是上海特色小吃，有汤的包子",
+        "pinyin": "shì shàng hǎi tè sè xiǎo chī, yǒu tāng de bāo zi",
+        "english": "It's a Shanghai specialty, soup dumplings",
+        "speaker": "B",
+        "audio_file": "conv_11_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "听起来很好吃，在哪里可以买到？",
+        "pinyin": "tīng qǐ lái hěn hǎo chī, zài nǎ lǐ kě yǐ mǎi dào?",
+        "english": "Sounds delicious, where can I buy it?",
+        "speaker": "A",
+        "audio_file": "conv_11_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 12,
+    "topic": "Asking for Directions to a Restaurant",
+    "category": "Navigation",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "对不起，请问怎么去附近的餐厅？",
+        "pinyin": "duì bu qǐ, qǐng wèn zěn me qù fù jìn de cān tīng?",
+        "english": "Excuse me, how do I get to a nearby restaurant?",
+        "speaker": "A",
+        "audio_file": "conv_12_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "往前走，然后左转",
+        "pinyin": "wǎng qián zǒu, rán hòu zuǒ zhuǎn",
+        "english": "Go straight ahead, then turn left",
+        "speaker": "B",
+        "audio_file": "conv_12_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "餐厅在右边吗？",
+        "pinyin": "cān tīng zài yòu biān ma?",
+        "english": "Is the restaurant on the right?",
+        "speaker": "A",
+        "audio_file": "conv_12_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "不是，在左边，红色招牌",
+        "pinyin": "bù shì, zài zuǒ biān, hóng sè zhāo pái",
+        "english": "No, on the left, red sign",
+        "speaker": "B",
+        "audio_file": "conv_12_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "大概要走多久？",
+        "pinyin": "dà gài yào zǒu duō jiǔ?",
+        "english": "How long does it take to walk there?",
+        "speaker": "A",
+        "audio_file": "conv_12_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "大约五分钟",
+        "pinyin": "dà yuē wǔ fēn zhōng",
+        "english": "About five minutes",
+        "speaker": "B",
+        "audio_file": "conv_12_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 13,
+    "topic": "Finding the Subway Station",
+    "category": "Navigation",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "地铁站在哪里？",
+        "pinyin": "dì tiě zhàn zài nǎ lǐ?",
+        "english": "Where is the subway station?",
+        "speaker": "A",
+        "audio_file": "conv_13_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "在银行对面",
+        "pinyin": "zài yín háng duì miàn",
+        "english": "Across from the bank",
+        "speaker": "B",
+        "audio_file": "conv_13_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "银行在哪里？",
+        "pinyin": "yín háng zài nǎ lǐ?",
+        "english": "Where is the bank?",
+        "speaker": "A",
+        "audio_file": "conv_13_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "就在这条街的尽头",
+        "pinyin": "jiù zài zhè tiáo jiē de jìn tóu",
+        "english": "At the end of this street",
+        "speaker": "B",
+        "audio_file": "conv_13_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "谢谢，我看到了",
+        "pinyin": "xiè xie, wǒ kàn dào le",
+        "english": "Thank you, I can see it",
+        "speaker": "A",
+        "audio_file": "conv_13_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "不客气，小心台阶",
+        "pinyin": "bù kè qì, xiǎo xīn tái jiē",
+        "english": "You're welcome, be careful of the steps",
+        "speaker": "B",
+        "audio_file": "conv_13_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 14,
+    "topic": "Looking for a Hotel",
+    "category": "Navigation",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "我在找附近的酒店",
+        "pinyin": "wǒ zài zhǎo fù jìn de jiǔ diàn",
+        "english": "I'm looking for a nearby hotel",
+        "speaker": "A",
+        "audio_file": "conv_14_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "这附近有几家酒店",
+        "pinyin": "zhè fù jìn yǒu jǐ jiā jiǔ diàn",
+        "english": "There are several hotels nearby",
+        "speaker": "B",
+        "audio_file": "conv_14_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "哪一家比较好？",
+        "pinyin": "nǎ yī jiā bǐ jiào hǎo?",
+        "english": "Which one is better?",
+        "speaker": "A",
+        "audio_file": "conv_14_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我推荐希尔顿酒店",
+        "pinyin": "wǒ tuī jiàn xī ěr dùn jiǔ diàn",
+        "english": "I recommend the Hilton Hotel",
+        "speaker": "B",
+        "audio_file": "conv_14_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "怎么去那里？",
+        "pinyin": "zěn me qù nà lǐ?",
+        "english": "How do I get there?",
+        "speaker": "A",
+        "audio_file": "conv_14_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "可以坐出租车，十分钟就到",
+        "pinyin": "kě yǐ zuò chū zū chē, shí fēn zhōng jiù dào",
+        "english": "You can take a taxi, it takes ten minutes",
+        "speaker": "B",
+        "audio_file": "conv_14_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 15,
+    "topic": "Finding a Shopping Mall",
+    "category": "Navigation",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "请问购物中心在哪里？",
+        "pinyin": "qǐng wèn gòu wù zhōng xīn zài nǎ lǐ?",
+        "english": "Excuse me, where is the shopping mall?",
+        "speaker": "A",
+        "audio_file": "conv_15_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "在十字路口右转",
+        "pinyin": "zài shí zì lù kǒu yòu zhuǎn",
+        "english": "Turn right at the intersection",
+        "speaker": "B",
+        "audio_file": "conv_15_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "然后呢？",
+        "pinyin": "rán hòu ne?",
+        "english": "Then what?",
+        "speaker": "A",
+        "audio_file": "conv_15_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "直走两百米就到了",
+        "pinyin": "zhí zǒu liǎng bǎi mǐ jiù dào le",
+        "english": "Go straight for two hundred meters",
+        "speaker": "B",
+        "audio_file": "conv_15_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "购物中心大吗？",
+        "pinyin": "gòu wù zhōng xīn dà ma?",
+        "english": "Is the shopping mall big?",
+        "speaker": "A",
+        "audio_file": "conv_15_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "很大，有五层楼",
+        "pinyin": "hěn dà, yǒu wǔ céng lóu",
+        "english": "Very big, it has five floors",
+        "speaker": "B",
+        "audio_file": "conv_15_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 16,
+    "topic": "Getting Lost and Asking for Help",
+    "category": "Navigation",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "对不起，我迷路了",
+        "pinyin": "duì bu qǐ, wǒ mí lù le",
+        "english": "Excuse me, I'm lost",
+        "speaker": "A",
+        "audio_file": "conv_16_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "你要去哪里？",
+        "pinyin": "nǐ yào qù nǎ lǐ?",
+        "english": "Where do you want to go?",
+        "speaker": "B",
+        "audio_file": "conv_16_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我要去天安门广场",
+        "pinyin": "wǒ yào qù tiān ān mén guǎng chǎng",
+        "english": "I want to go to Tiananmen Square",
+        "speaker": "A",
+        "audio_file": "conv_16_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "你走错方向了",
+        "pinyin": "nǐ zǒu cuò fāng xiàng le",
+        "english": "You're going in the wrong direction",
+        "speaker": "B",
+        "audio_file": "conv_16_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "应该怎么走？",
+        "pinyin": "yīng gāi zěn me zǒu?",
+        "english": "How should I go?",
+        "speaker": "A",
+        "audio_file": "conv_16_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "往回走，然后坐地铁一号线",
+        "pinyin": "wǎng huí zǒu, rán hòu zuò dì tiě yī hào xiàn",
+        "english": "Go back, then take subway line 1",
+        "speaker": "B",
+        "audio_file": "conv_16_6.mp3"
       }
     ]
   }

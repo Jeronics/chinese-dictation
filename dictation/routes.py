@@ -6,7 +6,7 @@ load_dotenv()
 import uuid
 from datetime import date, datetime, timedelta
 
-from flask import Blueprint, render_template, request, session, redirect, flash, url_for, g
+from flask import Blueprint, render_template, request, session, redirect, flash, url_for, g, send_from_directory
 from functools import wraps
 from .app_context import DictationContext
 from .corrector import Corrector
@@ -677,6 +677,25 @@ def conversation_session(conversation_id):
         return render_template("session_conversation.html", **conversation_session_obj.update_score(user_input))
     
     return render_template("session_conversation.html", **conversation_session_obj.get_context())
+
+@dictation_bp.route("/audio/<category>/<filename>")
+def serve_audio(category, filename):
+    """Serve audio files with proper caching headers"""
+    if category not in ['hsk_characters', 'conversations', 'stories']:
+        return "Invalid category", 400
+    
+    response = send_from_directory(f'static/audio_files/{category}', filename)
+    response.headers['Cache-Control'] = 'public, max-age=31536000'  # 1 year
+    response.headers['Accept-Ranges'] = 'bytes'
+    return response
+
+@dictation_bp.route("/audio/manifest.json")
+def serve_audio_manifest():
+    """Serve audio manifest with caching headers"""
+    response = send_from_directory('static/audio_files', 'manifest.json')
+    response.headers['Cache-Control'] = 'public, max-age=3600'  # 1 hour
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @dictation_bp.route("/report-correction", methods=["POST"])
 def report_correction():
