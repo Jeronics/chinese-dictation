@@ -57,6 +57,25 @@ def get_gradient_feedback(accuracy):
     else:
         return ("Poor..", "#c62828")        # red
 
+def initialize_session(level):
+    """Initialize session with given level or random level if none provided"""
+    if level and isinstance(level, str) and level.startswith("HSK"):
+        level = int(level.replace("HSK", ""))
+    elif level:
+        level = int(level)
+    
+    # If no level provided or session_ids not in session, initialize with random level
+    if not level or "session_ids" not in session:
+        level = level or None
+        session.update(
+            hsk_level=level,
+            session_ids=ctx.get_random_ids(level=level),
+            session_index=0,
+            session_score=0
+        )
+    
+    return level
+
 ### ──────── ROUTES ────────
 
 @dictation_bp.route("/")
@@ -96,26 +115,7 @@ def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
     """
-    level = request.args.get("hsk")
-    if level and isinstance(level, str) and level.startswith("HSK"):
-        level = int(level.replace("HSK", ""))
-    elif level:
-        level = int(level)
-    if level:
-        session.update(
-            hsk_level=level,
-            session_ids=ctx.get_random_ids(level=level),
-            session_index=0,
-            session_score=0
-        )
-    elif "session_ids" not in session:
-        level = None
-        session.update(
-            hsk_level=level,
-            session_ids=ctx.get_random_ids(level=level),
-            session_index=0,
-            session_score=0
-        )
+    level = initialize_session(request.args.get("hsk"))
 
     hsk_session = HSKSession(ctx)
 
