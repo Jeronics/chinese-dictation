@@ -44,26 +44,20 @@ story_form_handler = StoryFormHandler(corrector)
 conversation_form_handler = ConversationFormHandler(corrector)
 auth_form_handler = AuthenticationFormHandler()
 
-# --- Helper functions for character progress tracking ---
-# (Moved to db_helpers.py)
-
-# --- Helper functions for daily work tracking ---
-# (Moved to db_helpers.py)
 
 
 
-### ──────── ROUTES ────────
+
+
 
 @dictation_bp.route("/")
 def menu():
     """
     Main menu route. Clears session state and loads available stories and HSK totals for the user.
     """
-    # clear HSK level, session_ids, etc.
     for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
         session.pop(key, None)
 
-    # Get saved stories for logged-in users
     saved_stories = []
     saved_conversations = []
     user_id = session.get("user_id")
@@ -92,15 +86,12 @@ def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
     """
-    # Only initialize session if a level parameter is provided (new session request)
     hsk_level_param = request.args.get("hsk")
     if hsk_level_param:
         level = session_manager.initialize_hsk_session(hsk_level_param)
     else:
-        # Use existing session level
         level = safe_get_session_data("hsk_level")
     
-    # Ensure we have a valid session
     if not level or not SessionValidator.validate_hsk_session():
         flash("Session not found. Please start a new session.", "error")
         return redirect(url_for("dictation.menu"))
