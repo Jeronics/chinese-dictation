@@ -39,12 +39,7 @@ def update_character_progress(user_id: str, hanzi: str, hsk_level: int, correct:
     except Exception as e:
         logging.error(f"Error updating character progress for user {user_id}, hanzi {hanzi}: {e}")
 
-def get_user_character_status(user_id: str) -> Dict[str, str]:
-    """
-    Returns a dict: {hanzi: status} for the given user.
-    """
-    result = supabase.table("character_progress").select("hanzi, status").eq("user_id", user_id).execute()
-    return {row["hanzi"]: row["status"] for row in result.data} if result.data else {}
+
 
 def update_daily_work_registry(
     user_id: str,

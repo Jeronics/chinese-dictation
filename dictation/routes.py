@@ -1,18 +1,12 @@
-from traceback import print_tb
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-import uuid
-from datetime import date, datetime, timedelta
-
 from flask import Blueprint, render_template, request, session, redirect, flash, url_for, g, send_from_directory
-from functools import wraps
 from .app_context import DictationContext
 from .corrector import Corrector
 from .db_helpers import (
     update_character_progress,
-    get_user_character_status,
     update_daily_work_registry,
     get_daily_work_stats,
     get_daily_session_count,
@@ -26,8 +20,6 @@ from .form_handlers import HSKFormHandler, StoryFormHandler, ConversationFormHan
 from .error_handlers import ErrorHandler, handle_errors, validate_session_state, validate_user_input, SessionValidator, InputValidator, safe_get_form_data, safe_get_session_data
 from supabase import create_client
 import logging
-import smtplib
-from email.mime.text import MIMEText
 from .session import HSKSession, StorySession, ConversationSession
 
 logging.basicConfig(level=logging.INFO)
@@ -57,20 +49,6 @@ auth_form_handler = AuthenticationFormHandler()
 
 # --- Helper functions for daily work tracking ---
 # (Moved to db_helpers.py)
-
-def get_gradient_feedback(accuracy):
-    if accuracy == 100:
-        return ("Perfect!", "#00ff00")  # Extremely bright green
-    elif accuracy >= 85:
-        return ("Very Good!", "#00cc00")  # Bright green
-    elif accuracy >= 70:
-        return ("Good!", "#008000")       # Dull green  
-    elif accuracy >= 50:
-        return ("Getting Better!", "#ffa500") # orange
-    elif accuracy >= 25:
-        return ("Needs Practice..", "#ffa500") # orange
-    else:
-        return ("Poor..", "#c62828")        # red
 
 
 
