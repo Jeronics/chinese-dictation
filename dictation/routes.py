@@ -20,7 +20,8 @@ from .db_helpers import (
 )
 from .utils import login_required
 from .session_manager import SessionManager
-from .route_helpers import handle_session_actions, get_session_context, handle_session_completion, validate_session_access
+from .route_helpers import handle_session_actions, get_session_context, handle_session_completion, validate_session_access, handle_conversation_submit_all
+from .base_session_handler import StorySessionHandler, ConversationSessionHandler
 from supabase import create_client
 import logging
 import smtplib
@@ -40,6 +41,8 @@ dictation_bp = Blueprint("dictation", __name__)
 ctx = DictationContext()
 corrector = Corrector()
 session_manager = SessionManager(ctx, supabase)
+story_handler = StorySessionHandler(session_manager)
+conversation_handler = ConversationSessionHandler(session_manager)
 
 # --- Helper functions for character progress tracking ---
 # (Moved to db_helpers.py)
@@ -287,301 +290,24 @@ def story_session(story_id):
     Story dictation session route. Handles story progress, user answers, and session summary.
     """
     user_id = session.get("user_id")
-    
-    # Handle session actions (resume_later, restart)
-    redirect_url = handle_session_actions("story", story_id, user_id, session_manager)
-    if redirect_url:
-        return redirect(redirect_url)
-    
-    # Validate session access
-    error = validate_session_access("story", story_id, session_manager)
-    if error:
-        flash(error, "error")
-        return redirect(url_for("dictation.menu"))
-    
-    # Initialize or resume story session
-    init_result = session_manager.initialize_story_session(story_id, user_id)
-    if "error" in init_result:
-        flash(init_result["error"], "error")
-        return redirect(url_for("dictation.menu"))
-    
-    if init_result.get("resumed"):
-        story = session_manager.ctx.get_story(story_id)
-        flash(f"Resuming '{story['title']}' from part {init_result['index'] + 1} of {init_result['total']}", "info")
-    
-    # Initialize story group scores if needed
-    if "story_group_scores" not in session or session.get("story_id") != story_id:
-        session["story_group_scores"] = []
-
-    story_session_obj = StorySession(ctx)
-
-    if request.method == "POST" and "next" in request.form:
-        # Track per-group scores
-        group_size = 5
-        idx = story_session_obj.get_current_index()
-        story = session_manager.ctx.get_story(story_id)
-        total_parts = len(story["parts"])
-        
-        # If finishing a group or the story, record the group score
-        if (idx + 1) % group_size == 0 or (idx + 1) == total_parts:
-            # Calculate score for this group using per-sentence correctness
-            start = idx - ((idx) % group_size)
-            end = idx + 1
-            group_score = sum([1 for i in range(start, end) if session.get(f"story_part_{i}_correct", False)])
-            # Store as out of 10 (scale up if group smaller than 5)
-            group_score_scaled = int((group_score / (end - start)) * 10)
-            session["story_group_scores"].append(group_score_scaled)
-        
-        story_session_obj.advance()
-        if story_session_obj.get_current_index() >= len(story["parts"]):
-            score = story_session_obj.get_score()
-            total = len(story["parts"])
-            
-            # Calculate average accuracy for the story session
-            average_accuracy = 0
-            accuracy_scores = session.get("accuracy_scores", [])
-            if accuracy_scores:
-                average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
-            
-            # Handle session completion
-            completion_context = handle_session_completion("story", story_id, user_id, session_manager, total, average_accuracy)
-            
-            # Clear per-sentence correctness keys
-            for i in range(len(story["parts"])):
-                session.pop(f"story_part_{i}_correct", None)
-            session_manager.clear_session_data('story')
-            
-            return render_template("summary_story.html", 
-                                 score=score, 
-                                 story=story, 
-                                 story_id=story_id, 
-                                 **completion_context)
-
-    part_id = story_session_obj.get_current_id()
-    part = ctx.get_story_part(story_id, part_id)
-    if not part:
-        return "Story part not found", 500
-
-    # Get all audio file paths for the story (for sequential playback)
-    story_audio_files = ctx.story_all_audio_paths(story_id)
-
-    # Get part number from part id (should be in the format story_<story_id>_<part_number>)
-    try:
-        part_number = int(part_id.split('_')[-1])
-    except Exception:
-        part_number = story_session_obj.get_current_index() + 1
-
-    if request.method == "POST" and "user_input" in request.form:
-        user_input = request.form["user_input"].strip()
-        return render_template("session_story.html", **story_session_obj.update_score(user_input))
-
-    # Get story context (previous parts only, not the current one)
-    story_context = story["parts"][:story_session_obj.get_current_index()]
-    
-    return render_template("session_story.html", **story_session_obj.get_context())
+    return story_handler.handle_session(story_id, user_id)
 
 @dictation_bp.route("/conversation/<conversation_id>/session", methods=["GET", "POST"])
 def conversation_session(conversation_id):
     """
     Conversation dictation session route. Handles conversation progress, user answers, and session summary.
     """
-    conversation = ctx.get_conversation(conversation_id)
-    if not conversation:
-        flash("Conversation not found.", "error")
-        return redirect(url_for("dictation.menu"))
-
     user_id = session.get("user_id")
     
-    # Handle conversation actions
-    if request.method == "POST":
-        if "resume_later" in request.form:
-            # Save current progress to database
-            if user_id:
-                try:
-                    current_index = conversation_session_obj.get_current_index() if 'conversation_session_obj' in locals() else 0
-                    supabase.table("conversation_progress").upsert({
-                        "user_id": user_id,
-                        "conversation_id": conversation_id,
-                        "current_index": current_index,
-                        "score": conversation_session_obj.get_score() if 'conversation_session_obj' in locals() else 0,
-                        "last_updated": datetime.now().isoformat()
-                    }).execute()
-                    flash(f"Progress saved for '{conversation['topic']}'", "success")
-                except Exception as e:
-                    logging.error(f"Error saving conversation progress: {e}")
-                    flash("Failed to save progress.", "error")
-            return redirect(url_for("dictation.menu"))
-        
-        elif "restart" in request.form:
-            # Clear saved progress and start fresh
-            if user_id:
-                try:
-                    supabase.table("conversation_progress").delete().eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
-                except Exception as e:
-                    logging.error(f"Error clearing conversation progress: {e}")
-            # Clear session data
-            for key in ["conversation_session_ids", "conversation_session_index", "conversation_session_score", "conversation_id", "accuracy_scores"]:
-                session.pop(key, None)
-            flash(f"Restarted '{conversation['topic']}'", "info")
-
-    # Initialize or resume conversation session
-    if "conversation_session_ids" not in session or session.get("conversation_id") != conversation_id:
-        # Check for existing progress
-        existing_progress = None
-        if user_id:
-            try:
-                result = supabase.table("conversation_progress").select("*").eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
-                if result.data:
-                    existing_progress = result.data[0]
-            except Exception as e:
-                logging.error(f"Error loading conversation progress: {e}")
-        
-        if existing_progress:
-            # Resume from saved progress
-            session.update(
-                conversation_id=conversation_id,
-                conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
-                conversation_session_index=existing_progress["current_index"],
-                conversation_session_score=existing_progress["score"]
-            )
-            flash(f"Resuming '{conversation['topic']}' from sentence {existing_progress['current_index'] + 1} of {len(conversation['sentences'])}", "info")
-        else:
-            # Initialize new conversation session
-            session.update(
-                conversation_id=conversation_id,
-                conversation_session_ids=[sentence["id"] for sentence in conversation["sentences"]],
-                conversation_session_index=0,
-                conversation_session_score=0
-            )
-
-    conversation_session_obj = ConversationSession(ctx)
-
-    if request.method == "POST" and "next" in request.form:
-        conversation_session_obj.advance()
-        if conversation_session_obj.get_current_index() >= len(conversation["sentences"]):
-            score = conversation_session_obj.get_score()
-            total = len(conversation["sentences"])
-            
-            # Calculate average accuracy for the conversation session
-            average_accuracy = 0
-            accuracy_scores = session.get("accuracy_scores", [])
-            if accuracy_scores:
-                average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
-            if user_id and accuracy_scores:
-                update_daily_work_registry(user_id, "conversation", average_accuracy, total, conversation_id, total)
-            
-            # Clear conversation progress from database when completed
-            if user_id:
-                try:
-                    supabase.table("conversation_progress").delete().eq("user_id", user_id).eq("conversation_id", conversation_id).execute()
-                    logging.info(f"Cleared completed conversation progress for user {user_id}, conversation {conversation_id}")
-                except Exception as e:
-                    logging.error(f"Error clearing completed conversation progress: {e}")
-            
-            # Get daily work stats for summary
-            daily_stats = get_daily_work_stats(user_id) if user_id else {"today_sentences_above_7": 0, "today_total_sentences": 0, "current_streak": 0, "last_7_days": []}
-            
-            for key in ["conversation_session_ids", "conversation_session_index", "conversation_session_score", "conversation_id", "accuracy_scores"]:
-                session.pop(key, None)
-            return render_template("summary_conversation.html", score=score, total=total, conversation=conversation, conversation_id=conversation_id, daily_stats=daily_stats, average_accuracy=round(average_accuracy, 1))
-
-    # Handle "Submit All Answers" from conversation form
+    # Handle "Submit All Answers" from conversation form (special case)
     if request.method == "POST":
         form_keys = list(request.form.keys())
         user_input_keys = [k for k in form_keys if k.startswith("user_input_")]
         
         if user_input_keys:
-            # This is the "Submit All Answers" form
-            print(f"DEBUG: Submit All Answers detected! Processing {len(user_input_keys)} inputs")
-            
-            conversation_session_obj = ConversationSession(ctx)
-        
-        # Collect all user inputs from the form
-        all_inputs = {}
-        for key in user_input_keys:
-            sentence_id = key.replace("user_input_", "")
-            value = request.form[key].strip()
-            all_inputs[sentence_id] = value
-            print(f"DEBUG: Input {sentence_id} = '{value}'")
-        
-        print(f"DEBUG: All inputs collected: {all_inputs}")
-        
-        # Process all inputs and calculate overall results
-        total_accuracy = 0
-        total_sentences = len(conversation["sentences"])
-        all_corrections = []
-        
-        for sentence in conversation["sentences"]:
-            sentence_id = str(sentence["id"])
-            user_input = all_inputs.get(sentence_id, "")
-            
-            # Always process every sentence, even if user_input is blank
-            if user_input:
-                correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence["chinese"])
-                accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
-            else:
-                correction = ""
-                accuracy = 0
-            total_accuracy += accuracy
-            all_corrections.append({
-                "sentence_id": sentence_id,
-                "chinese": sentence["chinese"],
-                "user_input": user_input,
-                "correction": correction,
-                "pinyin": sentence["pinyin"],
-                "translation": sentence["english"],
-                "accuracy": accuracy,
-                "speaker": sentence["speaker"],
-                "audio_file": ctx.conversation_audio_path(conversation_id, sentence["id"])
-            })
-
-        print(f"DEBUG: Total corrections: {len(all_corrections)}")
-        
-        # Calculate average accuracy
-        average_accuracy = total_accuracy / total_sentences if total_sentences > 0 else 0
-        
-        # Update session with accuracy scores
-        session["accuracy_scores"] = [corr["accuracy"] for corr in all_corrections]
-        
-        # Update character progress for logged-in users
-        if user_id:
-            hanzi_updates = []
-            for correction in all_corrections:
-                sentence = next((s for s in conversation["sentences"] if str(s["id"]) == correction["sentence_id"]), None)
-                if sentence:
-                    for hanzi in set(sentence["chinese"]):
-                        match = next((entry for entry in ctx.hsk_data if entry["hanzi"] == hanzi), None)
-                        if match:
-                            hsk_level = match["hsk_level"]
-                            if isinstance(hsk_level, str) and hsk_level.startswith("HSK"):
-                                hsk_level_int = int(hsk_level.replace("HSK", ""))
-                            else:
-                                hsk_level_int = int(hsk_level)
-                            # Determine if character was correct based on accuracy
-                            correct = correction["accuracy"] >= 70  # Threshold for "correct"
-                            hanzi_updates.append({
-                                "hanzi": hanzi,
-                                "hsk_level": hsk_level_int,
-                                "correct": correct
-                            })
-            if hanzi_updates:
-                from .db_helpers import batch_update_character_progress
-                batch_update_character_progress(user_id, hanzi_updates)
-        
-        # Return results for display
-        return render_template("correction_conversation.html", 
-                             conversation_topic=conversation["topic"],
-                             level=conversation["hsk_level"],
-                             all_corrections=all_corrections,
-                             average_accuracy=round(average_accuracy, 1),
-                             total_sentences=total_sentences,
-                             conversation_id=conversation_id)
-
-    if request.method == "POST" and "user_input" in request.form:
-        user_input = request.form["user_input"].strip()
-        return render_template("session_conversation.html", **conversation_session_obj.update_score(user_input))
+            return handle_conversation_submit_all(conversation_id, user_id, user_input_keys, ctx, corrector)
     
-    return render_template("session_conversation.html", **conversation_session_obj.get_context())
+    return conversation_handler.handle_session(conversation_id, user_id)
 
 @dictation_bp.route("/audio/<category>/<filename>")
 def serve_audio(category, filename):
