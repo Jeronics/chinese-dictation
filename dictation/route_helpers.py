@@ -169,6 +169,9 @@ def handle_conversation_submit_all(conversation_id: str, user_id: Optional[str],
     """
     Handle the "Submit All Answers" functionality for conversations.
     """
+    from .form_handlers import ConversationFormHandler
+    from .error_handlers import safe_get_form_data
+    
     conversation = ctx.get_conversation(conversation_id)
     if not conversation:
         flash("Conversation not found.", "error")
@@ -178,49 +181,18 @@ def handle_conversation_submit_all(conversation_id: str, user_id: Optional[str],
     all_inputs = {}
     for key in user_input_keys:
         sentence_id = key.replace("user_input_", "")
-        value = request.form[key].strip()
+        value = safe_get_form_data(key)
         all_inputs[sentence_id] = value
     
-    # Process all inputs and calculate overall results
-    total_accuracy = 0
-    total_sentences = len(conversation["sentences"])
-    all_corrections = []
-    
-    for sentence in conversation["sentences"]:
-        sentence_id = str(sentence["id"])
-        user_input = all_inputs.get(sentence_id, "")
-        
-        # Always process every sentence, even if user_input is blank
-        if user_input:
-            correction, stripped_user, stripped_correct, correct_segments = corrector.compare(user_input, sentence["chinese"])
-            accuracy = round(len(correct_segments)/len(stripped_correct)*100) if len(stripped_correct) > 0 else 0
-        else:
-            correction = ""
-            accuracy = 0
-        total_accuracy += accuracy
-        all_corrections.append({
-            "sentence_id": sentence_id,
-            "chinese": sentence["chinese"],
-            "user_input": user_input,
-            "correction": correction,
-            "pinyin": sentence["pinyin"],
-            "translation": sentence["english"],
-            "accuracy": accuracy,
-            "speaker": sentence["speaker"],
-            "audio_file": ctx.conversation_audio_path(conversation_id, sentence["id"])
-        })
-    
-    # Calculate average accuracy
-    average_accuracy = total_accuracy / total_sentences if total_sentences > 0 else 0
-    
-    # Update session with accuracy scores
-    session["accuracy_scores"] = [corr["accuracy"] for corr in all_corrections]
+    # Use the form handler to process all inputs
+    form_handler = ConversationFormHandler(corrector)
+    result = form_handler.process_conversation_batch(conversation, all_inputs)
     
     # Update character progress for logged-in users
     if user_id:
         from .db_helpers import batch_update_character_progress
         hanzi_updates = []
-        for correction in all_corrections:
+        for correction in result["all_corrections"]:
             sentence = next((s for s in conversation["sentences"] if str(s["id"]) == correction["sentence_id"]), None)
             if sentence:
                 for hanzi in set(sentence["chinese"]):
@@ -246,7 +218,7 @@ def handle_conversation_submit_all(conversation_id: str, user_id: Optional[str],
     return render_template("correction_conversation.html", 
                          conversation_topic=conversation["topic"],
                          level=conversation["hsk_level"],
-                         all_corrections=all_corrections,
-                         average_accuracy=round(average_accuracy, 1),
-                         total_sentences=total_sentences,
+                         all_corrections=result["all_corrections"],
+                         average_accuracy=round(result["average_accuracy"], 1),
+                         total_sentences=result["total_sentences"],
                          conversation_id=conversation_id) 

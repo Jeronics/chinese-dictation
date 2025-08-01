@@ -22,6 +22,8 @@ from .utils import login_required
 from .session_manager import SessionManager
 from .route_helpers import handle_session_actions, get_session_context, handle_session_completion, validate_session_access, handle_conversation_submit_all
 from .base_session_handler import StorySessionHandler, ConversationSessionHandler
+from .form_handlers import HSKFormHandler, StoryFormHandler, ConversationFormHandler, AuthenticationFormHandler
+from .error_handlers import ErrorHandler, handle_errors, validate_session_state, validate_user_input, SessionValidator, InputValidator, safe_get_form_data, safe_get_session_data
 from supabase import create_client
 import logging
 import smtplib
@@ -43,6 +45,12 @@ corrector = Corrector()
 session_manager = SessionManager(ctx, supabase)
 story_handler = StorySessionHandler(session_manager)
 conversation_handler = ConversationSessionHandler(session_manager)
+
+# Initialize form handlers
+hsk_form_handler = HSKFormHandler(corrector)
+story_form_handler = StoryFormHandler(corrector)
+conversation_form_handler = ConversationFormHandler(corrector)
+auth_form_handler = AuthenticationFormHandler()
 
 # --- Helper functions for character progress tracking ---
 # (Moved to db_helpers.py)
@@ -101,6 +109,7 @@ def menu():
                          hsk_totals=ctx.hsk_totals)
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
+@handle_errors("HSK session", url_for("dictation.menu"))
 def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
@@ -111,10 +120,10 @@ def session_practice():
         level = session_manager.initialize_hsk_session(hsk_level_param)
     else:
         # Use existing session level
-        level = session.get("hsk_level")
+        level = safe_get_session_data("hsk_level")
     
     # Ensure we have a valid session
-    if not level or "session_ids" not in session or not session["session_ids"]:
+    if not level or not SessionValidator.validate_hsk_session():
         flash("Session not found. Please start a new session.", "error")
         return redirect(url_for("dictation.menu"))
     
@@ -124,8 +133,8 @@ def session_practice():
         hsk_session.advance()
         if hsk_session.get_current_index() >= 5:
             average_accuracy = 0
-            accuracy_scores = session.get("accuracy_scores", [])
-            user_id = session.get("user_id")
+            accuracy_scores = safe_get_session_data("accuracy_scores", [])
+            user_id = safe_get_session_data("user_id")
             if accuracy_scores:
                 average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
             if user_id and accuracy_scores:
@@ -142,10 +151,14 @@ def session_practice():
     
     s["id"] = sid
     if not ctx.audio_path(sid, s["hsk_level"]):
+        ErrorHandler.handle_file_error(Exception("Missing audio file"), f"audio file for sentence {sid}")
         return "Missing audio file", 500
 
     if request.method == "POST" and "user_input" in request.form:
-        user_input = request.form["user_input"].strip()
+        user_input = safe_get_form_data("user_input")
+        result = hsk_form_handler.process_hsk_input(user_input, s)
+        if "error" in result:
+            return redirect(request.url)
         return render_template("session_regular.html", **hsk_session.update_score(user_input))
     
     return render_template("session_regular.html", **hsk_session.get_context())
@@ -181,13 +194,20 @@ def inject_daily_session_count_context():
     return {"daily_session_count": getattr(g, "daily_session_count", None)}
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
+@handle_errors("login", url_for("dictation.login"))
 def login():
     """
     User login route. Handles both GET (display form) and POST (process login).
     """
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email = safe_get_form_data("email")
+        password = safe_get_form_data("password")
+        
+        # Validate form inputs
+        is_valid, error_msg = auth_form_handler.validate_login_form(email, password)
+        if not is_valid:
+            flash(error_msg, "error")
+            return render_template("login.html")
         
         try:
             # Authenticate with Supabase
@@ -205,19 +225,25 @@ def login():
             else:
                 flash("Invalid email or password", "error")
         except Exception as e:
-            logging.error(f"Login error: {e}")
-            flash("Login failed. Please try again.", "error")
+            ErrorHandler.handle_authentication_error(e, "login")
     
     return render_template("login.html")
 
 @dictation_bp.route("/signup", methods=["GET", "POST"])
+@handle_errors("signup", url_for("dictation.signup"))
 def signup():
     """
     User registration route. Handles both GET (display form) and POST (process registration).
     """
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email = safe_get_form_data("email")
+        password = safe_get_form_data("password")
+        
+        # Validate form inputs
+        is_valid, error_msg = auth_form_handler.validate_login_form(email, password)
+        if not is_valid:
+            flash(error_msg, "error")
+            return render_template("signup.html")
         
         try:
             # Create user with Supabase
@@ -232,8 +258,7 @@ def signup():
             else:
                 flash("Registration failed. Please try again.", "error")
         except Exception as e:
-            logging.error(f"Signup error: {e}")
-            flash("Registration failed. Please try again.", "error")
+            ErrorHandler.handle_authentication_error(e, "signup")
     
     return render_template("signup.html")
 
