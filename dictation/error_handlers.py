@@ -100,7 +100,11 @@ def handle_errors(operation: str = "operation", redirect_url: Optional[str] = No
             except Exception as e:
                 logging.error(f"Error during {operation}: {e}")
                 flash(f"An error occurred during {operation}. Please try again.", "error")
-                return redirect(redirect_url or url_for("dictation.menu"))
+                # Use lazy evaluation to avoid calling url_for at import time
+                if redirect_url:
+                    return redirect(redirect_url)
+                else:
+                    return redirect(url_for("dictation.menu"))
         return wrapper
     return decorator
 

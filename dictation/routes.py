@@ -76,7 +76,7 @@ def menu():
                          hsk_totals=ctx.hsk_totals)
 
 @dictation_bp.route("/session", methods=["GET", "POST"])
-@handle_errors("HSK session", url_for("dictation.menu"))
+@handle_errors("HSK session")
 def session_practice():
     """
     Main dictation practice session route. Handles session state, user answers, and session summary.
@@ -158,7 +158,7 @@ def inject_daily_session_count_context():
     return {"daily_session_count": getattr(g, "daily_session_count", None)}
 
 @dictation_bp.route("/login", methods=["GET", "POST"])
-@handle_errors("login", url_for("dictation.login"))
+@handle_errors("login")
 def login():
     """
     User login route. Handles both GET (display form) and POST (process login).
@@ -194,7 +194,7 @@ def login():
     return render_template("login.html")
 
 @dictation_bp.route("/signup", methods=["GET", "POST"])
-@handle_errors("signup", url_for("dictation.signup"))
+@handle_errors("signup")
 def signup():
     """
     User registration route. Handles both GET (display form) and POST (process registration).
