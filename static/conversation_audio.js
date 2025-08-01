@@ -42,26 +42,55 @@ function playSentenceAudio(audioFile) {
             }
         });
     } else {
-        // Fallback to direct audio loading
-        window.currentAudio = new Audio(`/audio/conversations/${audioFile}`);
+        // Fallback to direct audio loading with multiple path attempts
+        const audioPaths = [
+            `/audio/conversations/${audioFile}`,
+            `/static/audio_files/${audioFile}`,
+            `/audio/hsk_characters/${audioFile}`,
+            `/audio/stories/${audioFile}`
+        ];
         
-        // Find and highlight the corresponding input and play button
-        const speakerCircles = document.querySelectorAll('.speaker-circle');
-        speakerCircles.forEach(circle => {
-            const onclickAttr = circle.getAttribute('onclick');
-            if (onclickAttr && onclickAttr.includes(audioFile)) {
-                highlightActiveElements(circle);
+        let currentPathIndex = 0;
+        
+        function tryNextPath() {
+            if (currentPathIndex >= audioPaths.length) {
+                console.error('All audio paths failed for:', audioFile);
+                clearActiveStates();
+                return;
             }
-        });
+            
+            const currentPath = audioPaths[currentPathIndex];
+            console.log(`🎵 Trying audio path: ${currentPath}`);
+            
+            window.currentAudio = new Audio(currentPath);
+            
+            // Find and highlight the corresponding input and play button
+            const speakerCircles = document.querySelectorAll('.speaker-circle');
+            speakerCircles.forEach(circle => {
+                const onclickAttr = circle.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(audioFile)) {
+                    highlightActiveElements(circle);
+                }
+            });
+            
+            window.currentAudio.addEventListener('ended', () => {
+                clearActiveStates();
+            });
+            
+            window.currentAudio.addEventListener('error', () => {
+                console.warn(`❌ Failed to load: ${currentPath}`);
+                currentPathIndex++;
+                tryNextPath();
+            });
+            
+            window.currentAudio.play().catch(error => {
+                console.error('Error playing sentence audio:', error);
+                currentPathIndex++;
+                tryNextPath();
+            });
+        }
         
-        window.currentAudio.addEventListener('ended', () => {
-            clearActiveStates();
-        });
-        
-        window.currentAudio.play().catch(error => {
-            console.error('Error playing sentence audio:', error);
-            clearActiveStates();
-        });
+        tryNextPath();
     }
 }
 
@@ -165,43 +194,62 @@ function playAudioSequence(audioFiles, index) {
     }
     
     const audioFile = audioFiles[index];
-    window.currentAudio = new Audio(`/static/${audioFile}`);
-    conversationAudioState.currentIndex = index;
+    const audioPaths = [
+        `/audio/conversations/${audioFile}`,
+        `/static/audio_files/${audioFile}`,
+        `/audio/hsk_characters/${audioFile}`,
+        `/audio/stories/${audioFile}`
+    ];
     
-    // Find and highlight the corresponding input and play button
-    const speakerCircles = document.querySelectorAll('.speaker-circle');
-    speakerCircles.forEach(circle => {
-        const onclickAttr = circle.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes(audioFile)) {
-            highlightActiveElements(circle);
-        }
-    });
+    let currentPathIndex = 0;
     
-    window.currentAudio.addEventListener('ended', () => {
-        clearActiveStates();
-        // Play next audio file after current one ends
-        if (conversationAudioState.isPlaying) {
-            playAudioSequence(audioFiles, index + 1);
+    function tryNextPath() {
+        if (currentPathIndex >= audioPaths.length) {
+            console.error('All audio paths failed for:', audioFile);
+            // Continue with next audio file even if current one fails
+            if (conversationAudioState.isPlaying) {
+                playAudioSequence(audioFiles, index + 1);
+            }
+            return;
         }
-    });
+        
+        const currentPath = audioPaths[currentPathIndex];
+        console.log(`🎵 Trying audio path: ${currentPath}`);
+        
+        window.currentAudio = new Audio(currentPath);
+        conversationAudioState.currentIndex = index;
+        
+        // Find and highlight the corresponding input and play button
+        const speakerCircles = document.querySelectorAll('.speaker-circle');
+        speakerCircles.forEach(circle => {
+            const onclickAttr = circle.getAttribute('onclick');
+            if (onclickAttr && onclickAttr.includes(audioFile)) {
+                highlightActiveElements(circle);
+            }
+        });
+        
+        window.currentAudio.addEventListener('ended', () => {
+            clearActiveStates();
+            // Play next audio file after current one ends
+            if (conversationAudioState.isPlaying) {
+                playAudioSequence(audioFiles, index + 1);
+            }
+        });
+        
+        window.currentAudio.addEventListener('error', () => {
+            console.warn(`❌ Failed to load: ${currentPath}`);
+            currentPathIndex++;
+            tryNextPath();
+        });
+        
+        window.currentAudio.play().catch(error => {
+            console.error('Error playing conversation audio:', error);
+            currentPathIndex++;
+            tryNextPath();
+        });
+    }
     
-    window.currentAudio.addEventListener('error', () => {
-        console.error('Error playing audio:', audioFile);
-        clearActiveStates();
-        // Continue with next audio file even if current one fails
-        if (conversationAudioState.isPlaying) {
-            playAudioSequence(audioFiles, index + 1);
-        }
-    });
-    
-    window.currentAudio.play().catch(error => {
-        console.error('Error playing conversation audio:', error);
-        clearActiveStates();
-        // Continue with next audio file even if current one fails
-        if (conversationAudioState.isPlaying) {
-            playAudioSequence(audioFiles, index + 1);
-        }
-    });
+    tryNextPath();
 }
 
 // Highlight active elements (input field and play button)

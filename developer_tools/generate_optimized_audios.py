@@ -10,7 +10,7 @@ from gtts import gTTS
 
 # Configuration
 JSON_PATH = "conversations.json"
-OUTPUT_DIR = "static/audio_files"
+OUTPUT_DIR = "static/audio_files/conversations"
 OPTIMIZED_DIR = "static/audio_files/optimized"
 
 # Audio optimization settings

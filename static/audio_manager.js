@@ -58,7 +58,9 @@ class AudioManager {
      * Load audio file from server
      */
     async loadAudioFile(category, filename) {
-        const url = `${this.baseUrl}/${category}/${filename}`;
+        // Try new path first, fallback to legacy path
+        const newUrl = `${this.baseUrl}/${category}/${filename}`;
+        const legacyUrl = `/static/audio_files/${filename}`;
         
         return new Promise((resolve, reject) => {
             const audio = new Audio();
@@ -68,10 +70,17 @@ class AudioManager {
             }, { once: true });
             
             audio.addEventListener('error', (error) => {
-                reject(new Error(`Failed to load audio: ${url}`));
+                // Try legacy path if new path fails
+                if (audio.src === newUrl) {
+                    console.log(`🔄 Retrying with legacy path: ${legacyUrl}`);
+                    audio.src = legacyUrl;
+                    audio.load();
+                } else {
+                    reject(new Error(`Failed to load audio: ${newUrl} and ${legacyUrl}`));
+                }
             }, { once: true });
             
-            audio.src = url;
+            audio.src = newUrl;
             audio.load();
         });
     }

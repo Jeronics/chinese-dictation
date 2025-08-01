@@ -689,6 +689,25 @@ def serve_audio(category, filename):
     response.headers['Accept-Ranges'] = 'bytes'
     return response
 
+# Legacy route for backward compatibility
+@dictation_bp.route("/static/audio_files/<filename>")
+def serve_legacy_audio(filename):
+    """Serve audio files from legacy path for backward compatibility"""
+    # Determine category from filename
+    if filename.startswith('conv_'):
+        category = 'conversations'
+    elif filename.startswith('story_'):
+        category = 'stories'
+    elif '_HSK' in filename:
+        category = 'hsk_characters'
+    else:
+        return "File not found", 404
+    
+    response = send_from_directory(f'static/audio_files/{category}', filename)
+    response.headers['Cache-Control'] = 'public, max-age=31536000'  # 1 year
+    response.headers['Accept-Ranges'] = 'bytes'
+    return response
+
 @dictation_bp.route("/audio/manifest.json")
 def serve_audio_manifest():
     """Serve audio manifest with caching headers"""
