@@ -43,9 +43,16 @@ class SessionManager:
         if "session_ids" not in session:
             # Use provided level or None for random
             session_level = level or None
+            session_ids = self.ctx.get_random_ids(level=session_level)
+            
+            # Ensure we have valid session IDs
+            if not session_ids:
+                # Fallback to random sentences if no level-specific sentences found
+                session_ids = self.ctx.get_random_ids(level=None)
+            
             session.update(
                 hsk_level=session_level,
-                session_ids=self.ctx.get_random_ids(level=session_level),
+                session_ids=session_ids,
                 session_index=0,
                 session_score=0
             )
@@ -57,9 +64,16 @@ class SessionManager:
         
         # If session exists but a new level is provided, reinitialize with new level
         session_level = level
+        session_ids = self.ctx.get_random_ids(level=session_level)
+        
+        # Ensure we have valid session IDs
+        if not session_ids:
+            # Fallback to random sentences if no level-specific sentences found
+            session_ids = self.ctx.get_random_ids(level=None)
+        
         session.update(
             hsk_level=session_level,
-            session_ids=self.ctx.get_random_ids(level=session_level),
+            session_ids=session_ids,
             session_index=0,
             session_score=0
         )

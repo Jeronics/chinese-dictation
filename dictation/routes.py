@@ -113,6 +113,11 @@ def session_practice():
         # Use existing session level
         level = session.get("hsk_level")
     
+    # Ensure we have a valid session
+    if not level or "session_ids" not in session or not session["session_ids"]:
+        flash("Session not found. Please start a new session.", "error")
+        return redirect(url_for("dictation.menu"))
+    
     hsk_session = HSKSession(ctx)
 
     if request.method == "POST" and "next" in request.form:
@@ -131,6 +136,10 @@ def session_practice():
 
     sid = hsk_session.get_current_id()
     s = ctx.get_sentence(sid)
+    if not s:
+        flash("Sentence not found. Please try again.", "error")
+        return redirect(url_for("dictation.menu"))
+    
     s["id"] = sid
     if not ctx.audio_path(sid, s["hsk_level"]):
         return "Missing audio file", 500
