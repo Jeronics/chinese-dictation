@@ -135,11 +135,20 @@ class SessionManager:
     def save_story_progress(self, user_id: str, story_id: str, current_index: int, score: int) -> bool:
         """Save story progress to database."""
         try:
+            # Get story to calculate total_parts
+            story = self.ctx.get_story(story_id)
+            if not story:
+                logging.error(f"Story not found: {story_id}")
+                return False
+            
+            total_parts = len(story["parts"])
+            
             self.supabase.table("story_progress").upsert({
                 "user_id": user_id,
                 "story_id": story_id,
                 "current_index": current_index,
                 "score": score,
+                "total_parts": total_parts,
                 "last_updated": datetime.now().isoformat()
             }).execute()
             return True
