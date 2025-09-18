@@ -894,5 +894,285 @@
         "audio_file": "conv_16_6.mp3"
       }
     ]
+  },
+  {
+    "conversation_id": 17,
+    "topic": "Book Recommendations",
+    "category": "Literature & Culture",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你最近在读什么书？",
+        "pinyin": "nǐ zuì jìn zài dú shén me shū?",
+        "english": "What book are you reading recently?",
+        "speaker": "A",
+        "audio_file": "conv_17_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我在读一本中国小说",
+        "pinyin": "wǒ zài dú yī běn zhōng guó xiǎo shuō",
+        "english": "I'm reading a Chinese novel",
+        "speaker": "B",
+        "audio_file": "conv_17_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这本书怎么样？",
+        "pinyin": "zhè běn shū zěn me yàng?",
+        "english": "How is this book?",
+        "speaker": "A",
+        "audio_file": "conv_17_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "非常有趣，我推荐给你",
+        "pinyin": "fēi cháng yǒu qù, wǒ tuī jiàn gěi nǐ",
+        "english": "Very interesting, I recommend it to you",
+        "speaker": "B",
+        "audio_file": "conv_17_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "作者是谁？",
+        "pinyin": "zuò zhě shì shéi?",
+        "english": "Who is the author?",
+        "speaker": "A",
+        "audio_file": "conv_17_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是莫言写的",
+        "pinyin": "shì mò yán xiě de",
+        "english": "It's written by Mo Yan",
+        "speaker": "B",
+        "audio_file": "conv_17_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 18,
+    "topic": "Favorite Books",
+    "category": "Literature & Culture",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你最喜欢什么类型的书？",
+        "pinyin": "nǐ zuì xǐ huān shén me lèi xíng de shū?",
+        "english": "What type of books do you like most?",
+        "speaker": "A",
+        "audio_file": "conv_18_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我喜欢历史小说和科幻小说",
+        "pinyin": "wǒ xǐ huān lì shǐ xiǎo shuō hé kē huàn xiǎo shuō",
+        "english": "I like historical novels and science fiction",
+        "speaker": "B",
+        "audio_file": "conv_18_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你读过《三体》吗？",
+        "pinyin": "nǐ dú guò sān tǐ ma?",
+        "english": "Have you read 'The Three-Body Problem'?",
+        "speaker": "A",
+        "audio_file": "conv_18_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "读过，那本书很精彩",
+        "pinyin": "dú guò, nà běn shū hěn jīng cǎi",
+        "english": "Yes, that book is wonderful",
+        "speaker": "B",
+        "audio_file": "conv_18_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "我也觉得刘慈欣写得很好",
+        "pinyin": "wǒ yě jué de liú cí xīn xiě de hěn hǎo",
+        "english": "I also think Liu Cixin writes very well",
+        "speaker": "A",
+        "audio_file": "conv_18_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "他的想象力很丰富",
+        "pinyin": "tā de xiǎng xiàng lì hěn fēng fù",
+        "english": "His imagination is very rich",
+        "speaker": "B",
+        "audio_file": "conv_18_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 19,
+    "topic": "Book Club Discussion",
+    "category": "Literature & Culture",
+    "hsk_level": 4,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "今天的读书会讨论哪本书？",
+        "pinyin": "jīn tiān de dú shū huì tǎo lùn nǎ běn shū?",
+        "english": "Which book are we discussing in today's book club?",
+        "speaker": "A",
+        "audio_file": "conv_19_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我们讨论《活着》这本书",
+        "pinyin": "wǒ men tǎo lùn huó zhe zhè běn shū",
+        "english": "We're discussing the book 'To Live'",
+        "speaker": "B",
+        "audio_file": "conv_19_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这本书的主题是什么？",
+        "pinyin": "zhè běn shū de zhǔ tí shì shén me?",
+        "english": "What is the theme of this book?",
+        "speaker": "A",
+        "audio_file": "conv_19_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "主要讲的是人生的苦难和坚持",
+        "pinyin": "zhǔ yào jiǎng de shì rén shēng de kǔ nàn hé jiān chí",
+        "english": "It mainly tells about life's hardships and perseverance",
+        "speaker": "B",
+        "audio_file": "conv_19_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "余华的语言很朴实",
+        "pinyin": "yú huá de yǔ yán hěn pǔ shí",
+        "english": "Yu Hua's language is very simple and honest",
+        "speaker": "A",
+        "audio_file": "conv_19_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是的，但很有力量",
+        "pinyin": "shì de, dàn hěn yǒu lì liàng",
+        "english": "Yes, but it's very powerful",
+        "speaker": "B",
+        "audio_file": "conv_19_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 20,
+    "topic": "Reading Habits",
+    "category": "Literature & Culture",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你每天读多长时间的书？",
+        "pinyin": "nǐ měi tiān dú duō cháng shí jiān de shū?",
+        "english": "How long do you read books every day?",
+        "speaker": "A",
+        "audio_file": "conv_20_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我每天读一个小时",
+        "pinyin": "wǒ měi tiān dú yī gè xiǎo shí",
+        "english": "I read for one hour every day",
+        "speaker": "B",
+        "audio_file": "conv_20_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你什么时候读书？",
+        "pinyin": "nǐ shén me shí hou dú shū?",
+        "english": "When do you read?",
+        "speaker": "A",
+        "audio_file": "conv_20_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我晚上睡觉前读书",
+        "pinyin": "wǒ wǎn shàng shuì jiào qián dú shū",
+        "english": "I read before going to bed at night",
+        "speaker": "B",
+        "audio_file": "conv_20_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "这是个好习惯",
+        "pinyin": "zhè shì gè hǎo xí guàn",
+        "english": "That's a good habit",
+        "speaker": "A",
+        "audio_file": "conv_20_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "读书让我放松",
+        "pinyin": "dú shū ràng wǒ fàng sōng",
+        "english": "Reading helps me relax",
+        "speaker": "B",
+        "audio_file": "conv_20_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 21,
+    "topic": "Classic Literature",
+    "category": "Literature & Culture",
+    "hsk_level": 5,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你读过《红楼梦》吗？",
+        "pinyin": "nǐ dú guò hóng lóu mèng ma?",
+        "english": "Have you read 'Dream of the Red Chamber'?",
+        "speaker": "A",
+        "audio_file": "conv_21_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "读过，这是中国古典文学的杰作",
+        "pinyin": "dú guò, zhè shì zhōng guó gǔ diǎn wén xué de jié zuò",
+        "english": "Yes, it's a masterpiece of Chinese classical literature",
+        "speaker": "B",
+        "audio_file": "conv_21_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你觉得哪个角色最有趣？",
+        "pinyin": "nǐ jué de nǎ gè jué sè zuì yǒu qù?",
+        "english": "Which character do you find most interesting?",
+        "speaker": "A",
+        "audio_file": "conv_21_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我喜欢林黛玉，她很聪明",
+        "pinyin": "wǒ xǐ huān lín dài yù, tā hěn cōng míng",
+        "english": "I like Lin Daiyu, she's very intelligent",
+        "speaker": "B",
+        "audio_file": "conv_21_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "曹雪芹的写作技巧很精湛",
+        "pinyin": "cáo xuě qín de xiě zuò jì qiǎo hěn jīng zhàn",
+        "english": "Cao Xueqin's writing technique is very exquisite",
+        "speaker": "A",
+        "audio_file": "conv_21_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是的，这部小说反映了当时的社会",
+        "pinyin": "shì de, zhè bù xiǎo shuō fǎn yìng le dāng shí de shè huì",
+        "english": "Yes, this novel reflects the society of that time",
+        "speaker": "B",
+        "audio_file": "conv_21_6.mp3"
+      }
+    ]
   }
 ] 

@@ -148,3 +148,19 @@ class DictationContext:
             sorted(hsk_counts.items(), key=lambda x: int(x[0]))
         )
 
+    def get_conversations_by_category(self, category):
+        """Get all conversations for a specific category"""
+        category_conversations = {}
+        for conv_id, conversation in self.conversations.items():
+            if conversation.get("category") == category:
+                category_conversations[conv_id] = conversation
+        return category_conversations
+
+    def get_available_categories(self):
+        """Get all available conversation categories"""
+        categories = set()
+        for conversation in self.conversations.values():
+            if "category" in conversation:
+                categories.add(conversation["category"])
+        return sorted(list(categories))
+
