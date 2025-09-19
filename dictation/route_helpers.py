@@ -35,7 +35,9 @@ def _handle_resume_later(session_type: str, identifier: str, user_id: Optional[s
         if session_type == "story":
             current_index = session.get("story_session_index", 0)
             score = session.get("story_session_score", 0)
-            success = session_manager.save_story_progress(user_id, identifier, current_index, score)
+            # Save the next index (current + 1) so user resumes from the next part
+            next_index = current_index + 1
+            success = session_manager.save_story_progress(user_id, identifier, next_index, score)
             if success:
                 story = session_manager.ctx.get_story(identifier)
                 flash(f"Progress saved for '{story['title']}'", "success")
