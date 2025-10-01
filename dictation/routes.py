@@ -48,7 +48,11 @@ auth_form_handler = AuthenticationFormHandler()
 
 
 
-
+# Health check endpoint for keeping the app warm
+@dictation_bp.route("/health")
+def health_check():
+    """Simple health check endpoint for monitoring and keeping app alive"""
+    return {"status": "ok", "service": "chinese-dictation"}, 200
 
 @dictation_bp.route("/")
 def menu():
