@@ -59,8 +59,10 @@ def menu():
     """
     Main menu route. Clears session state and loads available stories and HSK totals for the user.
     """
-    for key in ["session_ids", "session_index", "session_score", "hsk_level"]:
-        session.pop(key, None)
+    # Clear all session data for HSK, story, and conversation sessions
+    session_manager.clear_session_data('hsk')
+    session_manager.clear_session_data('story')
+    session_manager.clear_session_data('conversation')
 
     saved_stories = []
     saved_conversations = []

@@ -41,6 +41,8 @@ def _handle_resume_later(session_type: str, identifier: str, user_id: Optional[s
             if success:
                 story = session_manager.ctx.get_story(identifier)
                 flash(f"Progress saved for '{story['title']}'", "success")
+                # Clear session data so it will reload from database next time
+                session_manager.clear_session_data('story')
             else:
                 flash("Failed to save progress.", "error")
         elif session_type == "conversation":
@@ -122,6 +124,9 @@ def handle_session_completion(session_type: str, identifier: str, user_id: Optio
     if user_id:
         update_daily_work_registry(user_id, session_type, average_accuracy, total_items, identifier, total_items)
         
+        # Clear saved progress from database when story is completed
+        if session_type == "story":
+            session_manager.clear_story_progress(user_id, identifier)
 
     
     # Get daily work stats for summary
