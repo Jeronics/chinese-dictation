@@ -89,10 +89,12 @@ class SessionManager:
         
         # Check if we need to initialize or resume
         if "story_session_ids" not in session or session.get("story_id") != story_id:
+            logging.info(f"[INIT] Story {story_id}: No active session, checking for saved progress...")
             existing_progress = self._load_story_progress(user_id, story_id) if user_id else None
             
             if existing_progress:
                 # Resume from saved progress
+                logging.info(f"[INIT] Story {story_id}: Resuming from index {existing_progress['current_index']}")
                 session.update(
                     story_id=story_id,
                     story_session_ids=[part["id"] for part in story["parts"]],
@@ -102,6 +104,7 @@ class SessionManager:
                 return {"resumed": True, "index": existing_progress["current_index"], "total": len(story["parts"])}
             else:
                 # Initialize new story session
+                logging.info(f"[INIT] Story {story_id}: Starting new session from index 0")
                 session.update(
                     story_id=story_id,
                     story_session_ids=[part["id"] for part in story["parts"]],
@@ -110,7 +113,9 @@ class SessionManager:
                 )
                 return {"resumed": False, "index": 0, "total": len(story["parts"])}
         
-        return {"resumed": False, "index": session.get("story_session_index", 0), "total": len(story["parts"])}
+        current_idx = session.get("story_session_index", 0)
+        logging.info(f"[INIT] Story {story_id}: Using existing session at index {current_idx}")
+        return {"resumed": False, "index": current_idx, "total": len(story["parts"])}
     
     def initialize_conversation_session(self, conversation_id: str, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Initialize conversation session."""
@@ -173,7 +178,12 @@ class SessionManager:
         """Load story progress from database."""
         try:
             result = self.supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).execute()
-            return result.data[0] if result.data else None
+            progress = result.data[0] if result.data else None
+            if progress:
+                logging.info(f"[LOAD] Story {story_id}: Loaded index {progress['current_index']} (sentence {progress['current_index'] + 1}) from database")
+            else:
+                logging.info(f"[LOAD] Story {story_id}: No saved progress found")
+            return progress
         except Exception as e:
             logging.error(f"Error loading story progress: {e}")
             return None

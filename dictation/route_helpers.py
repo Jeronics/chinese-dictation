@@ -35,14 +35,15 @@ def _handle_resume_later(session_type: str, identifier: str, user_id: Optional[s
         if session_type == "story":
             current_index = session.get("story_session_index", 0)
             score = session.get("story_session_score", 0)
-            # Save the next index (current + 1) so user resumes from the next part
-            next_index = current_index + 1
-            success = session_manager.save_story_progress(user_id, identifier, next_index, score)
+            # Save the current index so user resumes from the same sentence they're viewing
+            logging.info(f"[SAVE] Story {identifier}: Saving index {current_index} (sentence {current_index + 1})")
+            success = session_manager.save_story_progress(user_id, identifier, current_index, score)
             if success:
                 story = session_manager.ctx.get_story(identifier)
-                flash(f"Progress saved for '{story['title']}'", "success")
+                flash(f"Progress saved for '{story['title']}' at sentence {current_index + 1}", "success")
                 # Clear session data so it will reload from database next time
                 session_manager.clear_session_data('story')
+                logging.info(f"[SAVE] Cleared session data for story {identifier}")
             else:
                 flash("Failed to save progress.", "error")
         elif session_type == "conversation":
