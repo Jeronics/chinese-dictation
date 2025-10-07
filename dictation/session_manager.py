@@ -148,14 +148,29 @@ class SessionManager:
             
             total_parts = len(story["parts"])
             
-            self.supabase.table("story_progress").upsert({
-                "user_id": user_id,
-                "story_id": story_id,
-                "current_index": current_index,
-                "score": score,
-                "total_parts": total_parts,
-                "last_updated": datetime.now().isoformat()
-            }).execute()
+            # Check if progress exists
+            result = self.supabase.table("story_progress").select("id").eq("user_id", user_id).eq("story_id", story_id).execute()
+            
+            if result.data:
+                # Update existing progress
+                logging.info(f"[DB] Updating existing progress for story {story_id}, setting index to {current_index}")
+                self.supabase.table("story_progress").update({
+                    "current_index": current_index,
+                    "score": score,
+                    "total_parts": total_parts,
+                    "last_updated": datetime.now().isoformat()
+                }).eq("user_id", user_id).eq("story_id", story_id).execute()
+            else:
+                # Insert new progress
+                logging.info(f"[DB] Inserting new progress for story {story_id}, index {current_index}")
+                self.supabase.table("story_progress").insert({
+                    "user_id": user_id,
+                    "story_id": story_id,
+                    "current_index": current_index,
+                    "score": score,
+                    "total_parts": total_parts,
+                    "last_updated": datetime.now().isoformat()
+                }).execute()
             return True
         except Exception as e:
             logging.error(f"Error saving story progress: {e}")
@@ -177,10 +192,11 @@ class SessionManager:
     def _load_story_progress(self, user_id: str, story_id: str) -> Optional[Dict[str, Any]]:
         """Load story progress from database."""
         try:
-            result = self.supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).execute()
+            # Order by last_updated descending to get the most recent entry
+            result = self.supabase.table("story_progress").select("*").eq("user_id", user_id).eq("story_id", story_id).order("last_updated", desc=True).limit(1).execute()
             progress = result.data[0] if result.data else None
             if progress:
-                logging.info(f"[LOAD] Story {story_id}: Loaded index {progress['current_index']} (sentence {progress['current_index'] + 1}) from database")
+                logging.info(f"[LOAD] Story {story_id}: Loaded index {progress['current_index']} (sentence {progress['current_index'] + 1}) from database (updated: {progress.get('last_updated', 'N/A')})")
             else:
                 logging.info(f"[LOAD] Story {story_id}: No saved progress found")
             return progress
