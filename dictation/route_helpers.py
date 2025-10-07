@@ -35,12 +35,27 @@ def _handle_resume_later(session_type: str, identifier: str, user_id: Optional[s
         if session_type == "story":
             current_index = session.get("story_session_index", 0)
             score = session.get("story_session_score", 0)
-            # Save the current index so user resumes from the same sentence they're viewing
-            logging.info(f"[SAVE] Story {identifier}: Saving index {current_index} (sentence {current_index + 1})")
-            success = session_manager.save_story_progress(user_id, identifier, current_index, score)
+            
+            # Check if current sentence has been answered by comparing accuracy_scores length with index
+            # accuracy_scores grows by 1 each time a sentence is answered
+            # - If len(accuracy_scores) == current_index: viewing unanswered sentence → save current_index
+            # - If len(accuracy_scores) == current_index + 1: answered current sentence → save current_index + 1
+            accuracy_scores = session.get("accuracy_scores", [])
+            story = session_manager.ctx.get_story(identifier)
+            total_parts = len(story["parts"])
+            
+            if len(accuracy_scores) > current_index:
+                # User has answered the current sentence (viewing result), save next index
+                save_index = min(current_index + 1, total_parts)  # Don't exceed total parts
+                logging.info(f"[SAVE] Story {identifier}: User answered sentence {current_index + 1}, saving index {save_index} (will resume at sentence {save_index + 1})")
+            else:
+                # User hasn't answered current sentence yet (viewing question), save current index
+                save_index = current_index
+                logging.info(f"[SAVE] Story {identifier}: User viewing sentence {current_index + 1} (unanswered), saving index {save_index} (will resume at sentence {save_index + 1})")
+            
+            success = session_manager.save_story_progress(user_id, identifier, save_index, score)
             if success:
-                story = session_manager.ctx.get_story(identifier)
-                flash(f"Progress saved for '{story['title']}' at sentence {current_index + 1}", "success")
+                flash(f"Progress saved for '{story['title']}'. You'll resume from sentence {save_index + 1}.", "success")
                 # Clear session data so it will reload from database next time
                 session_manager.clear_session_data('story')
                 logging.info(f"[SAVE] Cleared session data for story {identifier}")
