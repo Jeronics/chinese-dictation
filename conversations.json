@@ -1622,5 +1622,509 @@
         "audio_file": "conv_29_6.mp3"
       }
     ]
+  },
+  {
+    "conversation_id": 30,
+    "topic": "Going to the Movies",
+    "category": "Entertainment & Media",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "周末我们去看电影吧",
+        "pinyin": "zhōu mò wǒ men qù kàn diàn yǐng ba",
+        "english": "Let's go watch a movie this weekend",
+        "speaker": "A",
+        "audio_file": "conv_30_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "好啊，你想看什么电影？",
+        "pinyin": "hǎo a, nǐ xiǎng kàn shén me diàn yǐng?",
+        "english": "Sure, what movie do you want to watch?",
+        "speaker": "B",
+        "audio_file": "conv_30_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我想看动作片",
+        "pinyin": "wǒ xiǎng kàn dòng zuò piàn",
+        "english": "I want to watch an action movie",
+        "speaker": "A",
+        "audio_file": "conv_30_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "电影票多少钱？",
+        "pinyin": "diàn yǐng piào duō shao qián?",
+        "english": "How much is the movie ticket?",
+        "speaker": "B",
+        "audio_file": "conv_30_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "五十块钱一张",
+        "pinyin": "wǔ shí kuài qián yī zhāng",
+        "english": "Fifty yuan per ticket",
+        "speaker": "A",
+        "audio_file": "conv_30_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "好的，我们买两张票",
+        "pinyin": "hǎo de, wǒ men mǎi liǎng zhāng piào",
+        "english": "Okay, let's buy two tickets",
+        "speaker": "B",
+        "audio_file": "conv_30_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 31,
+    "topic": "Discussing a Movie",
+    "category": "Entertainment & Media",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你看过这部电影吗？",
+        "pinyin": "nǐ kàn guò zhè bù diàn yǐng ma?",
+        "english": "Have you seen this movie?",
+        "speaker": "A",
+        "audio_file": "conv_31_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "看过，非常精彩",
+        "pinyin": "kàn guò, fēi cháng jīng cǎi",
+        "english": "Yes, it's very exciting",
+        "speaker": "B",
+        "audio_file": "conv_31_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这是什么类型的电影？",
+        "pinyin": "zhè shì shén me lèi xíng de diàn yǐng?",
+        "english": "What type of movie is it?",
+        "speaker": "A",
+        "audio_file": "conv_31_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "是科幻片，特效很棒",
+        "pinyin": "shì kē huàn piàn, tè xiào hěn bàng",
+        "english": "It's a sci-fi movie, the special effects are great",
+        "speaker": "B",
+        "audio_file": "conv_31_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "演员演得怎么样？",
+        "pinyin": "yǎn yuán yǎn de zěn me yàng?",
+        "english": "How was the acting?",
+        "speaker": "A",
+        "audio_file": "conv_31_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "演员都演得很好",
+        "pinyin": "yǎn yuán dōu yǎn de hěn hǎo",
+        "english": "All the actors performed very well",
+        "speaker": "B",
+        "audio_file": "conv_31_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 32,
+    "topic": "Taking Photographs",
+    "category": "Entertainment & Media",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这里的风景很美",
+        "pinyin": "zhè lǐ de fēng jǐng hěn měi",
+        "english": "The scenery here is beautiful",
+        "speaker": "A",
+        "audio_file": "conv_32_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我们拍几张照片吧",
+        "pinyin": "wǒ men pāi jǐ zhāng zhào piàn ba",
+        "english": "Let's take some photos",
+        "speaker": "B",
+        "audio_file": "conv_32_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你能帮我拍照吗？",
+        "pinyin": "nǐ néng bāng wǒ pāi zhào ma?",
+        "english": "Can you help me take a photo?",
+        "speaker": "A",
+        "audio_file": "conv_32_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "当然可以，站在那边",
+        "pinyin": "dāng rán kě yǐ, zhàn zài nà biān",
+        "english": "Of course, stand over there",
+        "speaker": "B",
+        "audio_file": "conv_32_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "准备好了，笑一个",
+        "pinyin": "zhǔn bèi hǎo le, xiào yī gè",
+        "english": "Ready, smile",
+        "speaker": "B",
+        "audio_file": "conv_32_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "拍得很好，谢谢",
+        "pinyin": "pāi de hěn hǎo, xiè xie",
+        "english": "Great photo, thank you",
+        "speaker": "A",
+        "audio_file": "conv_32_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 33,
+    "topic": "Discussing Photography",
+    "category": "Entertainment & Media",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你喜欢摄影吗？",
+        "pinyin": "nǐ xǐ huān shè yǐng ma?",
+        "english": "Do you like photography?",
+        "speaker": "A",
+        "audio_file": "conv_33_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "很喜欢，我有一台单反相机",
+        "pinyin": "hěn xǐ huān, wǒ yǒu yī tái dān fǎn xiàng jī",
+        "english": "Yes very much, I have a DSLR camera",
+        "speaker": "B",
+        "audio_file": "conv_33_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你最喜欢拍什么？",
+        "pinyin": "nǐ zuì xǐ huān pāi shén me?",
+        "english": "What do you like to photograph most?",
+        "speaker": "A",
+        "audio_file": "conv_33_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我喜欢拍风景和人物",
+        "pinyin": "wǒ xǐ huān pāi fēng jǐng hé rén wù",
+        "english": "I like to photograph landscapes and people",
+        "speaker": "B",
+        "audio_file": "conv_33_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你能教我拍照吗？",
+        "pinyin": "nǐ néng jiāo wǒ pāi zhào ma?",
+        "english": "Can you teach me photography?",
+        "speaker": "A",
+        "audio_file": "conv_33_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "没问题，我们周末一起去拍",
+        "pinyin": "méi wèn tí, wǒ men zhōu mò yī qǐ qù pāi",
+        "english": "No problem, let's go shoot together this weekend",
+        "speaker": "B",
+        "audio_file": "conv_33_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 34,
+    "topic": "At the Art Gallery",
+    "category": "Entertainment & Media",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个画展很有名",
+        "pinyin": "zhè ge huà zhǎn hěn yǒu míng",
+        "english": "This art exhibition is very famous",
+        "speaker": "A",
+        "audio_file": "conv_34_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "是哪位画家的作品？",
+        "pinyin": "shì nǎ wèi huà jiā de zuò pǐn?",
+        "english": "Which artist's work is it?",
+        "speaker": "B",
+        "audio_file": "conv_34_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "是齐白石的画",
+        "pinyin": "shì qí bái shí de huà",
+        "english": "It's paintings by Qi Baishi",
+        "speaker": "A",
+        "audio_file": "conv_34_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "这幅画很漂亮",
+        "pinyin": "zhè fú huà hěn piào liang",
+        "english": "This painting is beautiful",
+        "speaker": "B",
+        "audio_file": "conv_34_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你喜欢什么风格的画？",
+        "pinyin": "nǐ xǐ huān shén me fēng gé de huà?",
+        "english": "What style of painting do you like?",
+        "speaker": "A",
+        "audio_file": "conv_34_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "我喜欢中国水墨画",
+        "pinyin": "wǒ xǐ huān zhōng guó shuǐ mò huà",
+        "english": "I like Chinese ink wash paintings",
+        "speaker": "B",
+        "audio_file": "conv_34_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 35,
+    "topic": "Watching Videos Online",
+    "category": "Entertainment & Media",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你在看什么视频？",
+        "pinyin": "nǐ zài kàn shén me shì pín?",
+        "english": "What video are you watching?",
+        "speaker": "A",
+        "audio_file": "conv_35_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "我在看做菜的视频",
+        "pinyin": "wǒ zài kàn zuò cài de shì pín",
+        "english": "I'm watching a cooking video",
+        "speaker": "B",
+        "audio_file": "conv_35_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这个视频有趣吗？",
+        "pinyin": "zhè ge shì pín yǒu qù ma?",
+        "english": "Is this video interesting?",
+        "speaker": "A",
+        "audio_file": "conv_35_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "很有趣，也很实用",
+        "pinyin": "hěn yǒu qù, yě hěn shí yòng",
+        "english": "Very interesting and practical too",
+        "speaker": "B",
+        "audio_file": "conv_35_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你能发给我链接吗？",
+        "pinyin": "nǐ néng fā gěi wǒ liàn jiē ma?",
+        "english": "Can you send me the link?",
+        "speaker": "A",
+        "audio_file": "conv_35_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "可以，我马上发给你",
+        "pinyin": "kě yǐ, wǒ mǎ shàng fā gěi nǐ",
+        "english": "Sure, I'll send it to you right away",
+        "speaker": "B",
+        "audio_file": "conv_35_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 36,
+    "topic": "Discussing Art and Painting",
+    "category": "Entertainment & Media",
+    "hsk_level": 4,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你会画画吗？",
+        "pinyin": "nǐ huì huà huà ma?",
+        "english": "Can you paint?",
+        "speaker": "A",
+        "audio_file": "conv_36_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "会一点，我学过油画",
+        "pinyin": "huì yī diǎn, wǒ xué guò yóu huà",
+        "english": "A little, I studied oil painting",
+        "speaker": "B",
+        "audio_file": "conv_36_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "你最喜欢哪位艺术家？",
+        "pinyin": "nǐ zuì xǐ huān nǎ wèi yì shù jiā?",
+        "english": "Which artist do you like most?",
+        "speaker": "A",
+        "audio_file": "conv_36_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我喜欢梵高的作品",
+        "pinyin": "wǒ xǐ huān fàn gāo de zuò pǐn",
+        "english": "I like Van Gogh's work",
+        "speaker": "B",
+        "audio_file": "conv_36_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "他的色彩运用很独特",
+        "pinyin": "tā de sè cǎi yùn yòng hěn dú tè",
+        "english": "His use of color is very unique",
+        "speaker": "A",
+        "audio_file": "conv_36_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是的，他的画充满感情",
+        "pinyin": "shì de, tā de huà chōng mǎn gǎn qíng",
+        "english": "Yes, his paintings are full of emotion",
+        "speaker": "B",
+        "audio_file": "conv_36_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 37,
+    "topic": "Movie Recommendations",
+    "category": "Entertainment & Media",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "最近有什么好看的电影？",
+        "pinyin": "zuì jìn yǒu shén me hǎo kàn de diàn yǐng?",
+        "english": "Are there any good movies recently?",
+        "speaker": "A",
+        "audio_file": "conv_37_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "有一部新的喜剧片很火",
+        "pinyin": "yǒu yī bù xīn de xǐ jù piàn hěn huǒ",
+        "english": "There's a new comedy that's very popular",
+        "speaker": "B",
+        "audio_file": "conv_37_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "是国产片还是外国片？",
+        "pinyin": "shì guó chǎn piàn hái shì wài guó piàn?",
+        "english": "Is it a domestic or foreign film?",
+        "speaker": "A",
+        "audio_file": "conv_37_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "是国产片，票房很高",
+        "pinyin": "shì guó chǎn piàn, piào fáng hěn gāo",
+        "english": "It's a domestic film, with high box office",
+        "speaker": "B",
+        "audio_file": "conv_37_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "在哪个平台可以看？",
+        "pinyin": "zài nǎ ge píng tái kě yǐ kàn?",
+        "english": "On which platform can I watch it?",
+        "speaker": "A",
+        "audio_file": "conv_37_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "现在只能在电影院看",
+        "pinyin": "xiàn zài zhǐ néng zài diàn yǐng yuàn kàn",
+        "english": "Right now you can only watch it in cinemas",
+        "speaker": "B",
+        "audio_file": "conv_37_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 38,
+    "topic": "Visiting a Museum",
+    "category": "Entertainment & Media",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "我们去博物馆吧",
+        "pinyin": "wǒ men qù bó wù guǎn ba",
+        "english": "Let's go to the museum",
+        "speaker": "A",
+        "audio_file": "conv_38_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "好主意，去哪个博物馆？",
+        "pinyin": "hǎo zhǔ yì, qù nǎ ge bó wù guǎn?",
+        "english": "Good idea, which museum?",
+        "speaker": "B",
+        "audio_file": "conv_38_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "去故宫博物院",
+        "pinyin": "qù gù gōng bó wù yuàn",
+        "english": "Let's go to the Palace Museum",
+        "speaker": "A",
+        "audio_file": "conv_38_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "需要提前买票吗？",
+        "pinyin": "xū yào tí qián mǎi piào ma?",
+        "english": "Do we need to buy tickets in advance?",
+        "speaker": "B",
+        "audio_file": "conv_38_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "需要，最好网上预约",
+        "pinyin": "xū yào, zuì hǎo wǎng shàng yù yuē",
+        "english": "Yes, it's best to book online",
+        "speaker": "A",
+        "audio_file": "conv_38_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "我现在就去预约",
+        "pinyin": "wǒ xiàn zài jiù qù yù yuē",
+        "english": "I'll make a reservation now",
+        "speaker": "B",
+        "audio_file": "conv_38_6.mp3"
+      }
+    ]
   }
 ] 
