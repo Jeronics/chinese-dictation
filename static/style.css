@@ -1119,6 +1119,81 @@ button:disabled {
 }
 
 /* =========================
+   CONVERSATION CATEGORIES DROPDOWN
+   ========================= */
+.conversation-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category-dropdown {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.category-dropdown:hover {
+    border-color: var(--border-secondary);
+    box-shadow: var(--shadow-medium);
+}
+
+.category-header {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background-color: var(--bg-secondary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
+}
+
+.category-header:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.category-name {
+    font-weight: 600;
+    color: var(--accent-blue);
+    flex: 1;
+    text-align: left;
+}
+
+.category-count {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-left: 1rem;
+}
+
+.dropdown-arrow {
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.category-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.category-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 1.5rem;
+}
+
+.category-dropdown.active .category-content {
+    max-height: 5000px;
+    padding: 1.5rem;
+}
+
+/* =========================
    LOGIN NOTICE STYLES
    ========================= */
 

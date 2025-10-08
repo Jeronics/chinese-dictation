@@ -179,6 +179,14 @@
         // Optionally, you can call animateDailySessionCounter() after updating the counter via JS
     </script>
     
+    <script>
+        // Toggle category dropdown
+        function toggleCategory(button) {
+            const dropdown = button.closest('.category-dropdown');
+            dropdown.classList.toggle('active');
+        }
+    </script>
+    
     <script src="{{ url_for('static', filename='audio_manager.js') }}"></script>
     <script src="{{ url_for('static', filename='story_audio.js') }}"></script>
     <script src="{{ url_for('static', filename='hanzi_carousel.js') }}"></script>

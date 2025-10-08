@@ -33,9 +33,31 @@
 
     <div class="menu-section menu-section-with-top-margin">
         <h2>Conversations</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for conversation_id, conversation in conversations.items() %}
-                {{ conversation_cell(conversation_id, conversation, session.get('email') and conversation_id in saved_conversations, conversations) }}
+        {% set categories = {} %}
+        {% for conversation_id, conversation in conversations.items() %}
+            {% set category = conversation.category %}
+            {% if category not in categories %}
+                {% set _ = categories.update({category: []}) %}
+            {% endif %}
+            {% set _ = categories[category].append((conversation_id, conversation)) %}
+        {% endfor %}
+        
+        <div class="conversation-categories">
+            {% for category, conv_list in categories.items() %}
+                <div class="category-dropdown">
+                    <button class="category-header" onclick="toggleCategory(this)">
+                        <span class="category-name">{{ category }}</span>
+                        <span class="category-count">({{ conv_list|length }} conversations)</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="category-content">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            {% for conversation_id, conversation in conv_list %}
+                                {{ conversation_cell(conversation_id, conversation, session.get('email') and conversation_id in saved_conversations, conversations) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
