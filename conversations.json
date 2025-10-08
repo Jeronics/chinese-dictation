@@ -1174,5 +1174,453 @@
         "audio_file": "conv_21_6.mp3"
       }
     ]
+  },
+  {
+    "conversation_id": 22,
+    "topic": "Asking What Things Are Called",
+    "category": "Language Learning",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个用中文怎么说？",
+        "pinyin": "zhè ge yòng zhōng wén zěn me shuō?",
+        "english": "How do you say this in Chinese?",
+        "speaker": "A",
+        "audio_file": "conv_22_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "这个叫\"苹果\"",
+        "pinyin": "zhè ge jiào píng guǒ",
+        "english": "This is called 'apple'",
+        "speaker": "B",
+        "audio_file": "conv_22_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "那个东西叫什么？",
+        "pinyin": "nà ge dōng xi jiào shén me?",
+        "english": "What is that thing called?",
+        "speaker": "A",
+        "audio_file": "conv_22_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "那个是\"笔记本电脑\"",
+        "pinyin": "nà ge shì bǐ jì běn diàn nǎo",
+        "english": "That is a 'laptop computer'",
+        "speaker": "B",
+        "audio_file": "conv_22_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "\"手机\"的英文是什么？",
+        "pinyin": "shǒu jī de yīng wén shì shén me?",
+        "english": "What is 'shouji' in English?",
+        "speaker": "A",
+        "audio_file": "conv_22_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "是\"mobile phone\"",
+        "pinyin": "shì mobile phone",
+        "english": "It's 'mobile phone'",
+        "speaker": "B",
+        "audio_file": "conv_22_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 23,
+    "topic": "Asking How to Write and Spell",
+    "category": "Language Learning",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "你能写下来吗？",
+        "pinyin": "nǐ néng xiě xià lái ma?",
+        "english": "Can you write it down?",
+        "speaker": "A",
+        "audio_file": "conv_23_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "当然可以，你有纸吗？",
+        "pinyin": "dāng rán kě yǐ, nǐ yǒu zhǐ ma?",
+        "english": "Of course, do you have paper?",
+        "speaker": "B",
+        "audio_file": "conv_23_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这个字怎么写？",
+        "pinyin": "zhè ge zì zěn me xiě?",
+        "english": "How do you write this character?",
+        "speaker": "A",
+        "audio_file": "conv_23_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我给你看笔顺",
+        "pinyin": "wǒ gěi nǐ kàn bǐ shùn",
+        "english": "Let me show you the stroke order",
+        "speaker": "B",
+        "audio_file": "conv_23_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "这个词的拼音是什么？",
+        "pinyin": "zhè ge cí de pīn yīn shì shén me?",
+        "english": "What's the pinyin for this word?",
+        "speaker": "A",
+        "audio_file": "conv_23_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "拼音是\"xuéxí\"",
+        "pinyin": "pīn yīn shì xuéxí",
+        "english": "The pinyin is 'xuexi'",
+        "speaker": "B",
+        "audio_file": "conv_23_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 24,
+    "topic": "Asking About Measure Words",
+    "category": "Language Learning",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "\"苹果\"的量词是什么？",
+        "pinyin": "píng guǒ de liàng cí shì shén me?",
+        "english": "What is the measure word for 'apple'?",
+        "speaker": "A",
+        "audio_file": "conv_24_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "是\"个\"，一个苹果",
+        "pinyin": "shì gè, yī gè píng guǒ",
+        "english": "It's 'ge', one apple",
+        "speaker": "B",
+        "audio_file": "conv_24_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "书用什么量词？",
+        "pinyin": "shū yòng shén me liàng cí?",
+        "english": "What measure word is used for books?",
+        "speaker": "A",
+        "audio_file": "conv_24_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "用\"本\"，一本书",
+        "pinyin": "yòng běn, yī běn shū",
+        "english": "Use 'ben', one book",
+        "speaker": "B",
+        "audio_file": "conv_24_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "\"杯\"是量词吗？",
+        "pinyin": "bēi shì liàng cí ma?",
+        "english": "Is 'bei' a measure word?",
+        "speaker": "A",
+        "audio_file": "conv_24_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "对，一杯水，一杯茶",
+        "pinyin": "duì, yī bēi shuǐ, yī bēi chá",
+        "english": "Yes, one cup of water, one cup of tea",
+        "speaker": "B",
+        "audio_file": "conv_24_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 25,
+    "topic": "Asking About Tones and Pronunciation",
+    "category": "Language Learning",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个字是几声？",
+        "pinyin": "zhè ge zì shì jǐ shēng?",
+        "english": "What tone is this character?",
+        "speaker": "A",
+        "audio_file": "conv_25_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "是第三声",
+        "pinyin": "shì dì sān shēng",
+        "english": "It's the third tone",
+        "speaker": "B",
+        "audio_file": "conv_25_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我的发音对吗？",
+        "pinyin": "wǒ de fā yīn duì ma?",
+        "english": "Is my pronunciation correct?",
+        "speaker": "A",
+        "audio_file": "conv_25_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "基本对，但是声调要高一点",
+        "pinyin": "jī běn duì, dàn shì shēng diào yào gāo yī diǎn",
+        "english": "Basically correct, but the tone should be higher",
+        "speaker": "B",
+        "audio_file": "conv_25_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你能再说一遍吗？",
+        "pinyin": "nǐ néng zài shuō yī biàn ma?",
+        "english": "Can you say it again?",
+        "speaker": "A",
+        "audio_file": "conv_25_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "好的，请听：māma",
+        "pinyin": "hǎo de, qǐng tīng: māma",
+        "english": "Okay, please listen: mama",
+        "speaker": "B",
+        "audio_file": "conv_25_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 26,
+    "topic": "Asking About Tone Changes",
+    "category": "Language Learning",
+    "hsk_level": 4,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "为什么这个字的声调变了？",
+        "pinyin": "wèi shén me zhè ge zì de shēng diào biàn le?",
+        "english": "Why did the tone of this character change?",
+        "speaker": "A",
+        "audio_file": "conv_26_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "因为有变调规则",
+        "pinyin": "yīn wèi yǒu biàn diào guī zé",
+        "english": "Because there are tone sandhi rules",
+        "speaker": "B",
+        "audio_file": "conv_26_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "两个第三声在一起怎么读？",
+        "pinyin": "liǎng ge dì sān shēng zài yī qǐ zěn me dú?",
+        "english": "How do you read two third tones together?",
+        "speaker": "A",
+        "audio_file": "conv_26_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "第一个要读成第二声",
+        "pinyin": "dì yī ge yào dú chéng dì èr shēng",
+        "english": "The first one should be read as second tone",
+        "speaker": "B",
+        "audio_file": "conv_26_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "\"不\"的声调什么时候变？",
+        "pinyin": "bù de shēng diào shén me shí hou biàn?",
+        "english": "When does the tone of 'bu' change?",
+        "speaker": "A",
+        "audio_file": "conv_26_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "在第四声前读第二声",
+        "pinyin": "zài dì sì shēng qián dú dì èr shēng",
+        "english": "It's read as second tone before fourth tone",
+        "speaker": "B",
+        "audio_file": "conv_26_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 27,
+    "topic": "Asking About Character Meanings",
+    "category": "Language Learning",
+    "hsk_level": 3,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个字是什么意思？",
+        "pinyin": "zhè ge zì shì shén me yì si?",
+        "english": "What does this character mean?",
+        "speaker": "A",
+        "audio_file": "conv_27_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "它的意思是\"学习\"",
+        "pinyin": "tā de yì si shì xuéxí",
+        "english": "It means 'to study' or 'to learn'",
+        "speaker": "B",
+        "audio_file": "conv_27_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "这两个字有什么区别？",
+        "pinyin": "zhè liǎng ge zì yǒu shén me qū bié?",
+        "english": "What's the difference between these two characters?",
+        "speaker": "A",
+        "audio_file": "conv_27_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "\"看\"是看见，\"见\"是见面",
+        "pinyin": "kàn shì kàn jiàn, jiàn shì jiàn miàn",
+        "english": "'Kan' means to see, 'jian' means to meet",
+        "speaker": "B",
+        "audio_file": "conv_27_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "能举个例子吗？",
+        "pinyin": "néng jǔ gè lì zi ma?",
+        "english": "Can you give an example?",
+        "speaker": "A",
+        "audio_file": "conv_27_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "比如：我看书，明天见",
+        "pinyin": "bǐ rú: wǒ kàn shū, míng tiān jiàn",
+        "english": "For example: I read books, see you tomorrow",
+        "speaker": "B",
+        "audio_file": "conv_27_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 28,
+    "topic": "Asking About Radicals and Components",
+    "category": "Language Learning",
+    "hsk_level": 4,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "这个字的部首是什么？",
+        "pinyin": "zhè ge zì de bù shǒu shì shén me?",
+        "english": "What is the radical of this character?",
+        "speaker": "A",
+        "audio_file": "conv_28_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "部首是\"氵\"，三点水",
+        "pinyin": "bù shǒu shì sān diǎn shuǐ",
+        "english": "The radical is the three-drop water",
+        "speaker": "B",
+        "audio_file": "conv_28_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "\"氵\"是什么意思？",
+        "pinyin": "sān diǎn shuǐ shì shén me yì si?",
+        "english": "What does 'three-drop water' mean?",
+        "speaker": "A",
+        "audio_file": "conv_28_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "表示跟水有关的意思",
+        "pinyin": "biǎo shì gēn shuǐ yǒu guān de yì si",
+        "english": "It indicates meanings related to water",
+        "speaker": "B",
+        "audio_file": "conv_28_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "比如哪些字？",
+        "pinyin": "bǐ rú nǎ xiē zì?",
+        "english": "Like which characters?",
+        "speaker": "A",
+        "audio_file": "conv_28_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "比如\"河\"、\"湖\"、\"海\"",
+        "pinyin": "bǐ rú hé, hú, hǎi",
+        "english": "Like 'river', 'lake', 'sea'",
+        "speaker": "B",
+        "audio_file": "conv_28_6.mp3"
+      }
+    ]
+  },
+  {
+    "conversation_id": 29,
+    "topic": "Speaking Slowly and Clarifying",
+    "category": "Language Learning",
+    "hsk_level": 2,
+    "sentences": [
+      {
+        "id": 1,
+        "chinese": "请说慢一点",
+        "pinyin": "qǐng shuō màn yī diǎn",
+        "english": "Please speak a bit slower",
+        "speaker": "A",
+        "audio_file": "conv_29_1.mp3"
+      },
+      {
+        "id": 2,
+        "chinese": "好的，我说慢一点",
+        "pinyin": "hǎo de, wǒ shuō màn yī diǎn",
+        "english": "Okay, I'll speak slower",
+        "speaker": "B",
+        "audio_file": "conv_29_2.mp3"
+      },
+      {
+        "id": 3,
+        "chinese": "我没听懂",
+        "pinyin": "wǒ méi tīng dǒng",
+        "english": "I didn't understand",
+        "speaker": "A",
+        "audio_file": "conv_29_3.mp3"
+      },
+      {
+        "id": 4,
+        "chinese": "我再说一次",
+        "pinyin": "wǒ zài shuō yī cì",
+        "english": "I'll say it again",
+        "speaker": "B",
+        "audio_file": "conv_29_4.mp3"
+      },
+      {
+        "id": 5,
+        "chinese": "你能用简单的词吗？",
+        "pinyin": "nǐ néng yòng jiǎn dān de cí ma?",
+        "english": "Can you use simpler words?",
+        "speaker": "A",
+        "audio_file": "conv_29_5.mp3"
+      },
+      {
+        "id": 6,
+        "chinese": "没问题，我用简单的词",
+        "pinyin": "méi wèn tí, wǒ yòng jiǎn dān de cí",
+        "english": "No problem, I'll use simple words",
+        "speaker": "B",
+        "audio_file": "conv_29_6.mp3"
+      }
+    ]
   }
 ] 
