@@ -39,7 +39,7 @@
                         {% if correction.accuracy < 100 %}
                             <div class="correction-user-input">{{ correction.correction|safe }}</div>
                         {% endif %}
-                        <div class="correction-correct-answer">{{ correction.chinese }}</div>
+                        <div class="correction-correct-answer">{{ correction.chinese|clickable_hanzi }}</div>
                         <div class="correction-details">
                             <div class="pinyin">{{ correction.pinyin }}</div>
                             <div class="translation">{{ correction.translation }}</div>

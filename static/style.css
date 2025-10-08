@@ -829,6 +829,21 @@ button:disabled {
     background: var(--status-unseen);
 }
 
+/* Clickable Hanzi for stroke order display */
+.hanzi-char {
+    cursor: pointer;
+    padding: 0.1rem 0.2rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.hanzi-char:hover {
+    background: var(--bg-hover);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
 /* =========================
    MODALS
    ========================= */
